@@ -28,6 +28,18 @@
     <Filter Include="Source Files\TestEnvironment\Camera">
       <UniqueIdentifier>{4d90dd92-54a3-4442-88fb-4c7248df0db3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree">
+      <UniqueIdentifier>{68d0e8c0-99c3-4282-9f51-93c804d9f2eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes">
+      <UniqueIdentifier>{39bc7a8a-a030-49e1-aa4b-76833dab49a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators">
+      <UniqueIdentifier>{e0b3a6da-01e4-421e-96ea-346e090c2e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Composites">
+      <UniqueIdentifier>{8e2b9d30-9024-42f6-a7f9-a8e359d58706}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\basic.frag">
@@ -52,6 +64,21 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h">
       <Filter>Source Files\TestEnvironment\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\BehaviourTree.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNode.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeComposite.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Composites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeSelector.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Composites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeSequence.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Composites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
