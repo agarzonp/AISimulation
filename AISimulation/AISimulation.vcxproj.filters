@@ -98,6 +98,12 @@
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardOperator.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Blackboard</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Conditions\BTNodeCondition.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Conditions\BTNodeBlackboardCondition.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Conditions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
