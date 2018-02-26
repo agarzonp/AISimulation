@@ -22,12 +22,12 @@ public:
 	// Add child
 	void AddChild(std::unique_ptr<BTNode>&& child)
 	{
-		children.emplace_back(child);
+		children.emplace_back(std::move(child));
 	}
 	
 protected:
 
-	State OnRun(BlackBoard& blackBoard) final
+	State OnRun(BTBlackboard& blackBoard) final
 	{
 		if (state != State::RUNNING)
 		{

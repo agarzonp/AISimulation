@@ -3,12 +3,13 @@
 
 #include <memory>
 
-#include "Nodes/BTNode.h"
+#include "Blackboard/BTBlackboard.h"
+#include "Nodes/BTNodes.h"
 
 class BehaviourTree
 {
 	// blackboard
-	BlackBoard blackBoard;
+	BTBlackboard blackBoard;
 
 	// root
 	std::unique_ptr<BTNode> root;

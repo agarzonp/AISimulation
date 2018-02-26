@@ -1,10 +1,7 @@
 #ifndef BT_NODE_H
 #define BT_NODE_H
 
-class BlackBoard
-{
-	// TO-DO
-};
+#include "../Blackboard/BTBlackboard.h"
 
 class BTNode
 {
@@ -28,7 +25,7 @@ public:
 	{
 	}
 
-	State Run(BlackBoard& blackBoard)
+	State Run(BTBlackboard& blackBoard)
 	{
 		if (state != State::RUNNING)
 		{
@@ -47,9 +44,9 @@ public:
 
 protected:
 
-	virtual void OnEnter(BlackBoard& blackBoard) {};
-	virtual void OnExit(BlackBoard& blackBoard) {};
-	virtual State OnRun(BlackBoard& blackBoard) = 0;
+	virtual void OnEnter(BTBlackboard& blackBoard) {};
+	virtual void OnExit(BTBlackboard& blackBoard) {};
+	virtual State OnRun(BTBlackboard& blackBoard) = 0;
 	
 };
 

@@ -40,6 +40,12 @@
     <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Composites">
       <UniqueIdentifier>{8e2b9d30-9024-42f6-a7f9-a8e359d58706}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Conditions">
+      <UniqueIdentifier>{67a15ea0-6746-45a6-b7a4-da546167ac92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Blackboard">
+      <UniqueIdentifier>{b5ede8c9-8d02-438c-b1aa-89acb9025f45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\basic.frag">
@@ -79,6 +85,18 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeSequence.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Composites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNodes.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboard.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Blackboard</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardValue.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Blackboard</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardOperator.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Blackboard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
