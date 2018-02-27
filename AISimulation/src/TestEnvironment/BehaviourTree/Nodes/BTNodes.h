@@ -12,5 +12,8 @@
 #include "Conditions/BTNodeCondition.h"
 #include "Conditions/BTNodeBlackboardCondition.h"
 
+#include "Decorators/BTNodeDecorator.h"
+#include "Decorators/BTNodeDecoratorLimit.h"
+
 #endif // !BT_NODES_H
 

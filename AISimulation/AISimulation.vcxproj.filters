@@ -113,6 +113,12 @@
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWait.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecorator.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorLimit.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
