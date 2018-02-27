@@ -136,6 +136,8 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboard.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardOperator.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardValue.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeAction.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWait.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNode.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNodes.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeComposite.h" />

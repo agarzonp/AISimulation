@@ -28,7 +28,7 @@ class MyCustomConditionExample : public BTNodeCondition<MyCustomConditionExample
 {
 public:
 
-	bool IsSatisfied(const BlackBoard& blackBoard)
+	bool IsSatisfied(const BTBlackboard& blackBoard)
 	{
 		// check whatever is needed
 		return true;

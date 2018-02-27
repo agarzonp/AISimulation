@@ -2,8 +2,13 @@
 #define BT_NODES_H
 
 #include "BTNode.h"
+
+#include "Actions/BTNodeAction.h"
+#include "Actions/BTNodeActionWait.h"
+
 #include "Composites/BTNodeSelector.h"
 #include "Composites/BTNodeSequence.h"
+
 #include "Conditions/BTNodeCondition.h"
 #include "Conditions/BTNodeBlackboardCondition.h"
 

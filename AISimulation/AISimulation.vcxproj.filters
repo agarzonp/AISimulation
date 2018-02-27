@@ -46,6 +46,9 @@
     <Filter Include="Source Files\TestEnvironment\BehaviourTree\Blackboard">
       <UniqueIdentifier>{b5ede8c9-8d02-438c-b1aa-89acb9025f45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Actions">
+      <UniqueIdentifier>{a55a8527-065a-4064-9b9c-bfa8fd897e17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\basic.frag">
@@ -103,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Conditions\BTNodeBlackboardCondition.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeAction.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWait.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
