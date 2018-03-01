@@ -3,6 +3,12 @@
 
 #include "../Blackboard/BTBlackboard.h"
 
+#define ALLOW_DEBUG 1
+#if ALLOW_DEBUG 
+#define BT_NODE_DEBUG_PRINT(X) printf("%s\n", X)
+#else
+#endif
+
 class BTNode
 {
 public:

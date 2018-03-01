@@ -22,6 +22,7 @@ public:
 
 	State Execute(BTBlackboard& blackBoard)
 	{
+		BT_NODE_DEBUG_PRINT("Requesting to open the door...");
 		count--;
 		if (count == 0)
 		{

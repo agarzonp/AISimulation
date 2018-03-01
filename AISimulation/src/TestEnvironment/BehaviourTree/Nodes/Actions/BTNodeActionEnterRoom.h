@@ -25,9 +25,12 @@ public:
 
 	State Execute(BTBlackboard& blackBoard)
 	{
+		BT_NODE_DEBUG_PRINT("Entering into the room...");
+
 		distance--;
 		if (distance == 0)
 		{
+			BT_NODE_DEBUG_PRINT("Inside room!");
 			return state = State::SUCCEEDED;
 		}
 
