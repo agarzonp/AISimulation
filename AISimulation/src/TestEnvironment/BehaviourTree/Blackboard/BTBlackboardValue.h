@@ -75,6 +75,7 @@ private:
 public:
 
 	BTBlackboardValue() = default;
+	template <class T> BTBlackboardValue(T v) { Set(v); }
 
 	BTBlackboardValue::Type GetType() const { return type; }
 

@@ -131,6 +131,12 @@
     <ClInclude Include="src\TestEnvironment\AIEntity.h">
       <Filter>Source Files\TestEnvironment</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorFilter.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWork.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

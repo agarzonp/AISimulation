@@ -8,6 +8,7 @@
 #include "Actions/BTNodeActionGoToDoor.h"
 #include "Actions/BTNodeActionRequestOpenDoor.h"
 #include "Actions/BTNodeActionWait.h"
+#include "Actions/BTNodeActionWork.h"
 
 #include "Composites/BTNodeSelector.h"
 #include "Composites/BTNodeSequence.h"
@@ -16,6 +17,7 @@
 #include "Conditions/BTNodeBlackboardCondition.h"
 
 #include "Decorators/BTNodeDecorator.h"
+#include "Decorators/BTNodeDecoratorFilter.h"
 #include "Decorators/BTNodeDecoratorLimit.h"
 
 #endif // !BT_NODES_H

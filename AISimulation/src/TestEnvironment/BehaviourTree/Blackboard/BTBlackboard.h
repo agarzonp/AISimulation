@@ -25,7 +25,7 @@ public:
 		}
 	}
 
-	bool IsSatisfied(const std::string& key, BTBlackboardOperator btOperator, const BTBlackboardValue& value)
+	bool IsSatisfied(const std::string& key, BTBlackboardOperator btOperator, const BTBlackboardValue& value) const
 	{
 		auto it = blackboard.find(key);
 		assert(it != blackboard.end());

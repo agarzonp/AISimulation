@@ -26,6 +26,7 @@ public:
 		count--;
 		if (count == 0)
 		{
+			BT_NODE_DEBUG_PRINT("Request accepted!");
 			return state = State::SUCCEEDED;
 		}
 

@@ -24,16 +24,19 @@ public:
 		//
 		std::unique_ptr<BTNode> entityBehaviour= std::make_unique<BTNodeSelector>();
 
-			// Work behaviour (blackboard condition)
+			// Work behaviour (sequence)
 			//
-			std::unique_ptr<BTNode> workBehaviour = std::make_unique<BTNodeBlackboardCondition>("isTimeToWork", BTBlackboardOperator::IS_EQUAL, true);
+			std::unique_ptr<BTNode> workBehaviour = std::make_unique<BTNodeSequence>();
+				std::unique_ptr<BTNode> isTimeToWork = std::make_unique<BTNodeBlackboardCondition>("isTimeToWork", BTBlackboardOperator::IS_EQUAL, true);
+				std::unique_ptr<BTNode> workAction = std::make_unique<BTNodeActionWork>();
+				static_cast<BTNodeComposite*>(workBehaviour.get())->AddChild(isTimeToWork);
+				static_cast<BTNodeComposite*>(workBehaviour.get())->AddChild(workAction);
 			//
 			// Work behaviour end
 
-			// Sleep behaviour (sequence)
+			// Sleep behaviour (filter - sequence)
 			//
-			std::unique_ptr<BTNode> sleepBehaviour  = std::make_unique<BTNodeSequence>();
-				std::unique_ptr<BTNode> isTimeToSleep = std::make_unique<BTNodeBlackboardCondition>("isTimeToSleep", BTBlackboardOperator::IS_EQUAL, true);
+			std::unique_ptr<BTNode> sleepBehaviour = std::make_unique<BTNodeDecoratorFilter>(BTNodeBlackboardCondition("isTimeToSleep", BTBlackboardOperator::IS_EQUAL, true));
 				std::unique_ptr<BTNode> goToSleep = std::make_unique<BTNodeSequence>();
 					std::unique_ptr<BTNode> goToDoor = std::make_unique<BTNodeActionGoToDoor>();
 					std::unique_ptr<BTNode> checkDoorOpen = std::make_unique<BTNodeSelector>();
@@ -49,8 +52,7 @@ public:
 					static_cast<BTNodeComposite*>(goToSleep.get())->AddChild(goToDoor);
 					static_cast<BTNodeComposite*>(goToSleep.get())->AddChild(checkDoorOpen);
 					static_cast<BTNodeComposite*>(goToSleep.get())->AddChild(enterRoom);
-			static_cast<BTNodeComposite*>(sleepBehaviour.get())->AddChild(isTimeToSleep);
-			static_cast<BTNodeComposite*>(sleepBehaviour.get())->AddChild(goToSleep);
+			static_cast<BTNodeDecorator*>(sleepBehaviour.get())->SetChild(goToSleep);
 			//
 			// Sleep behaviour end
 

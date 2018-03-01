@@ -142,6 +142,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionRequestOpenDoor.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWait.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionGoToDoor.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWork.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNode.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNodes.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeComposite.h" />
@@ -150,6 +151,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Conditions\BTNodeBlackboardCondition.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Conditions\BTNodeCondition.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecorator.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorFilter.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorLimit.h" />
     <ClInclude Include="src\TestEnvironment\Camera\Camera.h" />
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h" />
