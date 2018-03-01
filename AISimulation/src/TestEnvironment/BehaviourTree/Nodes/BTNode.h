@@ -7,6 +7,7 @@
 #if ALLOW_DEBUG 
 #define BT_NODE_DEBUG_PRINT(X) printf("%s\n", X)
 #else
+#define BT_NODE_DEBUG_PRINT(X) ;
 #endif
 
 class BTNode
