@@ -4,6 +4,9 @@
 #include "BTNode.h"
 
 #include "Actions/BTNodeAction.h"
+#include "Actions/BTNodeActionEnterRoom.h"
+#include "Actions/BTNodeActionGoToDoor.h"
+#include "Actions/BTNodeActionRequestOpenDoor.h"
 #include "Actions/BTNodeActionWait.h"
 
 #include "Composites/BTNodeSelector.h"

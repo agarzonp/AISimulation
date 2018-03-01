@@ -11,7 +11,7 @@ public:
 
 protected:
 
-	bool OnRunBreak() final
+	bool LoopBreakConditionSatisfied() final
 	{
 		return (state != State::SUCCEEDED);
 	}

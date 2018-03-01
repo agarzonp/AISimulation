@@ -132,12 +132,16 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Shaders\Shader.h" />
+    <ClInclude Include="src\TestEnvironment\AIEntity.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\BehaviourTree.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboard.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardOperator.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardValue.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeAction.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionEnterRoom.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionRequestOpenDoor.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWait.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionGoToDoor.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNode.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNodes.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeComposite.h" />

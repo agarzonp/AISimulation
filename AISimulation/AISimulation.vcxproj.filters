@@ -119,6 +119,18 @@
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorLimit.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionGoToDoor.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionEnterRoom.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionRequestOpenDoor.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\AIEntity.h">
+      <Filter>Source Files\TestEnvironment</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
