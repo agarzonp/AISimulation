@@ -56,6 +56,7 @@
 *.scc
 
 # Others
-PhysicsEngine/Debug
+AISimulation/Debug
 *.db
 *.suo
+*.opendb
