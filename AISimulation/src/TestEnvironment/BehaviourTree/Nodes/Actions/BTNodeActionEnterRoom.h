@@ -19,8 +19,6 @@ public:
 
 	void End(BTBlackboard& blackboard)
 	{
-		BT_NODE_DEBUG_PRINT("Inside room!");
-
 		timer.Stop();
 
 		blackboard.Set("enterRoom", false);
@@ -35,6 +33,7 @@ public:
 	{
 		if (timer.HasTicked())
 		{
+			BT_NODE_DEBUG_PRINT("Inside room!");
 			return state = State::SUCCEEDED;
 		}
 

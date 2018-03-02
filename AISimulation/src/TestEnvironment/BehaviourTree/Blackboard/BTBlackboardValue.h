@@ -80,6 +80,11 @@ public:
 	BTBlackboardValue::Type GetType() const { return type; }
 
 	// Setters
+	void Set(const BTBlackboardValue& v)
+	{
+		*this = v;
+	}
+
 	void Set(int v)
 	{
 		BTBlackboardValueInt::Set(v);
@@ -120,6 +125,12 @@ public:
 		}
 
 		return false;
+	}
+
+	template <class T>
+	const T& Get()
+	{
+		return 0;
 	}
 
 private:
