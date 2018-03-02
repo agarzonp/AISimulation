@@ -59,3 +59,4 @@
 AISimulation/Debug
 *.db
 *.suo
+*.opendb
