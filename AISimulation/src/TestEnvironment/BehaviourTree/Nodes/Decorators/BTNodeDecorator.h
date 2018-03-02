@@ -17,6 +17,12 @@ public:
 	{
 		child = std::move(child_);
 	}
+
+	virtual void OnAbort(BTBlackboard& blackboard) final
+	{
+		// signal abort down the tree
+		child->Abort(blackboard);
+	}
 };
 
 #endif // !BT_NODE_DECORATOR_H

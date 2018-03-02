@@ -24,6 +24,11 @@ public:
 		blackboard.Set("requestOpenDoor", false);
 	}
 
+	void Cancel(BTBlackboard& blackboard)
+	{
+		BT_NODE_DEBUG_PRINT("Request open door cancelled!");
+	}
+
 	State Execute(BTBlackboard& blackboard)
 	{
 		if (timer.HasTicked())

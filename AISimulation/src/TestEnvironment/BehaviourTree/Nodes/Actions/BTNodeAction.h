@@ -22,6 +22,12 @@ public:
 		return action.End(blackboard);
 	}
 
+	void OnAbort(BTBlackboard& blackboard) final
+	{
+		Action& action = static_cast<Action&> (*this);
+		return action.Cancel(blackboard);
+	}
+
 	State OnRun(BTBlackboard& blackboard) final
 	{
 		Action& action = static_cast<Action&> (*this);

@@ -27,8 +27,14 @@ public:
 	// End
 	void End(BTBlackboard& blackboard)
 	{
-		BT_NODE_DEBUG_PRINT("Wait finished!");
+		BT_NODE_DEBUG_PRINT("Wait ended!");
 		timer.Stop();
+	}
+
+	// Cancel
+	void Cancel(BTBlackboard& blackboard)
+	{
+		BT_NODE_DEBUG_PRINT("Wait cancelled!");
 	}
 
 	// Execute

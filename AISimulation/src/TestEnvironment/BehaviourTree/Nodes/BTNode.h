@@ -17,10 +17,12 @@ public:
 
 	enum class State
 	{
-		INVALID = -1,
-		SUCCEEDED,
+		INVALID,
+		
+		ABORTED,
 		FAILED,
-		RUNNING
+		RUNNING,
+		SUCCEEDED
 	};
 
 protected:
@@ -50,10 +52,26 @@ public:
 		return state;
 	}
 
+	void Abort(BTBlackboard& blackboard)
+	{	
+		// Only abort those that are running
+		if (state == State::RUNNING)
+		{
+			state = State::ABORTED;
+
+			OnAbort(blackboard);
+
+			OnExit(blackboard);
+		}
+	}
+
+	bool IsRunning() const { return state == State::RUNNING; }
+
 protected:
 
 	virtual void OnEnter(BTBlackboard& blackboard) {};
 	virtual void OnExit(BTBlackboard& blackboard) {};
+	virtual void OnAbort(BTBlackboard& blackboard) {};
 	virtual State OnRun(BTBlackboard& blackboard) = 0;
 	
 };

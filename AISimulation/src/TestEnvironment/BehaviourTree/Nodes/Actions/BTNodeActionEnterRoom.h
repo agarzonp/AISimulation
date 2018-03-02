@@ -26,6 +26,11 @@ public:
 		blackboard.Set("enterRoom", false);
 	}
 
+	void Cancel(BTBlackboard& blackboard)
+	{
+		BT_NODE_DEBUG_PRINT("Entering room cancelled!");
+	}
+
 	State Execute(BTBlackboard& blackboard)
 	{
 		if (timer.HasTicked())

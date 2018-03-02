@@ -18,6 +18,14 @@ public:
 	{
 	}
 
+	// Cancel
+	void Cancel(BTBlackboard& blackboard)
+	{
+		BT_NODE_DEBUG_PRINT("Sleep cancelled!");
+
+		blackboard.Set("isSleeping", false);
+	}
+
 	// Execute
 	State Execute(BTBlackboard& blackboard)
 	{

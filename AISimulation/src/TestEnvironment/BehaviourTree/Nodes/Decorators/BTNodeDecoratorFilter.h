@@ -39,7 +39,16 @@ public:
 		{
 			return child->Run(blackBoard);
 		}
+		
+		// By default, the state is failed unless the decorator is aborted
 
+		if (child->IsRunning())
+		{
+			Abort(blackBoard);
+
+			return State::ABORTED;
+		}
+		
 		return State::FAILED;
 	}
 };

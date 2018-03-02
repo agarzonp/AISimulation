@@ -37,6 +37,14 @@ protected:
 		runningChildIndex = -1;
 	}
 
+	void OnAbort(BTBlackboard& blackboard) final
+	{
+		for (auto& child : children)
+		{
+			child->Abort(blackboard);
+		}
+	}
+
 	State OnRun(BTBlackboard& blackboard) final
 	{
 		if (state != State::RUNNING)
@@ -52,6 +60,12 @@ protected:
 			{
 				LoopStartingFromChild(runningChildIndex + 1, blackboard);
 			}
+		}
+
+		if (state == State::ABORTED)
+		{
+			// Do not propagate child aborted up the tree
+			state = State::FAILED;
 		}
 
 		return state;

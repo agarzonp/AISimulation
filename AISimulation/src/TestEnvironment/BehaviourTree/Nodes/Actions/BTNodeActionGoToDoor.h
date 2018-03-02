@@ -19,17 +19,21 @@ public:
 
 	void End(BTBlackboard& blackboard)
 	{
-		BT_NODE_DEBUG_PRINT("In front of door!");
-
 		timer.Stop();
 
 		blackboard.Set("gotoDoor", false);
+	}
+
+	void Cancel(BTBlackboard& blackboard)
+	{
+		BT_NODE_DEBUG_PRINT("Going to door cancelled!");
 	}
 
 	State Execute(BTBlackboard& blackboard)
 	{
 		if (timer.HasTicked())
 		{	
+			BT_NODE_DEBUG_PRINT("In front of door!");
 			return state = State::SUCCEEDED;
 		}
 	
