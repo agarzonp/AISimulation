@@ -27,30 +27,30 @@ public:
 	
 protected:
 
-	void OnEnter(BTBlackboard& blackBoard) final
+	void OnEnter(BTBlackboard& blackboard) final
 	{
 		runningChildIndex = -1;
 	}
 
-	void OnExit(BTBlackboard& blackBoard) final
+	void OnExit(BTBlackboard& blackboard) final
 	{
 		runningChildIndex = -1;
 	}
 
-	State OnRun(BTBlackboard& blackBoard) final
+	State OnRun(BTBlackboard& blackboard) final
 	{
 		if (state != State::RUNNING)
 		{
-			LoopStartingFromChild(0, blackBoard);
+			LoopStartingFromChild(0, blackboard);
 		}
 		else
 		{
-			state = children[runningChildIndex]->Run(blackBoard);
+			state = children[runningChildIndex]->Run(blackboard);
 
 			// continue checking the rest of children
 			if (state != State::RUNNING && !LoopBreakConditionSatisfied())
 			{
-				LoopStartingFromChild(runningChildIndex + 1, blackBoard);
+				LoopStartingFromChild(runningChildIndex + 1, blackboard);
 			}
 		}
 

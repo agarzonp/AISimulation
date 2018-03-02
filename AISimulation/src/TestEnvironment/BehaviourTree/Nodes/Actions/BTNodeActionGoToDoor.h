@@ -5,30 +5,31 @@
 
 class BTNodeActionGoToDoor: public BTNodeAction<BTNodeActionGoToDoor>
 {
-	static const int MAX_DISTANCE = 5;
+	static const int MAX_DISTANCE = 100;
 	int distance{ MAX_DISTANCE };
 
 public:
-	void Start(BTBlackboard& blackBoard)
-	{
-		blackBoard.Set("gotoDoor", true);
-		distance = MAX_DISTANCE;
-	}
-
-	void End(BTBlackboard& blackBoard)
-	{
-		blackBoard.Set("gotoDoor", false);
-		distance = MAX_DISTANCE;
-	}
-
-	State Execute(BTBlackboard& blackBoard)
+	void Start(BTBlackboard& blackboard)
 	{
 		BT_NODE_DEBUG_PRINT("Going to door...");
 
+		blackboard.Set("gotoDoor", true);
+		distance = MAX_DISTANCE;
+	}
+
+	void End(BTBlackboard& blackboard)
+	{
+		BT_NODE_DEBUG_PRINT("In front of door!");
+
+		blackboard.Set("gotoDoor", false);
+		distance = MAX_DISTANCE;
+	}
+
+	State Execute(BTBlackboard& blackboard)
+	{
 		distance--;
 		if (distance == 0)
-		{
-			BT_NODE_DEBUG_PRINT("In front of door!");
+		{	
 			return state = State::SUCCEEDED;
 		}
 	

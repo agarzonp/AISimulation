@@ -22,6 +22,9 @@ public:
 	AIEntity()
 	{
 		behaviourTree.Build();
+
+		blackboard.Set("isWorking", false);
+		blackboard.Set("isSleeping", false);
 	}
 
 	void Update(const WorldState& worldState)

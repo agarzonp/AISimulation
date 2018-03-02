@@ -8,25 +8,21 @@ class BTNodeActionWork : public BTNodeAction<BTNodeActionWork>
 public:
 
 	// Start
-	void Start(BTBlackboard& blackBoard)
+	void Start(BTBlackboard& blackboard)
 	{
 		BT_NODE_DEBUG_PRINT("Working...");
 	}
 
 	// End
-	void End(BTBlackboard& blackBoard)
+	void End(BTBlackboard& blackboard)
 	{
 	}
 
 	// Execute
-	State Execute(const BTBlackboard& blackBoard)
+	State Execute(BTBlackboard& blackboard)
 	{
-		// Note: Not the correct way to finish an action, this is just for testing purpose
-		if (blackBoard.IsSatisfied("isTimeToWork", BTBlackboardOperator::IS_EQUAL, BTBlackboardValue(false)))
-		{
-			return State::FAILED;
-		}
-
+		blackboard.Set("isWorking", true);
+		blackboard.Set("isSleeping", false);
 		return State::SUCCEEDED;
 	}
 };

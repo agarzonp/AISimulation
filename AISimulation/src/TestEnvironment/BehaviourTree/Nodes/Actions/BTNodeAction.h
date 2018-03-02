@@ -8,24 +8,24 @@ class BTNodeAction : public BTNode
 {
 public:
 
-	void OnEnter(BTBlackboard& blackBoard) final
+	void OnEnter(BTBlackboard& blackboard) final
 	{
 		state = State::RUNNING;
 
 		Action& action = static_cast<Action&> (*this);
-		return action.Start(blackBoard);
+		return action.Start(blackboard);
 	}
 
-	void OnExit(BTBlackboard& blackBoard) final
+	void OnExit(BTBlackboard& blackboard) final
 	{
 		Action& action = static_cast<Action&> (*this);
-		return action.End(blackBoard);
+		return action.End(blackboard);
 	}
 
-	State OnRun(BTBlackboard& blackBoard) final
+	State OnRun(BTBlackboard& blackboard) final
 	{
 		Action& action = static_cast<Action&> (*this);
-		return action.Execute(blackBoard);
+		return action.Execute(blackboard);
 	}
 };
 

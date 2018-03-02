@@ -24,24 +24,23 @@ public:
 	}
 
 	// Start
-	void Start(BTBlackboard& blackBoard)
+	void Start(BTBlackboard& blackboard)
 	{
 		BT_NODE_DEBUG_PRINT("Waiting...");
 		finishTime = std::chrono::system_clock::now() + waitTime;
 	}
 
 	// End
-	void End(BTBlackboard& blackBoard)
+	void End(BTBlackboard& blackboard)
 	{
 		BT_NODE_DEBUG_PRINT("Wait finished!");
 	}
 
 	// Execute
-	State Execute(const BTBlackboard& blackBoard)
+	State Execute(BTBlackboard& blackboard)
 	{
 		if (std::chrono::system_clock::now() >= finishTime)
-		{
-			
+		{	
 			return State::SUCCEEDED;
 		}
 

@@ -5,32 +5,31 @@
 
 class BTNodeActionEnterRoom : public BTNodeAction<BTNodeActionEnterRoom>
 {
-	static const int MAX_DISTANCE = 2;
+	static const int MAX_DISTANCE = 30;
 	int distance{ MAX_DISTANCE };
 
 public:
-	void Start(BTBlackboard& blackBoard)
-	{
-		blackBoard.Set("enterRoom", true);
-		blackBoard.Set("sleeping", false);
-		distance = MAX_DISTANCE;
-	}
-
-	void End(BTBlackboard& blackBoard)
-	{
-		blackBoard.Set("enterRoom", false);
-		blackBoard.Set("sleeping", true); // use a FSM to transition into the sleep state?
-		distance = MAX_DISTANCE;
-	}
-
-	State Execute(BTBlackboard& blackBoard)
+	void Start(BTBlackboard& blackboard)
 	{
 		BT_NODE_DEBUG_PRINT("Entering into the room...");
 
+		blackboard.Set("enterRoom", true);
+		distance = MAX_DISTANCE;
+	}
+
+	void End(BTBlackboard& blackboard)
+	{
+		BT_NODE_DEBUG_PRINT("Inside room!");
+
+		blackboard.Set("enterRoom", false);
+		distance = MAX_DISTANCE;
+	}
+
+	State Execute(BTBlackboard& blackboard)
+	{
 		distance--;
 		if (distance == 0)
 		{
-			BT_NODE_DEBUG_PRINT("Inside room!");
 			return state = State::SUCCEEDED;
 		}
 

@@ -137,6 +137,9 @@
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWork.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionSleep.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

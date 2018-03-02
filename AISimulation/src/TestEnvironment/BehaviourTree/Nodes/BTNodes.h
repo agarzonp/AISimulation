@@ -7,6 +7,7 @@
 #include "Actions/BTNodeActionEnterRoom.h"
 #include "Actions/BTNodeActionGoToDoor.h"
 #include "Actions/BTNodeActionRequestOpenDoor.h"
+#include "Actions/BTNodeActionSleep.h"
 #include "Actions/BTNodeActionWait.h"
 #include "Actions/BTNodeActionWork.h"
 

@@ -32,18 +32,18 @@ public:
 	{
 	}
 
-	State Run(BTBlackboard& blackBoard)
+	State Run(BTBlackboard& blackboard)
 	{
 		if (state != State::RUNNING)
 		{
-			OnEnter(blackBoard);
+			OnEnter(blackboard);
 		}
 
-		state = OnRun(blackBoard);
+		state = OnRun(blackboard);
 
 		if (state != State::RUNNING)
 		{
-			OnExit(blackBoard);
+			OnExit(blackboard);
 		}
 
 		return state;
@@ -51,9 +51,9 @@ public:
 
 protected:
 
-	virtual void OnEnter(BTBlackboard& blackBoard) {};
-	virtual void OnExit(BTBlackboard& blackBoard) {};
-	virtual State OnRun(BTBlackboard& blackBoard) = 0;
+	virtual void OnEnter(BTBlackboard& blackboard) {};
+	virtual void OnExit(BTBlackboard& blackboard) {};
+	virtual State OnRun(BTBlackboard& blackboard) = 0;
 	
 };
 

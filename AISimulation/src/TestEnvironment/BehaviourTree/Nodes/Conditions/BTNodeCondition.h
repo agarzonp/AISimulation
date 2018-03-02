@@ -10,10 +10,10 @@ class BTNodeCondition : public BTNode
 {
 protected:
 
-	State OnRun(BTBlackboard& blackBoard) final 
+	State OnRun(BTBlackboard& blackboard) final
 	{
 		Condition& condition = static_cast<Condition&> (*this);
-		if (condition.IsSatisfied(blackBoard))
+		if (condition.IsSatisfied(blackboard))
 		{
 			return State::SUCCEEDED;
 		}

@@ -22,9 +22,9 @@ public:
 		value.Set(value_);
 	}
 
-	State OnRun(BTBlackboard& blackBoard) final
+	State OnRun(BTBlackboard& blackboard) final
 	{
-		if (blackBoard.IsSatisfied(key, btOperator, value))
+		if (blackboard.IsSatisfied(key, btOperator, value))
 		{
 			return State::SUCCEEDED;
 		}
