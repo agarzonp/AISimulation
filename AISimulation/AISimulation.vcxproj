@@ -157,6 +157,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\Camera\Camera.h" />
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h" />
     <ClInclude Include="src\TestEnvironment\TestEnvironment.h" />
+    <ClInclude Include="src\Utils\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />

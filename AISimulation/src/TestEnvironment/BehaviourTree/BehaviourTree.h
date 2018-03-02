@@ -50,11 +50,7 @@ public:
 								std::unique_ptr<BTNode> goToDoor = std::make_unique<BTNodeActionGoToDoor>();
 								std::unique_ptr<BTNode> checkDoorOpen = std::make_unique<BTNodeSelector>();
 									std::unique_ptr<BTNode> isDoorOpen = std::make_unique<BTNodeBlackboardCondition>("isDoorOpen", BTBlackboardOperator::IS_EQUAL, true);
-									std::unique_ptr<BTNode> requestOpenDoor = std::make_unique<BTNodeSequence>();
-										std::unique_ptr<BTNode> requestOpenDoorAction = std::make_unique<BTNodeActionRequestOpenDoor>();
-										std::unique_ptr<BTNode> waitUntilDoorOpen = std::make_unique<BTNodeActionWait>(std::chrono::seconds(2));
-										static_cast<BTNodeComposite*>(requestOpenDoor.get())->AddChild(requestOpenDoorAction);
-										static_cast<BTNodeComposite*>(requestOpenDoor.get())->AddChild(waitUntilDoorOpen);
+									std::unique_ptr<BTNode> requestOpenDoor = std::make_unique<BTNodeActionRequestOpenDoor>();
 									static_cast<BTNodeComposite*>(checkDoorOpen.get())->AddChild(isDoorOpen);
 									static_cast<BTNodeComposite*>(checkDoorOpen.get())->AddChild(requestOpenDoor);
 								std::unique_ptr<BTNode> enterRoom = std::make_unique<BTNodeActionEnterRoom>();

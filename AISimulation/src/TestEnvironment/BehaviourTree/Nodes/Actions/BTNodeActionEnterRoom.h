@@ -5,8 +5,7 @@
 
 class BTNodeActionEnterRoom : public BTNodeAction<BTNodeActionEnterRoom>
 {
-	static const int MAX_DISTANCE = 30;
-	int distance{ MAX_DISTANCE };
+	Timer timer;
 
 public:
 	void Start(BTBlackboard& blackboard)
@@ -14,21 +13,22 @@ public:
 		BT_NODE_DEBUG_PRINT("Entering into the room...");
 
 		blackboard.Set("enterRoom", true);
-		distance = MAX_DISTANCE;
+
+		timer.Start(2000);
 	}
 
 	void End(BTBlackboard& blackboard)
 	{
 		BT_NODE_DEBUG_PRINT("Inside room!");
 
+		timer.Stop();
+
 		blackboard.Set("enterRoom", false);
-		distance = MAX_DISTANCE;
 	}
 
 	State Execute(BTBlackboard& blackboard)
 	{
-		distance--;
-		if (distance == 0)
+		if (timer.HasTicked())
 		{
 			return state = State::SUCCEEDED;
 		}

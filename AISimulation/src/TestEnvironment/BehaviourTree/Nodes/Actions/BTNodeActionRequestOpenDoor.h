@@ -5,27 +5,28 @@
 
 class BTNodeActionRequestOpenDoor : public BTNodeAction<BTNodeActionRequestOpenDoor>
 {
-	static const int MAX_COUNT = 10;
-	int count{ MAX_COUNT };
+	Timer timer;
+
 public:
 	void Start(BTBlackboard& blackboard)
 	{
 		BT_NODE_DEBUG_PRINT("Requesting to open the door...");
 
 		blackboard.Set("requestOpenDoor", true);
-		count = MAX_COUNT;
+
+		timer.Start(3000);
 	}
 
 	void End(BTBlackboard& blackboard)
 	{
+		timer.Stop();
+
 		blackboard.Set("requestOpenDoor", false);
-		count = MAX_COUNT;
 	}
 
 	State Execute(BTBlackboard& blackboard)
 	{
-		count--;
-		if (count == 0)
+		if (timer.HasTicked())
 		{
 			BT_NODE_DEBUG_PRINT("Door opened!");
 
