@@ -34,10 +34,10 @@ public:
 		if (timer.HasTicked())
 		{
 			BT_NODE_DEBUG_PRINT("Inside room!");
-			return state = State::SUCCEEDED;
+			return State::SUCCEEDED;
 		}
 
-		return state = State::RUNNING;
+		return State::RUNNING;
 	}
 
 };

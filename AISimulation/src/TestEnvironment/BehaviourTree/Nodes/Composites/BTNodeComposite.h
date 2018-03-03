@@ -47,19 +47,13 @@ protected:
 
 	State OnRun(BTBlackboard& blackboard) final
 	{
-		if (state != State::RUNNING)
+		if (runningChildIndex == -1)
 		{
-			LoopStartingFromChild(0, blackboard);
+			StartEvaluation(blackboard);
 		}
 		else
 		{
-			state = children[runningChildIndex]->Run(blackboard);
-
-			// continue checking the rest of children
-			if (state != State::RUNNING && !LoopBreakConditionSatisfied())
-			{
-				LoopStartingFromChild(runningChildIndex + 1, blackboard);
-			}
+			ContinueEvaluation(blackboard);
 		}
 
 		if (state == State::ABORTED)
@@ -71,8 +65,28 @@ protected:
 		return state;
 	}
 
-	// Loop 
-	void LoopStartingFromChild(size_t startChild, BTBlackboard& blackBoard)
+private:
+
+	// Start evaluation
+	void StartEvaluation(BTBlackboard& blackboard)
+	{
+		Evaluate(0, blackboard);
+	}
+
+	// Continue evaluation
+	void ContinueEvaluation(BTBlackboard& blackboard)
+	{
+		state = children[runningChildIndex]->Run(blackboard);
+
+		// continue checking the rest of children
+		if (state != State::RUNNING && !LoopBreakConditionSatisfied())
+		{
+			Evaluate(runningChildIndex + 1, blackboard);
+		}
+	}
+
+	// Evaluate 
+	void Evaluate(size_t startChild, BTBlackboard& blackBoard)
 	{
 		// loop until a child didn´t break
 		for (size_t childIndex = startChild; childIndex < children.size(); childIndex++)

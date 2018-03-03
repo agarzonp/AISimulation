@@ -10,8 +10,6 @@ public:
 
 	void OnEnter(BTBlackboard& blackboard) final
 	{
-		state = State::RUNNING;
-
 		Action& action = static_cast<Action&> (*this);
 		return action.Start(blackboard);
 	}

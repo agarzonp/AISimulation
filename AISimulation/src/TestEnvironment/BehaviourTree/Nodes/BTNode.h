@@ -39,6 +39,8 @@ public:
 	{
 		if (state != State::RUNNING)
 		{
+			state = State::RUNNING;
+
 			OnEnter(blackboard);
 		}
 

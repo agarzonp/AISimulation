@@ -37,10 +37,10 @@ public:
 
 			blackboard.Set("isDoorOpen", true);
 
-			return state = State::SUCCEEDED;
+			return State::SUCCEEDED;
 		}
 
-		return state = State::RUNNING;
+		return State::RUNNING;
 	}
 
 };
