@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{f8cd64dc-e790-4161-8b1f-c1dbf8ba3689}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels">
+      <UniqueIdentifier>{ad72e870-8538-496c-82b6-16471351ba48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\basic.frag">
@@ -151,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionSetBlackboard.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallel.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallelMonitor.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

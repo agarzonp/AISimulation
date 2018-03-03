@@ -156,6 +156,8 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorFilter.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorInverter.h" />
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorLimit.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallel.h" />
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallelMonitor.h" />
     <ClInclude Include="src\TestEnvironment\Camera\Camera.h" />
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h" />
     <ClInclude Include="src\TestEnvironment\TestEnvironment.h" />

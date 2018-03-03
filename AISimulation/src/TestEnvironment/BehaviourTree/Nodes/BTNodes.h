@@ -24,5 +24,8 @@
 #include "Decorators/BTNodeDecoratorInverter.h"
 #include "Decorators/BTNodeDecoratorLimit.h"
 
+#include "Parallels/BTNodeParallel.h"
+#include "Parallels/BTNodeParallelMonitor.h"
+
 #endif // !BT_NODES_H
 
