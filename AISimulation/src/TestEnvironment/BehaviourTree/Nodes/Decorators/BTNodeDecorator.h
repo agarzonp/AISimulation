@@ -13,7 +13,7 @@ protected:
 public:
 
 	// Set child
-	void SetChild(std::unique_ptr<BTNode>& child_)
+	void SetChild(std::unique_ptr<BTNode>&& child_)
 	{
 		child = std::move(child_);
 	}

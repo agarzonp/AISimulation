@@ -15,27 +15,14 @@ public:
 	{
 	}
 
-	// Set
-	void Set(std::vector<std::unique_ptr<BTNodeBaseCondition>>& conditions, std::vector<std::unique_ptr<BTNode>>& behaviours)
-	{
-		for (auto& condition : conditions)
-		{
-			children.emplace_back(std::move(condition));
-		}
-		
-		for (auto& behaviour : behaviours)
-		{
-			children.emplace_back(std::move(behaviour));
-		}
-	}
-
-	// Add
-	void Add(std::unique_ptr<BTNodeBaseCondition>& condition)
+	// Add condition
+	void AddCondition(std::unique_ptr<BTNodeBaseCondition>&& condition)
 	{
 		children.insert(children.begin(), std::move(condition));
 	}
 
-	void Add(std::unique_ptr<BTNode>& behaviour)
+	// Add behaviour
+	void AddBehaviour(std::unique_ptr<BTNode>&& behaviour)
 	{
 		children.push_back(std::move(behaviour));
 	}

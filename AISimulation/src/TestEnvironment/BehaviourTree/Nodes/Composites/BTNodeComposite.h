@@ -20,7 +20,7 @@ protected:
 public:
 
 	// Add child
-	void AddChild(std::unique_ptr<BTNode>& child)
+	void AddChild(std::unique_ptr<BTNode>&& child)
 	{
 		children.emplace_back(std::move(child));
 	}
