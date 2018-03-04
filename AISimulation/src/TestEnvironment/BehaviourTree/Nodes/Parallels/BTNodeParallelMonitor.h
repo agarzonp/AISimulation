@@ -3,6 +3,8 @@
 
 #include "BTNodeParallel.h"
 
+#include "../Conditions/BTNodeCondition.h"
+
 class BTNodeParallelMonitor : public BTNodeParallel
 {
 public:
@@ -13,8 +15,8 @@ public:
 	{
 	}
 
-	// TO-DO: make sure we are passing conditions (We need unified BTNodeCondition and BTNodeBlackboardCondition)
-	void Set(std::vector<std::unique_ptr<BTNode>>& conditions, std::vector<std::unique_ptr<BTNode>>& behaviours)
+	// Set
+	void Set(std::vector<std::unique_ptr<BTNodeBaseCondition>>& conditions, std::vector<std::unique_ptr<BTNode>>& behaviours)
 	{
 		for (auto& condition : conditions)
 		{
@@ -25,6 +27,17 @@ public:
 		{
 			children.emplace_back(std::move(behaviour));
 		}
+	}
+
+	// Add
+	void Add(std::unique_ptr<BTNodeBaseCondition>& condition)
+	{
+		children.insert(children.begin(), std::move(condition));
+	}
+
+	void Add(std::unique_ptr<BTNode>& behaviour)
+	{
+		children.push_back(std::move(behaviour));
 	}
 
 private:

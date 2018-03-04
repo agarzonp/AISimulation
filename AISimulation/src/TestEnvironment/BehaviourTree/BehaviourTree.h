@@ -54,10 +54,9 @@ public:
 						std::unique_ptr<BTNode> sleepSequence = std::make_unique<BTNodeSequence>();
 							std::unique_ptr<BTNode> tryToSleep = std::make_unique<BTNodeParallelMonitor>(BTNodeParallel::Policy::RequireAll, BTNodeParallel::Policy::RequireOne);
 								// conditions
-								std::vector<std::unique_ptr<BTNode>> conditions;
-								conditions.push_back(std::make_unique<BTNodeBlackboardCondition>("isTimeToSleep", BTBlackboardOperator::IS_EQUAL, true));
+								std::unique_ptr<BTNodeBaseCondition> condition = std::make_unique<BTNodeBlackboardCondition>("isTimeToSleep", BTBlackboardOperator::IS_EQUAL, true);
+								static_cast<BTNodeParallelMonitor*>(tryToSleep.get())->Add(condition);
 								// behaviours to monitor
-								std::vector<std::unique_ptr<BTNode>> behaviours;
 								std::unique_ptr<BTNode> goToSleep = std::make_unique<BTNodeSequence>();
 									std::unique_ptr<BTNode> goToDoor = std::make_unique<BTNodeActionGoToDoor>();
 									std::unique_ptr<BTNode> checkDoorOpen = std::make_unique<BTNodeSelector>();
@@ -69,8 +68,8 @@ public:
 									static_cast<BTNodeComposite*>(goToSleep.get())->AddChild(goToDoor);
 									static_cast<BTNodeComposite*>(goToSleep.get())->AddChild(checkDoorOpen);
 									static_cast<BTNodeComposite*>(goToSleep.get())->AddChild(enterRoom);
-								behaviours.push_back(std::move(goToSleep));
-							static_cast<BTNodeParallelMonitor*>(tryToSleep.get())->Set(conditions, behaviours);
+								static_cast<BTNodeParallelMonitor*>(tryToSleep.get())->Add(goToSleep);
+								//
 							std::unique_ptr<BTNode> sleepAction = std::make_unique<BTNodeActionSleep>();
 						static_cast<BTNodeComposite*>(sleepSequence.get())->AddChild(tryToSleep);
 						static_cast<BTNodeComposite*>(sleepSequence.get())->AddChild(sleepAction);

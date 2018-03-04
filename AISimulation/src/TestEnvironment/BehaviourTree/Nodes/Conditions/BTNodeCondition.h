@@ -5,15 +5,28 @@
 
 #include "../BTNode.h"
 
-template <class Condition>
-class BTNodeCondition : public BTNode
+class BTNodeBaseCondition : public BTNode
 {
+	public:
+		virtual bool Check(BTBlackboard& blackboard) = 0;
+};
+
+template <class Condition>
+class BTNodeCondition : public BTNodeBaseCondition
+{
+public:
+
+	bool Check(BTBlackboard& blackboard) final
+	{
+		Condition& condition = static_cast<Condition&> (*this);
+		return condition.IsSatisfied(blackboard);
+	}
+
 protected:
 
 	State OnRun(BTBlackboard& blackboard) final
 	{
-		Condition& condition = static_cast<Condition&> (*this);
-		if (condition.IsSatisfied(blackboard))
+		if (Check(blackboard))
 		{
 			return State::SUCCEEDED;
 		}
@@ -28,7 +41,7 @@ class MyCustomConditionExample : public BTNodeCondition<MyCustomConditionExample
 {
 public:
 
-	bool IsSatisfied(const BTBlackboard& blackBoard)
+	bool IsSatisfied(const BTBlackboard& blackboard)
 	{
 		// check whatever is needed
 		return true;

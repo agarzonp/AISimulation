@@ -3,9 +3,9 @@
 
 #include <string>
 
-#include "../BTNode.h"
+#include "BTNodeCondition.h"
 
-class BTNodeBlackboardCondition : public BTNode
+class BTNodeBlackboardCondition : public BTNodeCondition<BTNodeBlackboardCondition>
 {
 	std::string key;
 	BTBlackboardOperator btOperator;
@@ -15,21 +15,16 @@ public:
 
 	template<typename T>
 	BTNodeBlackboardCondition(const std::string& key_, BTBlackboardOperator btOperator_, const T& value_)
-		:BTNode()
+		: BTNodeCondition<BTNodeBlackboardCondition>()
 		, key(key_)
 		, btOperator(btOperator_)
 	{
 		value.Set(value_);
 	}
 
-	State OnRun(BTBlackboard& blackboard) final
+	bool IsSatisfied(const BTBlackboard& blackboard)
 	{
-		if (blackboard.IsSatisfied(key, btOperator, value))
-		{
-			return State::SUCCEEDED;
-		}
-
-		return State::FAILED;
+		return blackboard.IsSatisfied(key, btOperator, value);
 	}
 };
 #endif // !BT_NODE_BLACKBOARD_CONDITION_H
