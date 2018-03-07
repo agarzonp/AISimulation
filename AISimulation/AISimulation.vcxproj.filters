@@ -28,6 +28,9 @@
     <Filter Include="Source Files\TestEnvironment\Camera">
       <UniqueIdentifier>{4d90dd92-54a3-4442-88fb-4c7248df0db3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestEnvironment\Pathfinding">
+      <UniqueIdentifier>{bea8065e-9af5-476a-b1ec-fff071bd0d8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\basic.frag">
@@ -52,6 +55,18 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h">
       <Filter>Source Files\TestEnvironment\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\MathGeom.h">
+      <Filter>Source Files\TestEnvironment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\Pathfinder.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequest.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestQueue.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

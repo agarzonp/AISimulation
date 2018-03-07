@@ -10,7 +10,10 @@
 
 #include "../Input/Input.h"
 #include "../Shaders/Shader.h"
+
+#include "MathGeom.h"
 #include "Camera/FreeCamera.h"
+#include "Pathfinding/Pathfinder.h"
 
 class TestEnvironment : public InputListener
 {
@@ -39,7 +42,7 @@ public:
 
 	void Update(float deltaTime) 
 	{
-    camera.Update(deltaTime);
+		camera.Update(deltaTime);
 	}
 
 	void Render() 
@@ -281,6 +284,9 @@ private:
 
   // Camera
   FreeCamera camera;
+
+  // Pathfinder
+  Pathfinder pathfinder;
 };
 
 #endif
