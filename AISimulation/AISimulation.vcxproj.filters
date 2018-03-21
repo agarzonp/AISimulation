@@ -30,6 +30,7 @@
     </Filter>
     <Filter Include="Source Files\TestEnvironment\Pathfinding">
       <UniqueIdentifier>{bea8065e-9af5-476a-b1ec-fff071bd0d8f}</UniqueIdentifier>
+	</Filter>
     <Filter Include="Source Files\TestEnvironment\BehaviourTree">
       <UniqueIdentifier>{68d0e8c0-99c3-4282-9f51-93c804d9f2eb}</UniqueIdentifier>
     </Filter>
@@ -105,6 +106,7 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathfindingSystem.h">
       <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+	</ClInclude>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\BehaviourTree.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree</Filter>
     </ClInclude>
