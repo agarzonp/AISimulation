@@ -137,6 +137,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\MathGeom.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\NavGrid.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\Pathfinder.h" />
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathfindingSystem.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathNode.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequest.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestQueue.h" />

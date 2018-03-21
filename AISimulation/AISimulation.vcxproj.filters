@@ -77,6 +77,9 @@
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace.h">
       <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathfindingSystem.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

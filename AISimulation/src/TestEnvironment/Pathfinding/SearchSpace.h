@@ -1,20 +1,44 @@
 #ifndef SEARCH_SPACE_H
 #define SEARCH_SPACE_H
 
+#include <vector>
+
 #include "PathNode.h"
 
+// Search space type
+enum class SearchSpaceType
+{
+	OCTILE_GRID
+};
+
+// Search space data
+struct SearchSpaceData
+{
+	SearchSpaceType searchSpaceType;
+	MathGeom::Vector3 anchorPosition;
+	MathGeom::Vector3 worldSize;
+};
+
+// Seaerch space
 class SearchSpace
 {
+protected:
+
+	// nodes
+	std::vector<PathNode> nodes;
+
+	// search space data
+	SearchSpaceData searchSpaceData;
+
 public:
 
-	// SearchSpaceData
-	struct SearchSpaceData
-	{
-		MathGeom::Vector3 anchorPosition;
-		MathGeom::Vector3 worldSize;
-	};
-
-	SearchSpace(const SearchSpaceData& data) : searchSpaceData(data) {}
+	// Constructors
+	SearchSpace() = default;
+	SearchSpace(const SearchSpaceData& data) 
+		: searchSpaceData(data) 
+	{ 
+		Validate(); 
+	}
 
 	// Build
 	virtual void Build() = 0;
@@ -25,20 +49,12 @@ public:
 private:
 
 	// Validate
-	bool Validate()
+	void Validate()
 	{
 		assert(searchSpaceData.worldSize.x > 0);
 		assert(searchSpaceData.worldSize.y > 0);
 		assert(searchSpaceData.worldSize.z > 0);
 	}
-
-protected:
-
-	// nodes
-	std::vector<PathNode> nodes;
-
-	// search space data
-	SearchSpaceData searchSpaceData;
 };
 
 #endif // !SEARCH_SPACE_H

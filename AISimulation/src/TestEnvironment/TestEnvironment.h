@@ -13,7 +13,7 @@
 
 #include "MathGeom.h"
 #include "Camera/FreeCamera.h"
-#include "Pathfinding/Pathfinder.h"
+#include "Pathfinding/PathfindingSystem.h"
 
 class TestEnvironment : public InputListener
 {
@@ -43,11 +43,15 @@ public:
 	void Update(float deltaTime) 
 	{
 		camera.Update(deltaTime);
+
+		pathfindingSystem.Update();
 	}
 
 	void Render() 
 	{
 		DrawCubes();
+
+		pathfindingSystem.DebugRender();
 	}
 	
 protected:
@@ -71,6 +75,9 @@ protected:
 
 		// init camera
 		camera.Init(glm::vec3(0.0f, 1.0f, -15.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 1024.0f / 768.0f, 0.1f, 1000000.0f);
+
+		// init pathfinding system
+		InitPathfindingSystem();
 	}
 		
 	void InitVBO()
@@ -192,6 +199,16 @@ protected:
 		cubes[13].enabled = true;
 	}
 
+	void InitPathfindingSystem()
+	{
+		PathfindingSystemData pathfindingSystemData;
+		pathfindingSystemData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
+		pathfindingSystemData.searchSpaceData.anchorPosition = MathGeom::Vector3(0.0f, 0.0f, 0.0f);
+		pathfindingSystemData.searchSpaceData.worldSize = MathGeom::Vector3(1000.0f, 1000.0f, 1000.0f);
+		pathfindingSystemData.gridCellSize = 4.0f;
+		pathfindingSystem.Init(pathfindingSystemData);
+	}
+
 	void DrawCubes()
 	{
 		const glm::mat4& viewProjection = camera.ViewProjectionMatrix();
@@ -285,8 +302,8 @@ private:
   // Camera
   FreeCamera camera;
 
-  // Pathfinder
-  Pathfinder pathfinder;
+  // Pathfinding system
+  PathfindingSystem pathfindingSystem;
 };
 
 #endif

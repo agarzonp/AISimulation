@@ -41,7 +41,7 @@ public:
 			&&	anchorToPos.z >= 0 && anchorToPos.z <= searchSpaceData.worldSize.z)
 		{
 			anchorToPos /= cellSize;
-			return GetNode(anchorToPos.x, anchorToPos.y);
+			return GetNode(int(anchorToPos.x), int(anchorToPos.z));
 		}
 
 		return nullptr;
@@ -61,9 +61,9 @@ private:
 
 		static const int extraCells = 2; // just to make sure we cover all the world
 
-		totalCellsX = worldSize.x / cellSize + extraCells;
+		totalCellsX = int(worldSize.x / cellSize) + extraCells;
 		totalCellsY = 0;
-		totalCellsZ = worldSize.z / cellSize + extraCells;
+		totalCellsZ = int(worldSize.z / cellSize) + extraCells;
 		size_t totalCells = totalCellsX + totalCellsY + totalCellsZ;
 
 		// create the nodes
@@ -98,7 +98,7 @@ private:
 	// Get node
 	PathNode* GetNode(int x, int z)
 	{
-		if (x >= 0 && x < totalCellsX && z >= 0 && z < totalCellsZ)
+		if (x >= 0 && x < int(totalCellsX) && z >= 0 && z < int(totalCellsZ))
 		{
 			size_t nodeIndex = z * totalCellsX + x;
 			return &nodes[nodeIndex];

@@ -19,9 +19,15 @@ class Pathfinder
 	size_t requestCount{ 0 };
 
 	// search space
-	std::unique_ptr<SearchSpace> searchSpace;
+	std::shared_ptr<SearchSpace> searchSpace;
 
 public:
+
+	// Set search space
+	void SetSearchSpace(std::shared_ptr<SearchSpace> searchSpace)
+	{
+		this->searchSpace = searchSpace;
+	}
 
 	// Handler for the path request
 	class PathRequestHandler
