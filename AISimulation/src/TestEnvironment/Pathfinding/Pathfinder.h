@@ -5,6 +5,7 @@
 
 #include "PathRequest.h"
 #include "PathRequestQueue.h"
+#include "SearchSpace.h"
 
 class Pathfinder
 {
@@ -16,6 +17,9 @@ class Pathfinder
 
 	// request count
 	size_t requestCount{ 0 };
+
+	// search space
+	std::unique_ptr<SearchSpace> searchSpace;
 
 public:
 

@@ -68,6 +68,15 @@
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestQueue.h">
       <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\NavGrid.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathNode.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
