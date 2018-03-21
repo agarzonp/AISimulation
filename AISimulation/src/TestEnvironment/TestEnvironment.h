@@ -13,12 +13,20 @@
 #include "Camera/FreeCamera.h"
 
 #include "AIEntity.h"
+#include "GameObject.h"
+
+#include "Render/Meshes/CubeMesh.h"
+#include "Render/Meshes/SphereMesh.h"
+#include "Render/Renderable.h"
+#include "Render/SphereRenderable.h"
+
+#include "Physics/PhysicsEngine.h"
 
 class TestEnvironment : public InputListener
 {
 
 public:
-  TestEnvironment()
+	TestEnvironment()
 	{
 		Init();
 	}
@@ -32,14 +40,14 @@ public:
 	{
 		switch (key)
 		{
-			case GLFW_KEY_S:
-				worldState.isTimeToSleep = true;
-				break;
-			case GLFW_KEY_W:
-				worldState.isTimeToSleep = false;
-			case GLFW_KEY_O:
-				worldState.isDoorOpen = !worldState.isDoorOpen;
-				break;
+		case GLFW_KEY_S:
+			worldState.isTimeToSleep = true;
+			break;
+		case GLFW_KEY_W:
+			worldState.isTimeToSleep = false;
+		case GLFW_KEY_O:
+			worldState.isDoorOpen = !worldState.isDoorOpen;
+			break;
 		}
 	}
 
@@ -50,258 +58,183 @@ public:
 	
 	void OnMouseMove(double x, double y) { }
 
+	// Update
 	void Update(float deltaTime) 
 	{
 		camera.Update(deltaTime);
 
+		physicsEngine.Update(deltaTime);
+
 		aiEntity.Update(worldState);
 	}
 
+	// Render
 	void Render() 
 	{
-		DrawCubes();
+		// use the shader
+		shader.Use();
+
+		const glm::mat4& viewProjection = camera.ViewProjectionMatrix();
+		for (auto& gameObject : gameObjects)
+		{
+			gameObject.Render(viewProjection);
+		}
 	}
 	
 protected:
 
 	void Init()
 	{
-		// init the vertex buffer object
-		InitVBO();
-
-		// init the indeces buffer object
-		InitIBO();
-
-		// init the vertex array object
-		InitVAO();
+		// init cube mesh
+		cubeMesh.Init();
 
 		// load shader
 		shader.Load("assets/Shaders/basic.vert", "assets/Shaders/basic.frag");
 
-		// init cubes
-		InitCubes();
+		// init game objects
+		InitGameObjects();
 
-    // init camera
-    camera.Init(glm::vec3(0.0f, 1.0f, -15.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 1024.0f / 768.0f, 0.1f, 1000000.0f);
+		// init camera
+		camera.Init(glm::vec3(0.0f, 1.0f, -15.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 1024.0f / 768.0f, 0.1f, 1000000.0f);
+
+		// init physics
+		InitPhysics();
 	}
 		
-	void InitVBO()
+	void InitGameObjects()
 	{
-		// create one buffer in the GPU, use it as an array buffer and set the data
-		glGenBuffers(1, &vertexBufferObject);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	}
+		GameObject gameObject;
 
-	void InitIBO()
-	{
-		// create one buffer in the GPU, use it as an element array buffer and set the data
-		glGenBuffers(1, &indexBufferObject);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	}
-
-	void InitVAO()
-	{
-		// create one vertex array object for drawing and use it. This vertexArrayObject is the one who will deal with the vertex buffer
-		glGenVertexArrays(1, &vertexArrayObject);
-		glBindVertexArray(vertexArrayObject);
-
-		// Tell the vertex shader how to interpret the buffer data. This information is needed for the active vertexArrayObject
-		// The 0 attribute(pos) has 3 elements (x,y,z) of type GL_FLOAT
-		// The stride to the next 0 attribute is zero bytes because there are no other attributes in between
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-		// Enable the 0 attribute
-		glEnableVertexAttribArray(0);
-	}
-
-	void InitCubes()
-	{
 		// floor
-		cubes[0].pos = glm::vec3(0.0f, 0.0f, 10.0f);
-		cubes[0].scale = glm::vec3(40.0f, 0.0001f, 40.f);
-		cubes[0].color = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
-		cubes[0].enabled = true;
+		gameObject.transform.position = glm::vec3(0.0f, 0.0f, 10.0f);
+		gameObject.transform.scale = glm::vec3(40.0f, 0.0001f, 40.f);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.8f, 0.8f, 0.8f, 1.0f)));
+		gameObject.SetVisible(true);
+
+		gameObjects.emplace_back(gameObject);
 
 		// walls
-		cubes[1].pos = glm::vec3(40.0f, 5.0f, 10.0f);
-		cubes[1].scale = glm::vec3(0.5f, 5.0f, 40.f);
-		cubes[1].color = glm::vec4(0.11f, 0.11f, 0.11f, 1.0f);
-		cubes[1].enabled = true;
+		gameObject.transform.position = glm::vec3(40.0f, 5.0f, 10.0f);
+		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 40.f);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
+		gameObject.SetVisible(true);
 
-		cubes[2].pos = glm::vec3(-40.0f, 5.0f, 10.0f);
-		cubes[2].scale = glm::vec3(0.5f, 5.0f, 40.f);
-		cubes[2].color = glm::vec4(0.11f, 0.11f, 0.11f, 1.0f);
-		cubes[2].enabled = true;
+		gameObjects.emplace_back(gameObject);
 
-		cubes[3].pos = glm::vec3(0.0f, 5.0f, 50.0f);
-		cubes[3].scale = glm::vec3(40.0f, 5.0f, 0.5f);
-		cubes[3].color = glm::vec4(0.11f, 0.11f, 0.11f, 1.0f);
-		cubes[3].enabled = true;
+		gameObject.transform.position = glm::vec3(-40.0f, 5.0f, 10.0f);
+		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 40.f);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
+		gameObject.SetVisible(true);
 
-		cubes[4].pos = glm::vec3(0.0f, 5.0f, -30.0f);
-		cubes[4].scale = glm::vec3(40.0f, 5.0f, 0.5f);
-		cubes[4].color = glm::vec4(0.11f, 0.11f, 0.11f, 1.0f);
-		cubes[4].enabled = true;
+		gameObjects.emplace_back(gameObject);
 
-		// red cubes
-		cubes[5].pos = glm::vec3(-20.0f, 2.5f, -18.0f);
-		cubes[5].rotation = glm::vec3(0.5f, 0.5f, 0.0f);
-		cubes[5].scale = glm::vec3(2.5f, 2.5f, 2.5f);
-		cubes[5].color = glm::vec4(0.5f, 0.0f, 0.0f, 1.0f);
-		cubes[5].enabled = true;
+		gameObject.transform.position = glm::vec3(0.0f, 5.0f, 50.0f);
+		gameObject.transform.scale = glm::vec3(40.0f, 5.0f, 0.5f);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
+		gameObject.SetVisible(true);
 
-		cubes[6].pos = glm::vec3(25.0f, 2.5f, 40.0f);
-		cubes[6].rotation = glm::vec3(0.5f, 0.5f, 0.0f);
-		cubes[6].scale = glm::vec3(2.5f, 2.5f, 2.5f);
-		cubes[6].color = glm::vec4(0.5f, 0.0f, 0.0f, 1.0f);
-		cubes[6].enabled = true;
+		gameObjects.emplace_back(gameObject);
 
-		// blue tower
-		cubes[7].pos = glm::vec3(-10.0f, 3.5f, 20.0f);
-		cubes[7].rotation = glm::vec3(0.0f, 0.5f, 0.0f);
-		cubes[7].scale = glm::vec3(1.0f, 3.5f, 1.0f);
-		cubes[7].color = glm::vec4(0.0f, 0.0f, 0.5f, 1.0f);
-		cubes[7].enabled = true;
+		gameObject.transform.position = glm::vec3(0.0f, 5.0f, -30.0f);
+		gameObject.transform.scale = glm::vec3(40.0f, 5.0f, 0.5f);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
+		gameObject.SetVisible(true);
 
-		cubes[8].pos = glm::vec3(-15.0f, 11.5f, 22.7f);
-		cubes[8].rotation = glm::vec3(0.0f, 0.5f, 0.0f);
-		cubes[8].scale = glm::vec3(1.0f, 5.0f, 1.0f);
-		cubes[8].color = glm::vec4(0.0f, 0.0f, 0.5f, 1.0f);
-		cubes[8].enabled = true;
+		gameObjects.emplace_back(gameObject);
 
-		cubes[9].pos = glm::vec3(-5.0f, 11.5f, 17.3f);
-		cubes[9].rotation = glm::vec3(0.0f, 0.5f, 0.0f);
-		cubes[9].scale = glm::vec3(1.0f, 5.0f, 1.0f);
-		cubes[9].color = glm::vec4(0.0f, 0.0f, 0.5f, 1.0f);
-		cubes[9].enabled = true;
+		// green sphere
 
-		cubes[10].pos = glm::vec3(-10.0f, 7.5f, 20.0f);
-		cubes[10].rotation = glm::vec3(0.0f, 0.5f, 0.0f);
-		cubes[10].scale = glm::vec3(5.0f, 1.0f, 1.0f);
-		cubes[10].color = glm::vec4(0.0f, 0.0f, 0.5f, 1.0f);
-		cubes[10].enabled = true;
+		gameObject.transform.position = glm::vec3(-20.0f, 5.5f, 40.0f);
+		gameObject.transform.rotation = glm::vec3(0.5f, 0.5f, 0.0f);
+		gameObject.transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
+		gameObject.SetRenderable(std::shared_ptr<Renderable>(static_cast<Renderable*>(new SphereRenderable(3.0f, &sphereMesh, shader, glm::vec4(0.0f, 0.3f, 0.0f, 1.0f)))));
+		gameObject.SetVisible(true);
 
-		cubes[11].pos = glm::vec3(-10.0f, 15.5f, 20.0f);
-		cubes[11].rotation = glm::vec3(0.0f, 0.5f, 0.0f);
-		cubes[11].scale = glm::vec3(5.0f, 1.0f, 1.0f);
-		cubes[11].color = glm::vec4(0.0f, 0.0f, 0.5f, 1.0f);
-		cubes[11].enabled = true;
+		gameObjects.emplace_back(gameObject);
 
-		// green walls
+		gameObject.transform.position = glm::vec3(25.0f, 5.5f, 40.0f);
+		gameObject.transform.rotation = glm::vec3(0.5f, 0.5f, 0.0f);
+		gameObject.transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
+		gameObject.SetRenderable(std::shared_ptr<Renderable>(static_cast<Renderable*>(new SphereRenderable(5.0f, &sphereMesh, shader, glm::vec4(0.0f, 0.3f, 0.0f, 1.0f)))));
+		gameObject.SetVisible(true);
 
-		cubes[12].pos = glm::vec3(25.0f, 1.0f, 0.0f);
-		cubes[12].rotation = glm::vec3(0.0f, -1.23f, 0.0f);
-		cubes[12].scale = glm::vec3(5.0f, 1.0f, 0.25f);
-		cubes[12].color = glm::vec4(0.0f, 0.5f, 0.0f, 1.0f);
-		cubes[12].enabled = true;
+		gameObjects.emplace_back(gameObject);
 
-		cubes[13].pos = glm::vec3(30.0f, 1.0f, -10.0f);
-		cubes[13].rotation = glm::vec3(0.0f, -1.23f, 0.0f);
-		cubes[13].scale = glm::vec3(5.0f, 1.0f, 0.25f);
-		cubes[13].color = glm::vec4(0.0f, 0.5f, 0.0f, 1.0f);
-		cubes[13].enabled = true;
+		// red cube
+
+		gameObject.transform.position = glm::vec3(25.0f, 2.5f, 40.0f);
+		gameObject.transform.rotation = glm::vec3(0.5f, 0.5f, 0.0f);
+		gameObject.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.5f, 0.0f, 0.0f, 1.0f)));
+		gameObject.SetVisible(true);
+
+		gameObjects.emplace_back(gameObject);
 	}
 
-	void DrawCubes()
+	void InitPhysics()
 	{
-		const glm::mat4& viewProjection = camera.ViewProjectionMatrix();
+		physicsEngine.Init();
 
-		// use the shader
-		shader.Use();	
+		// green sphere
+		PhysicObjectDesc desc5;
+		desc5.type = PhysicObjectType::PARTICLE;
+		desc5.mass = 10.0f;
+		desc5.velocity = MathGeom::Vector3(2.0f, 0.0f, 0.0f);
+		desc5.acceleration = MathGeom::Vector3(10.0f, 0.0f, 0.0f);
+		desc5.colliderDesc = std::make_unique<SphereColliderDesc>(3.0f, gameObjects[5].transform);
+		desc5.isAffectedByGravity = false;
 
-		// tell the vertexArrayObject to be used
-		glBindVertexArray(vertexArrayObject);
+		physicsEngine.AddPhysics(gameObjects[5], desc5);
 
-		glm::mat4 model;
-		for (int i = 0; i < NUM_CUBES; i++)
-		{
-			Cube cube = cubes[i];
-			if (cube.enabled)
-			{
-				model = glm::mat4();
-				model = glm::translate(model, cube.pos) 
-					  * glm::rotate(model, cube.rotation.z, glm::vec3(0.0f, 0.0f, 1.0f)) 
-					  * glm::rotate(model, cube.rotation.y, glm::vec3(0.0f, 1.0f, 0.0f)) 
-					  * glm::rotate(model, cube.rotation.x, glm::vec3(1.0f, 0.0f, 0.0f))
-					  * glm::scale(model, cube.scale);
-				shader.SetUniform("modelViewProjection", viewProjection * model);
-				shader.SetUniform("color", cube.color);
-				glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)indices); // tell to draw cube by using the IBO
-			}
-		}
+		PhysicObjectDesc desc6;
+		desc6.type = PhysicObjectType::PARTICLE;
+		desc6.mass = 10.0f;
+		desc6.velocity = MathGeom::Vector3(-2.0f, 0.0f, 0.0f);
+		desc6.acceleration = MathGeom::Vector3(-10.0f, 0.0f, 0.0f);
+		desc6.colliderDesc = std::make_unique<SphereColliderDesc>(5.0f, gameObjects[6].transform);
+		desc6.isAffectedByGravity = false;
 
-		// do not use the vertexArrayObject anymore
-		glBindVertexArray(0);
+		physicsEngine.AddPhysics(gameObjects[6], desc6);
+		
+		// red cube
+		PhysicObjectDesc desc7;
+		desc7.type = PhysicObjectType::PARTICLE;
+		desc7.mass = 10.0f;
+		desc7.velocity = MathGeom::Vector3(-2.0f, 0.0f, 0.0f);
+		desc7.acceleration = MathGeom::Vector3(-10.0f, 0.0f, 0.0f);
+
+		//physicsEngine.AddPhysics(gameObjects[7], desc7);
 	}
 
 	void Terminate()
 	{
-		glDeleteVertexArrays(1, &vertexArrayObject);
-		glDeleteBuffers(1, &vertexBufferObject);
-		glDeleteBuffers(1, &indexBufferObject);
 	}
 
 private:
-
-	// vertices of the cube
-	GLfloat vertices[24] =
-	{
-		-1.0f,	1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		-1.0f,	1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f
-	};
-
-
-	// indices to cube vertices
-	GLuint indices[36] =
-	{
-	   // tri 1      tri 2
-		0, 2, 1,	0, 3, 2,	// front face
-		4, 6, 5,    4, 7, 6,	// back face	
-		4, 3, 0,    4, 7, 3,	// left face	
-		1, 6, 5,    1, 2, 6,	// right face	
-		4, 1, 5,    4, 0, 1,	// top face	
-		7, 2, 6,    7, 3, 2		// bottom face	
-	};
-	
-	// vbo, vao, ibo 
-	GLuint vertexBufferObject;
-	GLuint indexBufferObject;
-	GLuint vertexArrayObject; 
 	
 	// shader
 	Shader shader;
 
-	// cubes
-	struct Cube
-	{
-		bool enabled = false;
+	// cube mesh
+	CubeMesh cubeMesh;
 
-		glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
-		glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-	};
+	// sphere mesh
+	SphereMesh sphereMesh;
 
-	static const int NUM_CUBES = 64;
-	Cube cubes[NUM_CUBES];
+	// Camera
+	FreeCamera camera;
 
-  // Camera
-  FreeCamera camera;
+	// game objects
+	std::vector<GameObject> gameObjects;
 
-  // World state
-  WorldState worldState;
+	// Physics engine
+	PhysicsEngine physicsEngine;
 
-  // AI entity
-  AIEntity aiEntity;
+	// World state
+	WorldState worldState;
+
+	// AI entity
+	AIEntity aiEntity;
 };
 
 #endif

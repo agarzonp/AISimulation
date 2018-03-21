@@ -49,11 +49,32 @@
     <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Actions">
       <UniqueIdentifier>{a55a8527-065a-4064-9b9c-bfa8fd897e17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utils">
-      <UniqueIdentifier>{f8cd64dc-e790-4161-8b1f-c1dbf8ba3689}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels">
       <UniqueIdentifier>{ad72e870-8538-496c-82b6-16471351ba48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Physics">
+      <UniqueIdentifier>{416bad13-7dd9-40e6-b75d-30cd4056c0bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Physics\Collision">
+      <UniqueIdentifier>{05474620-51dd-4dd3-98f2-991576a4644d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Physics\Collision\Colliders">
+      <UniqueIdentifier>{bc7b535d-9e9a-47b9-bd62-81718daaf540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Physics\PhysicObject">
+      <UniqueIdentifier>{83913362-b594-469c-a0d3-c2ff0f8481db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Physics\Forces">
+      <UniqueIdentifier>{d224aa8a-553e-49f1-aeae-2703815b964e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Render">
+      <UniqueIdentifier>{0dcb76f7-d336-4f3f-8811-763afecbafff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Render\Meshes">
+      <UniqueIdentifier>{6df51e20-56c2-4ff3-956e-8608e01532f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{f8cd64dc-e790-4161-8b1f-c1dbf8ba3689}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +181,54 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallelMonitor.h">
       <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsEngine.h">
+      <Filter>Source Files\TestEnvironment\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\CollisionDetector.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\CollisionTest.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\Collider.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\ColliderDesc.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\SphereCollider.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Forces\Forces.h">
+      <Filter>Source Files\TestEnvironment\Physics\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Forces\GravityForce.h">
+      <Filter>Source Files\TestEnvironment\Physics\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Forces\IForce.h">
+      <Filter>Source Files\TestEnvironment\Physics\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\IPhysicObject.h">
+      <Filter>Source Files\TestEnvironment\Physics\PhysicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\Particle.h">
+      <Filter>Source Files\TestEnvironment\Physics\PhysicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\PhysicObject.h">
+      <Filter>Source Files\TestEnvironment\Physics\PhysicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\PhysicObjectDesc.h">
+      <Filter>Source Files\TestEnvironment\Physics\PhysicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\GameObject.h">
+      <Filter>Source Files\TestEnvironment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\MathGeom.h">
+      <Filter>Source Files\TestEnvironment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Transform.h">
+      <Filter>Source Files\TestEnvironment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
