@@ -15,6 +15,8 @@
 #include "Camera/FreeCamera.h"
 #include "Pathfinding/PathfindingSystem.h"
 
+#include "AIEntity.h"
+
 class TestEnvironment : public InputListener
 {
 
@@ -31,6 +33,17 @@ public:
 
 	void OnKeyPressed(int key) override 
 	{
+		switch (key)
+		{
+			case GLFW_KEY_S:
+				worldState.isTimeToSleep = true;
+				break;
+			case GLFW_KEY_W:
+				worldState.isTimeToSleep = false;
+			case GLFW_KEY_O:
+				worldState.isDoorOpen = !worldState.isDoorOpen;
+				break;
+		}
 	}
 
 	void OnKeyReleased(int key) override { }
@@ -43,6 +56,8 @@ public:
 	void Update(float deltaTime) 
 	{
 		camera.Update(deltaTime);
+
+		aiEntity.Update(worldState);
 
 		pathfindingSystem.Update();
 	}
@@ -304,6 +319,12 @@ private:
 
   // Pathfinding system
   PathfindingSystem pathfindingSystem;
+
+  // World state
+  WorldState worldState;
+
+  // AI entity
+  AIEntity aiEntity;
 };
 
 #endif

@@ -30,6 +30,32 @@
     </Filter>
     <Filter Include="Source Files\TestEnvironment\Pathfinding">
       <UniqueIdentifier>{bea8065e-9af5-476a-b1ec-fff071bd0d8f}</UniqueIdentifier>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree">
+      <UniqueIdentifier>{68d0e8c0-99c3-4282-9f51-93c804d9f2eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes">
+      <UniqueIdentifier>{39bc7a8a-a030-49e1-aa4b-76833dab49a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators">
+      <UniqueIdentifier>{e0b3a6da-01e4-421e-96ea-346e090c2e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Composites">
+      <UniqueIdentifier>{8e2b9d30-9024-42f6-a7f9-a8e359d58706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Conditions">
+      <UniqueIdentifier>{67a15ea0-6746-45a6-b7a4-da546167ac92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Blackboard">
+      <UniqueIdentifier>{b5ede8c9-8d02-438c-b1aa-89acb9025f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Actions">
+      <UniqueIdentifier>{a55a8527-065a-4064-9b9c-bfa8fd897e17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{f8cd64dc-e790-4161-8b1f-c1dbf8ba3689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels">
+      <UniqueIdentifier>{ad72e870-8538-496c-82b6-16471351ba48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +105,86 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathfindingSystem.h">
       <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\BehaviourTree.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNode.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeComposite.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Composites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeSelector.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Composites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Composites\BTNodeSequence.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Composites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\BTNodes.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboard.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Blackboard</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardValue.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Blackboard</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Blackboard\BTBlackboardOperator.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Blackboard</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Conditions\BTNodeCondition.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Conditions\BTNodeBlackboardCondition.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeAction.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWait.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecorator.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorLimit.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionGoToDoor.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionEnterRoom.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionRequestOpenDoor.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\AIEntity.h">
+      <Filter>Source Files\TestEnvironment</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorFilter.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionWork.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionSleep.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Timer.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Decorators\BTNodeDecoratorInverter.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Decorators</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Actions\BTNodeActionSetBlackboard.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallel.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallelMonitor.h">
+      <Filter>Source Files\TestEnvironment\BehaviourTree\Nodes\Parallels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
