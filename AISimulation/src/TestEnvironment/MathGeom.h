@@ -9,6 +9,10 @@ namespace MathGeom
 	using Vector3 = glm::vec3;
 	using Vector4 = glm::vec4;
 
+	using Matrix2 = glm::mat2;
+	using Matrix3 = glm::mat3;
+	using Matrix4 = glm::mat4;
+
 	using Quaternion = glm::quat;
 
 	const double PI = 3.14159265358979323846;

@@ -57,9 +57,12 @@ public:
 	}
 
 	// Debug render
-	void DebugRender()
+	void DebugRender(const MathGeom::Matrix4& viewProjection)
 	{
-		// TO-DO
+		if (searchSpace)
+		{
+			searchSpace->DebugRender(viewProjection);
+		}
 	}
 
 private:

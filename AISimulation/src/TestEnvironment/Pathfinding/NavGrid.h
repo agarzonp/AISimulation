@@ -59,12 +59,10 @@ private:
 		auto& anchorPos = searchSpaceData.anchorPosition;
 		auto& worldSize = searchSpaceData.worldSize;
 
-		static const int extraCells = 2; // just to make sure we cover all the world
-
-		totalCellsX = int(worldSize.x / cellSize) + extraCells;
-		totalCellsY = 0;
-		totalCellsZ = int(worldSize.z / cellSize) + extraCells;
-		size_t totalCells = totalCellsX + totalCellsY + totalCellsZ;
+		totalCellsX = int(worldSize.x / cellSize);
+		totalCellsY = 1;
+		totalCellsZ = int(worldSize.z / cellSize);
+		size_t totalCells = totalCellsX * totalCellsY * totalCellsZ;
 
 		// create the nodes
 		nodes.reserve(totalCells);
@@ -149,16 +147,16 @@ private:
 	// Create test layout
 	void CreateTestLayout()
 	{
-		for (size_t x = 4; x < totalCellsX; x += 8)
+		for (size_t x = 1; x < totalCellsX; x += 3)
 		{
-			for (size_t z = 4; z < totalCellsZ; z += 8)
+			for (size_t z = 1; z < totalCellsZ; z +=  3)
 			{
-				// 4x4 block
+				// 2x2 block
 				size_t startX = x;
 				size_t startZ = z;
-				for (size_t blockX = startX; blockX < startX + 4; blockX++)
+				for (size_t blockX = startX; blockX < startX + 2; blockX++)
 				{
-					for (size_t blockZ = startZ; blockZ < startZ + 4; blockZ++)
+					for (size_t blockZ = startZ; blockZ < startZ + 2; blockZ++)
 					{
 						PathNode* node = GetNode(blockX, blockZ);
 						if (!node)
@@ -170,6 +168,18 @@ private:
 						node->type = PathNodeType::BLOCKED;
 					}
 				}
+			}
+		}
+
+		std::srand((unsigned)std::chrono::system_clock::now().time_since_epoch().count());
+		int count = 3;
+		while (count > 0)
+		{
+			int n = std::rand() % nodes.size();
+			if (nodes[n].type == PathNodeType::UNBLOCKED)
+			{
+				nodes[n].type = PathNodeType::BLOCKED;
+				count--;
 			}
 		}
 	}

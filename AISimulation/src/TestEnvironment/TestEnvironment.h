@@ -22,6 +22,7 @@
 #include "Render/Meshes/SphereMesh.h"
 #include "Render/Renderable.h"
 #include "Render/SphereRenderable.h"
+#include "Render/RenderUtils.h"
 
 #include "Physics/PhysicsEngine.h"
 
@@ -85,7 +86,7 @@ public:
 			gameObject.Render(viewProjection);
 		}
 
-		pathfindingSystem.DebugRender();
+		pathfindingSystem.DebugRender(viewProjection);
 	}
 	
 protected:
@@ -98,11 +99,14 @@ protected:
 		// load shader
 		shader.Load("assets/Shaders/basic.vert", "assets/Shaders/basic.frag");
 
+		// Init render utils
+		RenderUtils::InitCubeRenderable(shader, &cubeMesh);
+
 		// init game objects
 		InitGameObjects();
 
 		// init camera
-		camera.Init(glm::vec3(0.0f, 1.0f, -15.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 1024.0f / 768.0f, 0.1f, 1000000.0f);
+		camera.Init(glm::vec3(0.0f, 150.0f, -40.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 1024.0f / 768.0f, 0.1f, 1000000.0f);
 
 		// init physics
 		InitPhysics();
@@ -116,37 +120,37 @@ protected:
 		GameObject gameObject;
 
 		// floor
-		gameObject.transform.position = glm::vec3(0.0f, 0.0f, 10.0f);
-		gameObject.transform.scale = glm::vec3(40.0f, 0.0001f, 40.f);
+		gameObject.transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
+		gameObject.transform.scale = glm::vec3(50.0f, 0.0001f, 50.f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.8f, 0.8f, 0.8f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
 		// walls
-		gameObject.transform.position = glm::vec3(40.0f, 5.0f, 10.0f);
-		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 40.f);
+		gameObject.transform.position = glm::vec3(50.0f, 5.0f, 0.0f);
+		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 50.f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
-		gameObject.transform.position = glm::vec3(-40.0f, 5.0f, 10.0f);
-		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 40.f);
+		gameObject.transform.position = glm::vec3(-50.0f, 5.0f, 0.0f);
+		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 50.f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
 		gameObject.transform.position = glm::vec3(0.0f, 5.0f, 50.0f);
-		gameObject.transform.scale = glm::vec3(40.0f, 5.0f, 0.5f);
+		gameObject.transform.scale = glm::vec3(50.0f, 5.0f, 0.5f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
-		gameObject.transform.position = glm::vec3(0.0f, 5.0f, -30.0f);
-		gameObject.transform.scale = glm::vec3(40.0f, 5.0f, 0.5f);
+		gameObject.transform.position = glm::vec3(0.0f, 5.0f, -50.0f);
+		gameObject.transform.scale = glm::vec3(50.0f, 5.0f, 0.5f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
@@ -172,11 +176,11 @@ protected:
 
 		// red cube
 
-		gameObject.transform.position = glm::vec3(25.0f, 2.5f, 40.0f);
+		gameObject.transform.position = glm::vec3(25.0f, 0.0f, 40.0f);
 		gameObject.transform.rotation = glm::vec3(0.5f, 0.5f, 0.0f);
 		gameObject.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
-		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.5f, 0.0f, 0.0f, 1.0f)));
-		gameObject.SetVisible(true);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+		gameObject.SetVisible(false);
 
 		gameObjects.emplace_back(gameObject);
 	}
@@ -220,9 +224,9 @@ protected:
 	{
 		PathfindingSystemData pathfindingSystemData;
 		pathfindingSystemData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
-		pathfindingSystemData.searchSpaceData.anchorPosition = MathGeom::Vector3(0.0f, 0.0f, 0.0f);
-		pathfindingSystemData.searchSpaceData.worldSize = MathGeom::Vector3(1000.0f, 1000.0f, 1000.0f);
-		pathfindingSystemData.gridCellSize = 4.0f;
+		pathfindingSystemData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
+		pathfindingSystemData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);
+		pathfindingSystemData.gridCellSize = 10.0f;
 		pathfindingSystem.Init(pathfindingSystemData);
 	}
 

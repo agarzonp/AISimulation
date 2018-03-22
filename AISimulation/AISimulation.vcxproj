@@ -160,7 +160,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallelMonitor.h" />
     <ClInclude Include="src\TestEnvironment\Camera\Camera.h" />
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h" />
-	<ClInclude Include="src\TestEnvironment\GameObject.h" />
+    <ClInclude Include="src\TestEnvironment\GameObject.h" />
     <ClInclude Include="src\TestEnvironment\MathGeom.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\NavGrid.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\Pathfinder.h" />
@@ -182,6 +182,12 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\Particle.h" />
     <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\PhysicObject.h" />
     <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\PhysicObjectDesc.h" />
+    <ClInclude Include="src\TestEnvironment\Render\Meshes\CubeMesh.h" />
+    <ClInclude Include="src\TestEnvironment\Render\Meshes\Mesh.h" />
+    <ClInclude Include="src\TestEnvironment\Render\Meshes\SphereMesh.h" />
+    <ClInclude Include="src\TestEnvironment\Render\Renderable.h" />
+    <ClInclude Include="src\TestEnvironment\Render\RenderUtils.h" />
+    <ClInclude Include="src\TestEnvironment\Render\SphereRenderable.h" />
     <ClInclude Include="src\TestEnvironment\TestEnvironment.h" />
     <ClInclude Include="src\TestEnvironment\Transform.h" />
     <ClInclude Include="src\Utils\Timer.h" />

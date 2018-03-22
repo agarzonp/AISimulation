@@ -3,11 +3,13 @@
 
 #include <array>
 
+#include "../Render/Renderable.h"
+
 // PathNodeType
 enum class PathNodeType
 {
-	BLOCKED,
-	UNBLOCKED
+	BLOCKED = 0x000000, // black
+	UNBLOCKED = 0xFFFFFF // white
 };
 
 // PathNodeAdjacency
@@ -40,7 +42,7 @@ struct PathNode
 	std::array<PathNode*, (int)PathNodeAdjacency::MAX_ADJACENCY > neighbours;
 
 	// type
-	PathNodeType type;
+	PathNodeType type { PathNodeType::UNBLOCKED };
 
 	// costs
 	float hCost{ 0.0f };

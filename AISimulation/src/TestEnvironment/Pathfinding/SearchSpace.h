@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "../Render/RenderUtils.h"
+
 #include "PathNode.h"
 
 // Search space type
@@ -30,6 +32,9 @@ protected:
 	// search space data
 	SearchSpaceData searchSpaceData;
 
+	// node renderable
+	Renderable nodeRenderable;
+
 public:
 
 	// Constructors
@@ -46,6 +51,12 @@ public:
 	// Localise
 	virtual PathNode* Localise(const MathGeom::Vector3& position) = 0;
 
+	// Debug render
+	void DebugRender(const MathGeom::Matrix4& viewProjection)
+	{
+		DebugRenderNodes(viewProjection);
+	}
+
 private:
 
 	// Validate
@@ -54,6 +65,18 @@ private:
 		assert(searchSpaceData.worldSize.x > 0);
 		assert(searchSpaceData.worldSize.y > 0);
 		assert(searchSpaceData.worldSize.z > 0);
+	}
+
+	// Debug render nodes
+	void DebugRenderNodes(const MathGeom::Matrix4& viewProjection)
+	{
+		for (auto& node : nodes)
+		{
+			Transform transform;
+			transform.position = node.position;
+
+			RenderUtils::RenderCube(viewProjection, transform, static_cast<unsigned>(node.type));
+		}
 	}
 };
 
