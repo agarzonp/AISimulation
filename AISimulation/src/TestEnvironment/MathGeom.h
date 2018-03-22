@@ -10,6 +10,8 @@ namespace MathGeom
 	using Vector4 = glm::vec4;
 
 	using Quaternion = glm::quat;
+
+	const double PI = 3.14159265358979323846;
 }
 
 

@@ -160,6 +160,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\BehaviourTree\Nodes\Parallels\BTNodeParallelMonitor.h" />
     <ClInclude Include="src\TestEnvironment\Camera\Camera.h" />
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h" />
+	<ClInclude Include="src\TestEnvironment\GameObject.h" />
     <ClInclude Include="src\TestEnvironment\MathGeom.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\NavGrid.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\Pathfinder.h" />
@@ -168,7 +169,21 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequest.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestQueue.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\Collider.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\ColliderDesc.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\SphereCollider.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\CollisionDetector.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\CollisionTest.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Forces\Forces.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Forces\GravityForce.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Forces\IForce.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsEngine.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\IPhysicObject.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\Particle.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\PhysicObject.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\PhysicsObject\PhysicObjectDesc.h" />
     <ClInclude Include="src\TestEnvironment\TestEnvironment.h" />
+    <ClInclude Include="src\TestEnvironment\Transform.h" />
     <ClInclude Include="src\Utils\Timer.h" />
   </ItemGroup>
   <ItemGroup>
