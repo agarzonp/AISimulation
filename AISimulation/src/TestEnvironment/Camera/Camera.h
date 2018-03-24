@@ -19,7 +19,8 @@ public:
 		this->zNear = zNear;
 		this->zFar = zFar;
 
-		Rotate(eulerAngles);
+		forward = focusPos - pos;
+		UpdateCameraVectors();
 	}
 	
 	glm::mat4 ViewProjectionMatrix() const
