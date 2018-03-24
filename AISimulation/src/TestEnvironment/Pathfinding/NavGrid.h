@@ -31,6 +31,9 @@ public:
 
 		// Note: To be removed when create the grid from static world
 		CreateTestLayout();
+
+		// Compute adjacency
+		ComputeAdjacency();
 	}
 
 	// Localise
@@ -79,69 +82,6 @@ private:
 				nodes.emplace_back(PathNode(nodePos));
 			}
 		}
-
-		// Compute adyacency
-		for (size_t i = 0; i < nodes.size(); i++)
-		{
-			int cellX = i % totalCellsX;
-			int cellZ = i / totalCellsX;
-
-			SetAdjacency(nodes[i], GetNode(cellX + 1, cellZ - 1), PathNodeAdjacency::TOP_RIGHT);
-			SetAdjacency(nodes[i], GetNode(cellX + 1, cellZ), PathNodeAdjacency::RIGHT);
-			SetAdjacency(nodes[i], GetNode(cellX + 1, cellZ + 1), PathNodeAdjacency::BOTTOM_RIGHT);
-			SetAdjacency(nodes[i], GetNode(cellX , cellZ + 1), PathNodeAdjacency::BOTTOM);
-		}
-	}
-
-	// Get node
-	PathNode* GetNode(int x, int z)
-	{
-		if (x >= 0 && x < int(totalCellsX) && z >= 0 && z < int(totalCellsZ))
-		{
-			size_t nodeIndex = z * totalCellsX + x;
-			return &nodes[nodeIndex];
-		}
-
-		return nullptr;
-	}
-
-	// Set Adjacency
-	void SetAdjacency(PathNode& nodeA, PathNode* nodeB, PathNodeAdjacency adjacency)
-	{
-		switch (adjacency)
-		{
-		case PathNodeAdjacency::TOP_RIGHT: 
-			nodeA.neighbours[(int)PathNodeAdjacency::TOP_RIGHT] = nodeB;
-			if (nodeB)
-			{
-				nodeB->neighbours[(int)PathNodeAdjacency::BOTTOM_LEFT] = &nodeA;
-			}
-			break;
-		case PathNodeAdjacency::RIGHT:
-			nodeA.neighbours[(int)PathNodeAdjacency::RIGHT] = nodeB;
-			if (nodeB)
-			{
-				nodeB->neighbours[(int)PathNodeAdjacency::LEFT] = &nodeA;
-			}
-			break;
-		case PathNodeAdjacency::BOTTOM_RIGHT:
-			nodeA.neighbours[(int)PathNodeAdjacency::BOTTOM_RIGHT] = nodeB;
-			if (nodeB)
-			{
-				nodeB->neighbours[(int)PathNodeAdjacency::TOP_LEFT] = &nodeA;
-			}
-			break;
-		case PathNodeAdjacency::BOTTOM:
-			nodeA.neighbours[(int)PathNodeAdjacency::BOTTOM] = nodeB;
-			if (nodeB)
-			{
-				nodeB->neighbours[(int)PathNodeAdjacency::TOP] = &nodeA;
-			}
-			break;
-		default:
-			assert(false);
-			break;
-		}
 	}
 
 	// Create test layout
@@ -149,7 +89,7 @@ private:
 	{
 		for (size_t x = 1; x < totalCellsX; x += 3)
 		{
-			for (size_t z = 1; z < totalCellsZ; z +=  3)
+			for (size_t z = 1; z < totalCellsZ; z += 3)
 			{
 				// 2x2 block
 				size_t startX = x;
@@ -164,7 +104,7 @@ private:
 							// early exit
 							break;
 						}
-						
+
 						node->type = PathNodeType::BLOCKED;
 					}
 				}
@@ -181,6 +121,101 @@ private:
 				nodes[n].type = PathNodeType::BLOCKED;
 				count--;
 			}
+		}
+	}
+
+	// Get node
+	PathNode* GetNode(int x, int z)
+	{
+		if (x >= 0 && x < int(totalCellsX) && z >= 0 && z < int(totalCellsZ))
+		{
+			size_t nodeIndex = z * totalCellsX + x;
+			return &nodes[nodeIndex];
+		}
+
+		return nullptr;
+	}
+
+	// Compute adjacency
+	void ComputeAdjacency()
+	{
+		for (size_t i = 0; i < nodes.size(); i++)
+		{
+			int cellX = i % totalCellsX;
+			int cellZ = i / totalCellsX;
+
+			SetAdjacency(nodes[i], GetNode(cellX, cellZ - 1), PathNodeAdjacency::TOP);
+			SetAdjacency(nodes[i], GetNode(cellX, cellZ + 1), PathNodeAdjacency::BOTTOM);
+			SetAdjacency(nodes[i], GetNode(cellX - 1, cellZ), PathNodeAdjacency::LEFT);
+			SetAdjacency(nodes[i], GetNode(cellX + 1, cellZ), PathNodeAdjacency::RIGHT);
+			
+
+			SetAdjacency(nodes[i], GetNode(cellX - 1, cellZ - 1), PathNodeAdjacency::TOP_LEFT);
+			SetAdjacency(nodes[i], GetNode(cellX + 1, cellZ - 1), PathNodeAdjacency::TOP_RIGHT);
+			SetAdjacency(nodes[i], GetNode(cellX - 1, cellZ + 1), PathNodeAdjacency::BOTTOM_LEFT);
+			SetAdjacency(nodes[i], GetNode(cellX + 1, cellZ + 1), PathNodeAdjacency::BOTTOM_RIGHT);
+		}
+	}
+
+	// Set Adjacency
+	void SetAdjacency(PathNode& nodeA, PathNode* nodeB, PathNodeAdjacency adjacency)
+	{
+		if (nodeA.type == PathNodeType::BLOCKED || !nodeB || nodeB->type == PathNodeType::BLOCKED)
+		{
+			// no need to connect the nodes
+			return;
+		}
+
+		switch (adjacency)
+		{
+		case PathNodeAdjacency::TOP:
+			nodeA.neighbours[(int)PathNodeAdjacency::TOP] = nodeB;
+			nodeB->neighbours[(int)PathNodeAdjacency::BOTTOM] = &nodeA;
+			break;
+		case PathNodeAdjacency::BOTTOM:
+			nodeA.neighbours[(int)PathNodeAdjacency::BOTTOM] = nodeB;
+			nodeB->neighbours[(int)PathNodeAdjacency::TOP] = &nodeA;
+			break;
+		case PathNodeAdjacency::RIGHT:
+			nodeA.neighbours[(int)PathNodeAdjacency::RIGHT] = nodeB;
+			nodeB->neighbours[(int)PathNodeAdjacency::LEFT] = &nodeA;
+			break;
+		case PathNodeAdjacency::LEFT:
+			nodeA.neighbours[(int)PathNodeAdjacency::LEFT] = nodeB;
+			nodeB->neighbours[(int)PathNodeAdjacency::RIGHT] = &nodeA;
+			break;
+		case PathNodeAdjacency::TOP_LEFT:
+			if (nodeB->neighbours[(int)PathNodeAdjacency::RIGHT] && nodeB->neighbours[(int)PathNodeAdjacency::BOTTOM])
+			{
+				nodeA.neighbours[(int)PathNodeAdjacency::TOP_LEFT] = nodeB;
+				nodeB->neighbours[(int)PathNodeAdjacency::BOTTOM_RIGHT] = &nodeA;
+			}
+			break;
+		case PathNodeAdjacency::TOP_RIGHT:
+			if (nodeB->neighbours[(int)PathNodeAdjacency::LEFT] && nodeB->neighbours[(int)PathNodeAdjacency::BOTTOM])
+			{
+				nodeA.neighbours[(int)PathNodeAdjacency::TOP_RIGHT] = nodeB;
+				nodeB->neighbours[(int)PathNodeAdjacency::BOTTOM_LEFT] = &nodeA;
+			}
+			break;
+		case PathNodeAdjacency::BOTTOM_LEFT:
+			if (nodeB->neighbours[(int)PathNodeAdjacency::RIGHT] && nodeB->neighbours[(int)PathNodeAdjacency::TOP])
+			{
+				nodeA.neighbours[(int)PathNodeAdjacency::BOTTOM_LEFT] = nodeB;
+				nodeB->neighbours[(int)PathNodeAdjacency::TOP_RIGHT] = &nodeA;
+			}
+			break;
+		case PathNodeAdjacency::BOTTOM_RIGHT:
+			if (nodeB->neighbours[(int)PathNodeAdjacency::LEFT] && nodeB->neighbours[(int)PathNodeAdjacency::TOP])
+			{
+				nodeA.neighbours[(int)PathNodeAdjacency::BOTTOM_RIGHT] = nodeB;
+				nodeB->neighbours[(int)PathNodeAdjacency::TOP_LEFT] = &nodeA;
+			}
+			break;
+		
+		default:
+			assert(false);
+			break;
 		}
 	}
 };

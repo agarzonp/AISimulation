@@ -32,13 +32,16 @@ struct PathNode
 {
 	// Constructors
 	PathNode() = default;
-	PathNode(const MathGeom::Vector3& pos) : position(pos) {}
+	PathNode(const MathGeom::Vector3& pos) 
+		: position(pos) 
+	{
+		Init();
+	}
 
 	// position
 	MathGeom::Vector3 position;
 
 	// adjacent neighbours of current PathNode
-	static const int MAX_NEIGHBOURS = 8;
 	std::array<PathNode*, (int)PathNodeAdjacency::MAX_ADJACENCY > neighbours;
 
 	// type
@@ -50,7 +53,17 @@ struct PathNode
 	float fCost{ 0.0f };
 
 	// parent node
-	std::shared_ptr<PathNode> parent;
+	PathNode* parent{ nullptr };
+
+private:
+
+	void Init()
+	{
+		for (int i = 0; i < (int)PathNodeAdjacency::MAX_ADJACENCY; i++)
+		{
+			neighbours[i] = nullptr;
+		}
+	}
 };
 
 
