@@ -21,9 +21,6 @@ enum class PathRequestResultStatus
 	PathFound
 };
 
-// Path
-using Path = std::vector<MathGeom::Vector3>;
-
 // OnPathRequestResult
 using OnPathRequestResult = std::function<void(PathRequestId id, PathRequestResultStatus resultStatus, Path& path)>;
 

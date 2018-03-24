@@ -1,12 +1,20 @@
 #ifndef PATHFINDER_H
 #define PATHFINDER_H
 
-#include "SearchSpace/NavGrid.h"
+#include <vector>
+
+// Path
+using Path = std::vector<MathGeom::Vector3>;
+
+#include "SearchSpace/SearchSpaceTypes.h"
+#include "PathPlanner/PathPlannerTypes.h"
 #include "PathScheduler/PathScheduler.h"
 
-struct PathfindingSystemData
+// Pathfinder data
+struct PathfinderData
 {
 	SearchSpaceData searchSpaceData;
+	PathPlannerType pathPlannerType;
 	float gridCellSize{ 1.0f };
 };
 
@@ -15,13 +23,16 @@ class Pathfinder
 	// search space
 	std::shared_ptr<SearchSpace> searchSpace;
 
+	// path planner
+	std::shared_ptr<PathPlanner> pathPlanner;
+
 	// path scheduler
 	PathScheduler pathScheduler;
 
 public:
 	
 	// Init
-	void Init(const PathfindingSystemData& data)
+	void Init(const PathfinderData& data)
 	{
 		// create search space
 		switch (data.searchSpaceData.searchSpaceType)
@@ -40,8 +51,19 @@ public:
 			searchSpace->Build();
 		}
 
-		// set pathfinder search space
-		pathScheduler.SetSearchSpace(searchSpace);
+		// create planner
+		switch (data.pathPlannerType)
+		{
+		case PathPlannerType::A_STAR:
+			pathPlanner = std::make_shared<AStar>();
+			break;
+		default:
+			assert(false);
+			break;
+		}
+
+		// init scheduler
+		pathScheduler.Init(searchSpace, pathPlanner);
 	}
 
 	// Request path
@@ -63,7 +85,7 @@ public:
 	{
 		if (debugRenderPath)
 		{
-			pathScheduler.DebugRender(viewProjection);
+			pathPlanner->DebugRender(viewProjection);
 		}
 
 		if (searchSpace && debugRenderSearchSpace)

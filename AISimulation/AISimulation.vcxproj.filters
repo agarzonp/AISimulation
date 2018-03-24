@@ -85,6 +85,9 @@
     <Filter Include="Source Files\TestEnvironment\Pathfinding\PathScheduler">
       <UniqueIdentifier>{5cf15919-82aa-4e54-9029-786b9aa4cc60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestEnvironment\Pathfinding\PathPlanner">
+      <UniqueIdentifier>{5bf7350d-0679-44a2-8cb2-5a77cc52e9d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\basic.frag">
@@ -280,6 +283,18 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\Pathfinder.h">
       <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\PathPlanner.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathPlanner</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\AStar.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathPlanner</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\SearchSpaceTypes.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\SearchSpace</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\PathPlannerTypes.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathPlanner</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

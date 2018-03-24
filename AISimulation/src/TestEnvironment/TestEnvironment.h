@@ -141,7 +141,7 @@ protected:
 		InitPhysics();
 
 		// init pathfinding system
-		InitPathfindingSystem();
+		InitPathfinder();
 	}
 		
 	void InitGameObjects()
@@ -249,14 +249,15 @@ protected:
 		//physicsEngine.AddPhysics(gameObjects[7], desc7);
 	}
 
-	void InitPathfindingSystem()
+	void InitPathfinder()
 	{
-		PathfindingSystemData pathfindingSystemData;
-		pathfindingSystemData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
-		pathfindingSystemData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
-		pathfindingSystemData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);
-		pathfindingSystemData.gridCellSize = 10.0f;
-		pathfinder.Init(pathfindingSystemData);
+		PathfinderData pathfinderData;
+		pathfinderData.pathPlannerType = PathPlannerType::A_STAR;
+		pathfinderData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
+		pathfinderData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
+		pathfinderData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);
+		pathfinderData.gridCellSize = 10.0f;
+		pathfinder.Init(pathfinderData);
 	}
 
 	void Terminate()

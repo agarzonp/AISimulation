@@ -7,12 +7,6 @@
 
 #include "../PathNode.h"
 
-// Search space type
-enum class SearchSpaceType
-{
-	OCTILE_GRID
-};
-
 // Search space data
 struct SearchSpaceData
 {
