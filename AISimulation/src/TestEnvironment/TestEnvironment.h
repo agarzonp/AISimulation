@@ -10,7 +10,10 @@
 
 #include "../Input/Input.h"
 #include "../Shaders/Shader.h"
+
+#include "MathGeom.h"
 #include "Camera/FreeCamera.h"
+#include "Pathfinding/Pathfinder.h"
 
 #include "AIEntity.h"
 #include "GameObject.h"
@@ -19,6 +22,7 @@
 #include "Render/Meshes/SphereMesh.h"
 #include "Render/Renderable.h"
 #include "Render/SphereRenderable.h"
+#include "Render/RenderUtils.h"
 
 #include "Physics/PhysicsEngine.h"
 
@@ -48,6 +52,40 @@ public:
 		case GLFW_KEY_O:
 			worldState.isDoorOpen = !worldState.isDoorOpen;
 			break;
+
+		case GLFW_KEY_1:
+		{
+			pathfinder.debugRenderSearchSpace = !pathfinder.debugRenderSearchSpace;
+			break;
+		}
+		case GLFW_KEY_2:
+		{
+			pathfinder.debugRenderPath = !pathfinder.debugRenderPath;
+			break;
+		}
+		case GLFW_KEY_TAB:
+		{
+			static PathRequestId pathRequestId;
+
+			// cancel current request as we are goint to request a new one
+			pathfinder.CancelRequest(pathRequestId);
+			
+
+			std::srand((unsigned)std::chrono::system_clock::now().time_since_epoch().count());
+
+			PathRequestData pathRequestData;
+			pathRequestData.start = MathGeom::Vector3(-50 + std::rand()%100, 0.0f, -50 + std::rand() % 100);
+			pathRequestData.goal = MathGeom::Vector3(-50 + std::rand() % 100, 0.0f, -50 + std::rand() % 100);
+			pathRequestData.onPathRequestResult = [](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
+			{
+				printf("PathRequest %d result: %d pathSize: %d\n", id, resultStatus, path.size());
+			};
+
+			pathRequestId = pathfinder.RequestPath(pathRequestData);
+			break;
+		}
+			
+			
 		}
 	}
 
@@ -66,6 +104,8 @@ public:
 		physicsEngine.Update(deltaTime);
 
 		aiEntity.Update(worldState);
+
+		pathfinder.Update();
 	}
 
 	// Render
@@ -79,6 +119,8 @@ public:
 		{
 			gameObject.Render(viewProjection);
 		}
+
+		pathfinder.DebugRender(viewProjection);
 	}
 	
 protected:
@@ -91,14 +133,20 @@ protected:
 		// load shader
 		shader.Load("assets/Shaders/basic.vert", "assets/Shaders/basic.frag");
 
+		// Init render utils
+		RenderUtils::InitCubeRenderable(shader, &cubeMesh);
+
 		// init game objects
 		InitGameObjects();
 
 		// init camera
-		camera.Init(glm::vec3(0.0f, 1.0f, -15.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 1024.0f / 768.0f, 0.1f, 1000000.0f);
+		camera.Init(glm::vec3(0.0f, 150.0f, -40.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 1024.0f / 768.0f, 0.1f, 1000000.0f);
 
 		// init physics
 		InitPhysics();
+
+		// init pathfinding system
+		InitPathfinder();
 	}
 		
 	void InitGameObjects()
@@ -106,37 +154,37 @@ protected:
 		GameObject gameObject;
 
 		// floor
-		gameObject.transform.position = glm::vec3(0.0f, 0.0f, 10.0f);
-		gameObject.transform.scale = glm::vec3(40.0f, 0.0001f, 40.f);
+		gameObject.transform.position = glm::vec3(0.0f, 0.0f, 0.0f);
+		gameObject.transform.scale = glm::vec3(50.0f, 0.0001f, 50.f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.8f, 0.8f, 0.8f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
 		// walls
-		gameObject.transform.position = glm::vec3(40.0f, 5.0f, 10.0f);
-		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 40.f);
+		gameObject.transform.position = glm::vec3(50.0f, 5.0f, 0.0f);
+		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 50.f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
-		gameObject.transform.position = glm::vec3(-40.0f, 5.0f, 10.0f);
-		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 40.f);
+		gameObject.transform.position = glm::vec3(-50.0f, 5.0f, 0.0f);
+		gameObject.transform.scale = glm::vec3(0.5f, 5.0f, 50.f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
 		gameObject.transform.position = glm::vec3(0.0f, 5.0f, 50.0f);
-		gameObject.transform.scale = glm::vec3(40.0f, 5.0f, 0.5f);
+		gameObject.transform.scale = glm::vec3(50.0f, 5.0f, 0.5f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
 		gameObjects.emplace_back(gameObject);
 
-		gameObject.transform.position = glm::vec3(0.0f, 5.0f, -30.0f);
-		gameObject.transform.scale = glm::vec3(40.0f, 5.0f, 0.5f);
+		gameObject.transform.position = glm::vec3(0.0f, 5.0f, -50.0f);
+		gameObject.transform.scale = glm::vec3(50.0f, 5.0f, 0.5f);
 		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.11f, 0.11f, 0.11f, 1.0f)));
 		gameObject.SetVisible(true);
 
@@ -162,11 +210,11 @@ protected:
 
 		// red cube
 
-		gameObject.transform.position = glm::vec3(25.0f, 2.5f, 40.0f);
+		gameObject.transform.position = glm::vec3(25.0f, 0.0f, 40.0f);
 		gameObject.transform.rotation = glm::vec3(0.5f, 0.5f, 0.0f);
 		gameObject.transform.scale = glm::vec3(2.5f, 2.5f, 2.5f);
-		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(0.5f, 0.0f, 0.0f, 1.0f)));
-		gameObject.SetVisible(true);
+		gameObject.SetRenderable(std::make_shared<Renderable>(&cubeMesh, shader, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)));
+		gameObject.SetVisible(false);
 
 		gameObjects.emplace_back(gameObject);
 	}
@@ -206,6 +254,17 @@ protected:
 		//physicsEngine.AddPhysics(gameObjects[7], desc7);
 	}
 
+	void InitPathfinder()
+	{
+		PathfinderData pathfinderData;
+		pathfinderData.pathPlannerData.type = PathPlannerType::A_STAR;
+		pathfinderData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
+		pathfinderData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
+		pathfinderData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);
+		pathfinderData.gridCellSize = 10.0f;
+		pathfinder.Init(pathfinderData);
+	}
+
 	void Terminate()
 	{
 	}
@@ -229,6 +288,9 @@ private:
 
 	// Physics engine
 	PhysicsEngine physicsEngine;
+	
+	// Pathfinder
+	Pathfinder pathfinder;
 
 	// World state
 	WorldState worldState;

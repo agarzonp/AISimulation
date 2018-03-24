@@ -30,6 +30,8 @@ public:
 
 	virtual ~Renderable(){}
 
+	glm::vec4& Color() { return color; }
+
 	// Set visible
 	void SetVisible(bool visible) { isVisible = visible; }
 
