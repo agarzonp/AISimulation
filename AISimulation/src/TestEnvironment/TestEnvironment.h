@@ -65,6 +65,13 @@ public:
 		}
 		case GLFW_KEY_TAB:
 		{
+			static PathScheduler::PathRequestHandler pathRequest;
+			if (pathRequest)
+			{
+				// cancel current request as we are goint to request a new one
+				pathRequest.Cancel();
+			}
+
 			std::srand((unsigned)std::chrono::system_clock::now().time_since_epoch().count());
 
 			PathRequestData pathRequestData;
@@ -75,7 +82,6 @@ public:
 				printf("PathRequest %d result: %d pathSize: %d\n", id, resultStatus, path.size());
 			};
 
-			static PathScheduler::PathRequestHandler pathRequest;
 			pathRequest = pathfinder.RequestPath(pathRequestData);
 			break;
 		}
@@ -252,7 +258,7 @@ protected:
 	void InitPathfinder()
 	{
 		PathfinderData pathfinderData;
-		pathfinderData.pathPlannerType = PathPlannerType::A_STAR;
+		pathfinderData.pathPlannerData.type = PathPlannerType::A_STAR;
 		pathfinderData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
 		pathfinderData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
 		pathfinderData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);

@@ -70,7 +70,7 @@ public:
 			}
 
 			// operator bool
-			operator bool() const { return id > 0 && pathScheduler; }
+			operator bool() const { return id > 0 && pathScheduler && pathScheduler->IsRequestEnqueued(id); }
 
 			// Cancel
 			void Cancel()
@@ -112,6 +112,12 @@ public:
 	}
 
 protected:
+
+	// Is request enqueued
+	bool IsRequestEnqueued(PathRequestId requestId)
+	{
+		return requests.find(requestId) != requests.end();
+	}
 
 	// Cancel request
 	void CancelRequest(PathRequestId requestId)
