@@ -52,6 +52,38 @@ public:
 		case GLFW_KEY_O:
 			worldState.isDoorOpen = !worldState.isDoorOpen;
 			break;
+
+		case GLFW_KEY_1:
+		{
+			pathfindingSystem.debugRenderSearchSpace = !pathfindingSystem.debugRenderSearchSpace;
+			break;
+		}
+		case GLFW_KEY_2:
+		{
+			pathfindingSystem.debugRenderPath = !pathfindingSystem.debugRenderPath;
+			break;
+		}
+		case GLFW_KEY_TAB:
+		{
+			std::srand((unsigned)std::chrono::system_clock::now().time_since_epoch().count());
+
+			PathRequestData pathRequestData;
+			//pathRequestData.start = MathGeom::Vector3(-50 + std::rand()%100, 0.0f, -50 + std::rand() % 100);
+			//pathRequestData.goal = MathGeom::Vector3(-50 + std::rand() % 100, 0.0f, -50 + std::rand() % 100);
+			
+			pathRequestData.start = MathGeom::Vector3(15.0f, 0.0f, -45.0f);
+			pathRequestData.goal = MathGeom::Vector3(-45.0f, 0.0f, -5.0f);
+			pathRequestData.onPathRequestResult = [](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
+			{
+				printf("PathRequest %d result: %d pathSize: %d\n", id, resultStatus, path.size());
+			};
+
+			static Pathfinder::PathRequestHandler pathRequest;
+			pathRequest = pathfindingSystem.RequestPath(pathRequestData);
+			break;
+		}
+			
+			
 		}
 	}
 

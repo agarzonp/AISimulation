@@ -7,15 +7,25 @@
 // PathRequestId
 using PathRequestId = size_t;
 
-// PathRequestResult
-struct PathRequestResult
+// PathRequestResultStatus
+enum class PathRequestResultStatus
 {
-	PathRequestId id;
-	std::vector<MathGeom::Vector3> path;
+	PathNotFound,
+
+	PathNotFound_StartNotLocalised,
+	PathNotFound_GoalNotLocalised,
+
+	PathNotFound_StartBlocked,
+	PathNotFound_GoalBlocked,
+		
+	PathFound
 };
 
+// Path
+using Path = std::vector<MathGeom::Vector3>;
+
 // OnPathRequestResult
-using OnPathRequestResult = std::function<void(const PathRequestResult& result)>;
+using OnPathRequestResult = std::function<void(PathRequestId id, PathRequestResultStatus resultStatus, Path& path)>;
 
 // PathRequestPriority
 enum class PathRequestPriority

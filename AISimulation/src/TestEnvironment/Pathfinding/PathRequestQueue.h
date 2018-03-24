@@ -8,12 +8,12 @@
 class PathRequestQueue
 {
 	// queue
-	std::deque<const PathRequest*> queue;
+	std::deque<PathRequest*> queue;
 
 public:
 
 	// Enqueue
-	bool Enqueue(const PathRequest& request)
+	bool Enqueue(PathRequest& request)
 	{
 		switch (request.data.priority)
 		{
@@ -44,7 +44,7 @@ public:
 	}
 
 	// Get request
-	const PathRequest* GetRequest()
+	PathRequest* GetRequest()
 	{
 		if (queue.size() > 0)
 		{

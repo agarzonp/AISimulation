@@ -16,6 +16,13 @@ namespace MathGeom
 	using Quaternion = glm::quat;
 
 	const double PI = 3.14159265358979323846;
+
+	float DistanceSq(const Vector3& a, const Vector3& b)
+	{
+		Vector3 fromAtoB = b - a;
+
+		return fromAtoB.x * fromAtoB.x + fromAtoB.y * fromAtoB.y + fromAtoB.z * fromAtoB.z;
+	}
 }
 
 

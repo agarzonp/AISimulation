@@ -57,12 +57,21 @@ public:
 	}
 
 	// Debug render
+	bool debugRenderSearchSpace{ false };
+	bool debugRenderPath{ false };
 	void DebugRender(const MathGeom::Matrix4& viewProjection)
 	{
-		if (searchSpace)
+		if (debugRenderPath)
+		{
+			pathfinder.DebugRender(viewProjection);
+		}
+
+		if (searchSpace && debugRenderSearchSpace)
 		{
 			searchSpace->DebugRender(viewProjection);
 		}
+
+		
 	}
 
 private:
