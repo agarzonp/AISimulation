@@ -13,7 +13,7 @@
 
 #include "MathGeom.h"
 #include "Camera/FreeCamera.h"
-#include "Pathfinding/PathfindingSystem.h"
+#include "Pathfinding/Pathfinder.h"
 
 #include "AIEntity.h"
 #include "GameObject.h"
@@ -55,12 +55,12 @@ public:
 
 		case GLFW_KEY_1:
 		{
-			pathfindingSystem.debugRenderSearchSpace = !pathfindingSystem.debugRenderSearchSpace;
+			pathfinder.debugRenderSearchSpace = !pathfinder.debugRenderSearchSpace;
 			break;
 		}
 		case GLFW_KEY_2:
 		{
-			pathfindingSystem.debugRenderPath = !pathfindingSystem.debugRenderPath;
+			pathfinder.debugRenderPath = !pathfinder.debugRenderPath;
 			break;
 		}
 		case GLFW_KEY_TAB:
@@ -68,18 +68,15 @@ public:
 			std::srand((unsigned)std::chrono::system_clock::now().time_since_epoch().count());
 
 			PathRequestData pathRequestData;
-			//pathRequestData.start = MathGeom::Vector3(-50 + std::rand()%100, 0.0f, -50 + std::rand() % 100);
-			//pathRequestData.goal = MathGeom::Vector3(-50 + std::rand() % 100, 0.0f, -50 + std::rand() % 100);
-			
-			pathRequestData.start = MathGeom::Vector3(15.0f, 0.0f, -45.0f);
-			pathRequestData.goal = MathGeom::Vector3(-45.0f, 0.0f, -5.0f);
+			pathRequestData.start = MathGeom::Vector3(-50 + std::rand()%100, 0.0f, -50 + std::rand() % 100);
+			pathRequestData.goal = MathGeom::Vector3(-50 + std::rand() % 100, 0.0f, -50 + std::rand() % 100);
 			pathRequestData.onPathRequestResult = [](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
 			{
 				printf("PathRequest %d result: %d pathSize: %d\n", id, resultStatus, path.size());
 			};
 
-			static Pathfinder::PathRequestHandler pathRequest;
-			pathRequest = pathfindingSystem.RequestPath(pathRequestData);
+			static PathScheduler::PathRequestHandler pathRequest;
+			pathRequest = pathfinder.RequestPath(pathRequestData);
 			break;
 		}
 			
@@ -103,7 +100,7 @@ public:
 
 		aiEntity.Update(worldState);
 
-		pathfindingSystem.Update();
+		pathfinder.Update();
 	}
 
 	// Render
@@ -118,7 +115,7 @@ public:
 			gameObject.Render(viewProjection);
 		}
 
-		pathfindingSystem.DebugRender(viewProjection);
+		pathfinder.DebugRender(viewProjection);
 	}
 	
 protected:
@@ -259,7 +256,7 @@ protected:
 		pathfindingSystemData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
 		pathfindingSystemData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);
 		pathfindingSystemData.gridCellSize = 10.0f;
-		pathfindingSystem.Init(pathfindingSystemData);
+		pathfinder.Init(pathfindingSystemData);
 	}
 
 	void Terminate()
@@ -286,8 +283,8 @@ private:
 	// Physics engine
 	PhysicsEngine physicsEngine;
 
-	// Pathfinding system
-	PathfindingSystem pathfindingSystem;
+	// Pathfinder
+	Pathfinder pathfinder;
 
 	// World state
 	WorldState worldState;

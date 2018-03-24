@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "../Render/RenderUtils.h"
+#include "../../Render/RenderUtils.h"
 
-#include "PathNode.h"
+#include "../PathNode.h"
 
 // Search space type
 enum class SearchSpaceType
