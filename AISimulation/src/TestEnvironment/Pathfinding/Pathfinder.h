@@ -14,7 +14,7 @@ using Path = std::vector<MathGeom::Vector3>;
 struct PathfinderData
 {
 	SearchSpaceData searchSpaceData;
-	PathPlannerType pathPlannerType;
+	PathPlannerData pathPlannerData;
 	float gridCellSize{ 1.0f };
 };
 
@@ -52,10 +52,10 @@ public:
 		}
 
 		// create planner
-		switch (data.pathPlannerType)
+		switch (data.pathPlannerData.type)
 		{
 		case PathPlannerType::A_STAR:
-			pathPlanner = std::make_shared<AStar>();
+			pathPlanner = std::make_shared<AStar>(data.pathPlannerData);
 			break;
 		default:
 			assert(false);

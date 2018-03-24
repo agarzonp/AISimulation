@@ -3,14 +3,31 @@
 
 #include "../PathNode.h"
 
+// number of revolutions that the algorithm can perform
+static const int DEFAULT_MAX_REVOLUTIONS = 200;
+
+// Path planner data
+struct PathPlannerData
+{
+	PathPlannerType type;
+	int maxRevolutions = DEFAULT_MAX_REVOLUTIONS;
+};
+
+// Abstrac path planner
 class PathPlanner
 {
+
 protected:
 
 	bool searchCompleted{ false };
 	bool pathFound{ false };
 
+	int maxRevolutions{ DEFAULT_MAX_REVOLUTIONS };
+
 public:
+
+	// Constructors
+	PathPlanner(const PathPlannerData& data): maxRevolutions(data.maxRevolutions){}
 
 	// Start search
 	virtual bool StartSearch(PathNode* start, PathNode* goal) = 0;

@@ -17,6 +17,9 @@ class AStar : public PathPlanner
 
 public:
 
+	// Consructors
+	AStar(const PathPlannerData& data) : PathPlanner(data) {}
+
 	// Start search
 	bool StartSearch(PathNode* start, PathNode* goal) final
 	{
@@ -105,6 +108,7 @@ private:
 	// Search
 	bool Search()
 	{
+		int revolution = 0;
 		while (open.size() > 0)
 		{
 			// get cheapest from open
@@ -119,9 +123,16 @@ private:
 
 			// Evaluate
 			Evaluate(current);
+
+			// check search allowance
+			if (revolution++ >= maxRevolutions)
+			{
+				// allowance surpassed so exit and continue next frame
+				break;
+			}
 		}
 
-		searchCompleted = true;
+		searchCompleted = (pathFound || open.size() == 0);
 
 		return searchCompleted;
 	}
