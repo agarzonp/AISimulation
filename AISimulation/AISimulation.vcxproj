@@ -167,9 +167,9 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\AStar.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\PathPlanner.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\PathPlannerTypes.h" />
-    <ClInclude Include="src\TestEnvironment\Pathfinding\PathScheduler\PathScheduler.h" />
-    <ClInclude Include="src\TestEnvironment\Pathfinding\PathScheduler\PathRequest.h" />
-    <ClInclude Include="src\TestEnvironment\Pathfinding\PathScheduler\PathRequestQueue.h" />
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestScheduler\PathRequest.h" />
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestScheduler\PathRequestQueue.h" />
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestScheduler\PathRequestScheduler.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\NavGrid.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\SearchSpace.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\SearchSpaceTypes.h" />

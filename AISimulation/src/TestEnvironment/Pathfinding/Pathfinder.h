@@ -8,7 +8,7 @@ using Path = std::vector<MathGeom::Vector3>;
 
 #include "SearchSpace/SearchSpaceTypes.h"
 #include "PathPlanner/PathPlannerTypes.h"
-#include "PathScheduler/PathScheduler.h"
+#include "PathRequestScheduler/PathRequestScheduler.h"
 
 // Pathfinder data
 struct PathfinderData
@@ -26,8 +26,8 @@ class Pathfinder
 	// path planner
 	std::shared_ptr<PathPlanner> pathPlanner;
 
-	// path scheduler
-	PathScheduler pathScheduler;
+	// path request scheduler
+	PathRequestScheduler pathRequestScheduler;
 
 public:
 	
@@ -63,19 +63,26 @@ public:
 		}
 
 		// init scheduler
-		pathScheduler.Init(searchSpace, pathPlanner);
+		pathRequestScheduler.Init(searchSpace, pathPlanner);
 	}
 
 	// Request path
-	PathScheduler::PathRequestHandler RequestPath(const PathRequestData& requestData)
+	PathRequestId RequestPath(const PathRequestData& requestData)
 	{
-		return pathScheduler.RequestPath(requestData);
+		// add the request to the scheduler
+		return pathRequestScheduler.AddRequest(requestData);
+	}
+
+	// Cancel request
+	void CancelRequest(PathRequestId requestId)
+	{
+		return pathRequestScheduler.CancelRequest(requestId);
 	}
 
 	// Update
 	void Update()
 	{
-		pathScheduler.Update();
+		pathRequestScheduler.Update();
 	}
 
 	// Debug render

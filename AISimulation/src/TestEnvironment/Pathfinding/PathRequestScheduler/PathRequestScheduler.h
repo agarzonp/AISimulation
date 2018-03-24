@@ -1,5 +1,5 @@
-#ifndef PATH_SCHEDULER_H
-#define PATH_SCHEDULER_H
+#ifndef PATH_REQUEST_SCHEDULER_H
+#define PATH_REQUEST_SCHEDULER_H
 
 #include <map>
 
@@ -9,7 +9,7 @@
 #include "../SearchSpace/SearchSpace.h"
 #include "../PathPlanner/PathPlanner.h"
 
-class PathScheduler
+class PathRequestScheduler
 {
 	// path requests
 	std::map<PathRequestId, PathRequest> requests;
@@ -35,57 +35,8 @@ public:
 		this->pathPlanner = pathPlanner;
 	}
 
-	// Handler for the path request
-	class PathRequestHandler
-	{
-		// id
-		PathRequestId id { 0 };
-		PathScheduler* pathScheduler { nullptr };
-
-		public:
-
-			// Constructors
-			PathRequestHandler() = default;
-			PathRequestHandler(PathRequestId id_, PathScheduler* pathfinder_) : id(id_), pathScheduler(pathfinder_) {}
-			PathRequestHandler(const PathRequestHandler& other) = delete;
-			PathRequestHandler(PathRequestHandler&& other) { *this = std::move(other); }
-			
-			// Desctructor
-			~PathRequestHandler() { Cancel(); }
-
-			// Assignment operators
-			PathRequestHandler& operator=(const PathRequestHandler& other) = delete;
-			PathRequestHandler& operator=(PathRequestHandler&& other)
-			{
-				if (this != &other)
-				{
-					this->id = other.id;
-					this->pathScheduler = other.pathScheduler;
-					
-					other.id = 0;
-					other.pathScheduler = nullptr;
-				}
-			
-				return *this;
-			}
-
-			// operator bool
-			operator bool() const { return id > 0 && pathScheduler && pathScheduler->IsRequestEnqueued(id); }
-
-			// Cancel
-			void Cancel()
-			{
-				if (pathScheduler)
-				{
-					pathScheduler->CancelRequest(id);
-					pathScheduler = nullptr;
-					id = 0;
-				}
-			}
-	};
-
-	// Request path
-	PathRequestHandler RequestPath(const PathRequestData& requestData)
+	// Add request
+	PathRequestId AddRequest(const PathRequestData& requestData)
 	{
 		// increase request count
 		requestCount++;
@@ -100,8 +51,14 @@ public:
 			request.state = PathRequest::State::QUEUED;
 		}
 
-		// return a handler for the registered request
-		return PathRequestHandler(request.id, this);
+		return request.id;
+	}
+
+	// Cancel request
+	void CancelRequest(PathRequestId requestId)
+	{
+		requestQueue.Remove(requestId);
+		requests.erase(requestId);
 	}
 
 	// Update
@@ -117,13 +74,6 @@ protected:
 	bool IsRequestEnqueued(PathRequestId requestId)
 	{
 		return requests.find(requestId) != requests.end();
-	}
-
-	// Cancel request
-	void CancelRequest(PathRequestId requestId)
-	{
-		requestQueue.Remove(requestId);
-		requests.erase(requestId);
 	}
 
 private:
@@ -251,5 +201,5 @@ private:
 	}
 };
 
-#endif // !PATHFINDER_H
+#endif // !PATH_REQUEST_SCHEDULER_H
 

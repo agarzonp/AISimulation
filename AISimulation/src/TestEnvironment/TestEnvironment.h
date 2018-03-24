@@ -65,12 +65,11 @@ public:
 		}
 		case GLFW_KEY_TAB:
 		{
-			static PathScheduler::PathRequestHandler pathRequest;
-			if (pathRequest)
-			{
-				// cancel current request as we are goint to request a new one
-				pathRequest.Cancel();
-			}
+			static PathRequestId pathRequestId;
+
+			// cancel current request as we are goint to request a new one
+			pathfinder.CancelRequest(pathRequestId);
+			
 
 			std::srand((unsigned)std::chrono::system_clock::now().time_since_epoch().count());
 
@@ -82,7 +81,7 @@ public:
 				printf("PathRequest %d result: %d pathSize: %d\n", id, resultStatus, path.size());
 			};
 
-			pathRequest = pathfinder.RequestPath(pathRequestData);
+			pathRequestId = pathfinder.RequestPath(pathRequestData);
 			break;
 		}
 			
@@ -289,7 +288,7 @@ private:
 
 	// Physics engine
 	PhysicsEngine physicsEngine;
-
+	
 	// Pathfinder
 	Pathfinder pathfinder;
 

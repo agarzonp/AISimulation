@@ -82,11 +82,11 @@
     <Filter Include="Source Files\TestEnvironment\Pathfinding\SearchSpace">
       <UniqueIdentifier>{146237f8-3faf-4a91-9bae-679bd51fa863}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\TestEnvironment\Pathfinding\PathScheduler">
-      <UniqueIdentifier>{5cf15919-82aa-4e54-9029-786b9aa4cc60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\TestEnvironment\Pathfinding\PathPlanner">
       <UniqueIdentifier>{5bf7350d-0679-44a2-8cb2-5a77cc52e9d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestEnvironment\Pathfinding\PathRequestScheduler">
+      <UniqueIdentifier>{5cf15919-82aa-4e54-9029-786b9aa4cc60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -266,20 +266,11 @@
     <ClInclude Include="src\TestEnvironment\Render\RenderUtils.h">
       <Filter>Source Files\TestEnvironment\Render</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestEnvironment\Pathfinding\PathScheduler\PathRequest.h">
-      <Filter>Source Files\TestEnvironment\Pathfinding\PathScheduler</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TestEnvironment\Pathfinding\PathScheduler\PathRequestQueue.h">
-      <Filter>Source Files\TestEnvironment\Pathfinding\PathScheduler</Filter>
-    </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\NavGrid.h">
       <Filter>Source Files\TestEnvironment\Pathfinding\SearchSpace</Filter>
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\SearchSpace.h">
       <Filter>Source Files\TestEnvironment\Pathfinding\SearchSpace</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TestEnvironment\Pathfinding\PathScheduler\PathScheduler.h">
-      <Filter>Source Files\TestEnvironment\Pathfinding\PathScheduler</Filter>
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\Pathfinder.h">
       <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
@@ -295,6 +286,15 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\PathPlannerTypes.h">
       <Filter>Source Files\TestEnvironment\Pathfinding\PathPlanner</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestScheduler\PathRequest.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathRequestScheduler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestScheduler\PathRequestQueue.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathRequestScheduler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestScheduler\PathRequestScheduler.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathRequestScheduler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
