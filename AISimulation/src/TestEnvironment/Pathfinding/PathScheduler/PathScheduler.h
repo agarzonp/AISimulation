@@ -47,9 +47,27 @@ public:
 			// Constructors
 			PathRequestHandler() = default;
 			PathRequestHandler(PathRequestId id_, PathScheduler* pathfinder_) : id(id_), pathScheduler(pathfinder_) {}
-
+			PathRequestHandler(const PathRequestHandler& other) = delete;
+			PathRequestHandler(PathRequestHandler&& other) { *this = std::move(other); }
+			
 			// Desctructor
-			//~PathRequestHandler() { Cancel(); } // FIXME: Use move semantics!
+			~PathRequestHandler() { Cancel(); }
+
+			// Assignment operators
+			PathRequestHandler& operator=(const PathRequestHandler& other) = delete;
+			PathRequestHandler& operator=(PathRequestHandler&& other)
+			{
+				if (this != &other)
+				{
+					this->id = other.id;
+					this->pathScheduler = other.pathScheduler;
+					
+					other.id = 0;
+					other.pathScheduler = nullptr;
+				}
+			
+				return *this;
+			}
 
 			// operator bool
 			operator bool() const { return id > 0 && pathScheduler; }
