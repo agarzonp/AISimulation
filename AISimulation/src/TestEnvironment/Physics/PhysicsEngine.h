@@ -95,6 +95,13 @@ public:
 		HandleCollisions();
 	}
 
+	// Debug render
+	void DebugRender(const glm::mat4& viewProjection)
+	{
+		// debug render colliders
+		DebugRenderColliders(viewProjection);
+	}
+
 private:
 
 	// Set collider
@@ -107,10 +114,24 @@ private:
 
 			switch (colliderDesc->type)
 			{
+			case ColliderType::AABB:
+			{
+				collider = std::make_unique<AABBCollider>(colliderDesc->transform);
+				break;
+			}
+			case ColliderType::PLANE:
+			{
+				MathGeom::Vector3 pointA = static_cast<PlaneColliderDesc*>(colliderDesc.get())->pointA;
+				MathGeom::Vector3 pointB = static_cast<PlaneColliderDesc*>(colliderDesc.get())->pointB;
+				MathGeom::Vector3 pointC = static_cast<PlaneColliderDesc*>(colliderDesc.get())->pointC;
+
+				collider = std::make_unique<PlaneCollider>(pointA, pointB, pointC, colliderDesc->transform);
+
+				break;
+			}
 			case ColliderType::SPHERE:
 			{
-				float radius = static_cast<SphereColliderDesc*>(colliderDesc.get())->radius;
-				collider = std::make_unique<SphereCollider>(radius, colliderDesc->transform);
+				collider = std::make_unique<SphereCollider>(colliderDesc->transform);
 				break;
 			}
 			default:
@@ -167,13 +188,42 @@ private:
 			{
 				if (collisionDetector.IsCollision(*physicObjects[i], *physicObjects[j]))
 				{
+					printf("Collision!\n");
 				}
 			}
 		}
 	}
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+// DEBUG
+public:
+
+	static bool s_renderColliders;
+
+private:
+
+	// Render colliders
+	void DebugRenderColliders(const MathGeom::Matrix4& viewProjection)
+	{
+		if (s_renderColliders)
+		{
+			for (size_t i = 0; i < physicObjects.size(); i++)
+			{
+				physicObjects[i]->DebugRenderCollider(viewProjection);
+			}
+		}
+	}
+
+// DEBUG
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 };
+
+bool PhysicsEngine::s_renderColliders = false;
 
 #endif // !PHYSICS_ENGINE
 

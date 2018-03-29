@@ -4,12 +4,15 @@
 #include "../MathGeom.h"
 
 #include "Meshes/CubeMesh.h"
+#include "Meshes/SphereMesh.h"
 #include "Renderable.h"
+#include "SphereRenderable.h"
 
 class RenderUtils
 {
-	// cube renderable
+	// renderables
 	static std::unique_ptr<Renderable> cubeRenderable;
+	static std::unique_ptr<SphereRenderable> sphereRenderable;
 
 public:
 	
@@ -17,6 +20,11 @@ public:
 	static void InitCubeRenderable(Shader& shader, CubeMesh* cubeMesh)
 	{
 		cubeRenderable = std::make_unique<Renderable>(cubeMesh, shader, glm::vec4(0.5f, 0.0f, 0.0f, 1.0f));
+	}
+
+	static void InitSphereRenderable(Shader& shader, SphereMesh* sphereMesh)
+	{
+		sphereRenderable = std::make_unique<SphereRenderable>(1.0f, sphereMesh, shader, glm::vec4(0.5f, 0.0f, 0.0f, 1.0f));
 	}
 
 	// Render cube
@@ -28,6 +36,19 @@ public:
 			cubeRenderable->SetVisible(true);
 			cubeRenderable->Render(viewProjection, transform);
 			cubeRenderable->SetVisible(false);
+		}
+	}
+
+	// Render cube
+	static void RenderSphere(const MathGeom::Matrix4& viewProjection, float radius, const Transform& transform, unsigned hexColor)
+	{
+		if (sphereRenderable)
+		{
+			sphereRenderable->Radius() = radius;
+			sphereRenderable->Color() = GetColor(hexColor);
+			sphereRenderable->SetVisible(true);
+			sphereRenderable->Render(viewProjection, transform);
+			sphereRenderable->SetVisible(false);
 		}
 	}
 
@@ -50,6 +71,7 @@ public:
 };
 
 std::unique_ptr<Renderable> RenderUtils::cubeRenderable;
+std::unique_ptr<SphereRenderable> RenderUtils::sphereRenderable;
 
 #endif // !RENDER_UTILS_H
 
