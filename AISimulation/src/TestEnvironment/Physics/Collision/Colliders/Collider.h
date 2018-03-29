@@ -4,7 +4,11 @@
 enum class ColliderType
 {
 	INVALID,
+
+	AABB,
+	PLANE,
 	SPHERE
+	
 };
 
 class Collider
@@ -35,6 +39,9 @@ public:
 
 	// Set transform
 	void SetTransform(const Transform& transform_) { transform = transform_; }
+
+	// Debug Render
+	virtual void DebugRender(const glm::mat4& viewProjection) = 0;
 };
 
 #endif // !COLLIDER_H

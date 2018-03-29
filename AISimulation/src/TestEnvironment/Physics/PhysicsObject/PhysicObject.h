@@ -98,6 +98,15 @@ public:
 		accumulatedForces = MathGeom::Vector3();
 	}
 
+	// Debg render collider
+	void DebugRenderCollider(const glm::mat4& viewProjection)
+	{
+		if (collider)
+		{
+			collider->DebugRender(viewProjection);
+		}
+	}
+
 };
 
 #endif // !PHYSIC_OBJECT_H

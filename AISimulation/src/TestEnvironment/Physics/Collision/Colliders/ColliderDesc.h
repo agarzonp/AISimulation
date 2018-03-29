@@ -1,7 +1,7 @@
 #ifndef COLLIDER_DESC_H
 #define	COLLIDER_DESC_H
 
-// ColliderDesc
+// Collider desc
 struct ColliderDesc
 {
 	ColliderType type{ ColliderType::INVALID };
@@ -14,14 +14,36 @@ struct ColliderDesc
 	}
 };
 
-// SphereColliderDesc
+// AABB collider desc
+struct AABBColliderDesc : public ColliderDesc
+{
+	AABBColliderDesc(Transform& transform)
+		: ColliderDesc(ColliderType::AABB, transform)
+	{
+	}
+};
+
+// Plane collider desc
+struct PlaneColliderDesc : public ColliderDesc
+{
+	MathGeom::Vector3 pointA;
+	MathGeom::Vector3 pointB;
+	MathGeom::Vector3 pointC;
+
+	PlaneColliderDesc(MathGeom::Vector3& a, MathGeom::Vector3& b, MathGeom::Vector3& c, Transform& transform)
+		: ColliderDesc(ColliderType::PLANE, transform)
+		, pointA(a)
+		, pointB(b)
+		, pointC(c)
+	{
+	}
+};
+
+// Sphere collider desc
 struct SphereColliderDesc : public ColliderDesc
 {
-	float radius{ 1.0f };
-
-	SphereColliderDesc(float radius_, Transform& transform)
+	SphereColliderDesc(Transform& transform)
 		: ColliderDesc(ColliderType::SPHERE, transform)
-		, radius(radius_)
 	{
 	}
 };

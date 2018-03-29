@@ -31,8 +31,19 @@ private:
 	{
 		switch (GetCollisionTestType(colliderA, colliderB))
 		{
+		case CollisionTest::Type::NONE:
+			return false;
+
+		case CollisionTest::Type::AABB_AABB:
+			return CollisionTest::AABB_AABB(colliderA, colliderB);
+		case CollisionTest::Type::AABB_PLANE:
+			return CollisionTest::AABB_Plane(colliderA, colliderB);
+		case CollisionTest::Type::AABB_SPHERE:
+			return CollisionTest::AABB_Sphere(colliderA, colliderB);
+		case CollisionTest::Type::SPHERE_PLANE:
+			return CollisionTest::Sphere_Plane(colliderA, colliderB);
 		case CollisionTest::Type::SPHERE_SPHERE:
-			return CollisionTest::SphereShere(*static_cast<const SphereCollider*>(&colliderA), *static_cast<const SphereCollider*>(&colliderB));
+			return CollisionTest::Sphere_Sphere(colliderA, colliderB);
 		default:
 			assert(false);
 			break;
@@ -51,10 +62,70 @@ private:
 
 		switch (colliderTypeA)
 		{
+			case ColliderType::AABB:
+			{
+				switch (colliderTypeB)
+				{
+				case ColliderType::AABB:
+				{
+					testType = CollisionTest::Type::AABB_AABB;
+					break;
+				}
+				case ColliderType::PLANE:
+				{
+					testType = CollisionTest::Type::AABB_PLANE;
+					break;
+				}
+				case ColliderType::SPHERE:
+				{
+					testType = CollisionTest::Type::AABB_SPHERE;
+					break;
+				}
+				default:
+					assert(false);
+					break;
+				}
+				break;
+			}
+			case ColliderType::PLANE:
+			{
+				switch (colliderTypeB)
+				{
+				case ColliderType::AABB:
+				{
+					testType = CollisionTest::Type::AABB_PLANE;
+					break;
+				}
+				case ColliderType::PLANE:
+				{
+					testType = CollisionTest::Type::NONE;
+					break;
+				}
+				case ColliderType::SPHERE:
+				{
+					testType = CollisionTest::Type::SPHERE_PLANE;
+					break;
+				}
+				default:
+					assert(false);
+					break;
+				}
+				break;
+			}
 			case ColliderType::SPHERE:
 			{
 				switch (colliderTypeB)
 				{
+				case ColliderType::AABB:
+				{
+					testType = CollisionTest::Type::AABB_SPHERE;
+					break;
+				}
+				case ColliderType::PLANE:
+				{
+					testType = CollisionTest::Type::SPHERE_PLANE;
+					break;
+				}
 				case ColliderType::SPHERE:
 				{
 					testType = CollisionTest::Type::SPHERE_SPHERE;
@@ -66,6 +137,7 @@ private:
 				}
 				break;
 			}
+			
 			default:
 			assert(false);
 			break;
