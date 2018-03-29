@@ -17,11 +17,17 @@ public:
 	{
 	}
 
+	float& Radius() { return radius; }
+
 protected:
 
 	glm::mat4 ModelMatrix(const Transform& transform) override
-	{			
-		return glm::scale(Renderable::ModelMatrix(transform), radius * transform.scale);
+	{		
+		Transform sphereTransfom;
+		sphereTransfom.position = transform.position;
+		sphereTransfom.scale *= radius;
+
+		return Renderable::ModelMatrix(sphereTransfom);
 	}
 };
 

@@ -296,6 +296,18 @@
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathRequestScheduler\PathRequestScheduler.h">
       <Filter>Source Files\TestEnvironment\Pathfinding\PathRequestScheduler</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\ClosestPointOn.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\DistanceTo.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\AABBCollider.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\PlaneCollider.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
