@@ -12,10 +12,16 @@ public:
 
 	// Constructor
 	SphereCollider() = delete;
-	SphereCollider(float radius_, Transform& transform)
+	SphereCollider(Transform& transform)
 		: Collider(ColliderType::SPHERE, transform)
-		, radius(radius_)
 	{
+		radius = std::fmaxf(std::fmaxf(transform.scale.x, transform.scale.y), transform.scale.z);
+	}
+
+	// Debug Render
+	void DebugRender(const glm::mat4& viewProjection) final
+	{
+		RenderUtils::RenderSphere(viewProjection, radius + 0.01f, transform, 0xFFFFFF);
 	}
 };
 
