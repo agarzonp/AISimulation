@@ -173,6 +173,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\NavGrid.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\SearchSpace.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\SearchSpace\SearchSpaceTypes.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\CollisionManager.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Collision\ClosestPointOn.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\AABBCollider.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\Collider.h" />
@@ -181,6 +182,9 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\SphereCollider.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Collision\CollisionDetector.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Collision\CollisionTest.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\ContactData.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\ContactsGenerator.h" />
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\ContactsResolver.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Collision\DistanceTo.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Forces\Forces.h" />
     <ClInclude Include="src\TestEnvironment\Physics\Forces\GravityForce.h" />

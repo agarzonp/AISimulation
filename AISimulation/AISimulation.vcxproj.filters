@@ -308,6 +308,18 @@
     <ClInclude Include="src\TestEnvironment\Physics\Collision\Colliders\PlaneCollider.h">
       <Filter>Source Files\TestEnvironment\Physics\Collision\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\CollisionManager.h">
+      <Filter>Source Files\TestEnvironment\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\ContactData.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\ContactsGenerator.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Physics\Collision\ContactsResolver.h">
+      <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
