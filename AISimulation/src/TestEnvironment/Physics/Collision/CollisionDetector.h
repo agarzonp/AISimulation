@@ -10,7 +10,7 @@ class CollisionDetector
 public:
 
 	// IsCollision
-	bool IsCollision(const PhysicObject& objectA, const PhysicObject& objectB)
+	bool IsCollision(PhysicObject& objectA, PhysicObject& objectB, Contacts& outContacts)
 	{
 		if (!objectA.HasCollider() || !objectB.HasCollider())
 		{
@@ -21,13 +21,13 @@ public:
 		const Collider& colliderA = objectA.GetCollider();
 		const Collider& colliderB = objectB.GetCollider();
 
-		return Test(colliderA, colliderB);
+		return Test(colliderA, colliderB, outContacts);
 	}
 
 private:
 
 	// Test collision
-	bool Test(const Collider& colliderA, const Collider& colliderB)
+	bool Test(const Collider& colliderA, const Collider& colliderB, Contacts& outContacts)
 	{
 		switch (GetCollisionTestType(colliderA, colliderB))
 		{
@@ -35,15 +35,15 @@ private:
 			return false;
 
 		case CollisionTest::Type::AABB_AABB:
-			return CollisionTest::AABB_AABB(colliderA, colliderB);
+			return CollisionTest::AABB_AABB(colliderA, colliderB, outContacts);
 		case CollisionTest::Type::AABB_PLANE:
-			return CollisionTest::AABB_Plane(colliderA, colliderB);
+			return CollisionTest::AABB_Plane(colliderA, colliderB, outContacts);
 		case CollisionTest::Type::AABB_SPHERE:
-			return CollisionTest::AABB_Sphere(colliderA, colliderB);
+			return CollisionTest::AABB_Sphere(colliderA, colliderB, outContacts);
 		case CollisionTest::Type::SPHERE_PLANE:
-			return CollisionTest::Sphere_Plane(colliderA, colliderB);
+			return CollisionTest::Sphere_Plane(colliderA, colliderB, outContacts);
 		case CollisionTest::Type::SPHERE_SPHERE:
-			return CollisionTest::Sphere_Sphere(colliderA, colliderB);
+			return CollisionTest::Sphere_Sphere(colliderA, colliderB, outContacts);
 		default:
 			assert(false);
 			break;

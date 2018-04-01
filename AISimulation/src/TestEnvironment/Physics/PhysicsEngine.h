@@ -5,15 +5,15 @@
 
 #include "../GameObject.h"
 
-#include "Collision/CollisionDetector.h"
 #include "Forces/Forces.h"
 #include "PhysicsObject/PhysicObjectDesc.h"
 #include "PhysicsObject/Particle.h"
 
+#include "CollisionManager.h"
+
 class PhysicsEngine
 {
 	// physic objects
-	using PhysicObjects = std::vector<PhysicObject*>;
 	PhysicObjects physicObjects;
 
 	// particles
@@ -27,8 +27,8 @@ class PhysicsEngine
 	using ForcesMap = std::map<ForcesMapEntryFirst, ForcesMapEntrySecond>;
 	ForcesMap forcesMap;
 
-	// Collision detector
-	CollisionDetector collisionDetector;
+	// Collision manager
+	CollisionManager collisionManager;
 
 public:
 
@@ -36,6 +36,9 @@ public:
 	void Init()
 	{
 		particles.reserve(MAX_PARTICLE_OBJECTS);
+		
+		size_t maxContacts = 500;
+		collisionManager.Init(maxContacts);
 	}
 
 	// Add physic to the game object
@@ -92,7 +95,7 @@ public:
 		Integrate(deltaTime);
 
 		// handle collision
-		HandleCollisions();
+		collisionManager.Update(physicObjects, deltaTime);
 	}
 
 	// Debug render
@@ -178,21 +181,6 @@ private:
 		}
 	}
 
-	// Handle collisions
-	void HandleCollisions()
-	{
-		// TO-DO: replace brute force approach by a broad phase collision detection using spatial partitioning techniques
-		for (size_t i = 0; i < physicObjects.size() - 1; i++)
-		{
-			for (size_t j = i + 1; j < physicObjects.size(); j++)
-			{
-				if (collisionDetector.IsCollision(*physicObjects[i], *physicObjects[j]))
-				{
-					printf("Collision!\n");
-				}
-			}
-		}
-	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
