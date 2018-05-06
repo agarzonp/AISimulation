@@ -26,6 +26,11 @@ class PathRequestScheduler
 	// path planner
 	std::shared_ptr<PathPlanner> pathPlanner;
 
+	// last start and goal
+	MathGeom::Vector3 lastStart;
+	MathGeom::Vector3 lastGoal;
+
+
 public:
 
 	// Init
@@ -80,6 +85,39 @@ public:
 		FindPaths();
 	}
 
+	// Debug render
+	void DebugRender(const MathGeom::Matrix4& viewProjection)
+	{
+		if (requestCount > 0)
+		{
+			Transform transform;
+			transform.position = lastStart;
+			RenderUtils::RenderCube(viewProjection, transform, 0x0000FF);
+
+			transform.position = lastGoal;
+			RenderUtils::RenderCube(viewProjection, transform, 0x0000FF);
+
+			PathNode* start = searchSpace->Localise(lastStart);
+			if (start)
+			{
+				transform.position = start->position;
+				RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
+			}
+
+			PathNode* goal = searchSpace->Localise(lastGoal);
+			if (goal)
+			{
+				transform.position = goal->position;
+				RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
+			}
+
+			if (start && goal && start->type != PathNodeType::BLOCKED && goal->type != PathNodeType::BLOCKED)
+			{
+				pathPlanner->DebugRender(viewProjection);
+			}
+		}
+	}
+
 protected:
 
 	// Is request enqueued
@@ -125,12 +163,17 @@ private:
 	{
 		assert(request.state == PathRequest::State::QUEUED || request.state == PathRequest::State::INTERRUPTED);
 
+		// for debugging purpose
+		pathPlanner->Reset();
+		lastStart = request.data.start;
+		lastGoal = request.data.goal;
+
 		// running request
 		request.state = PathRequest::State::RUNNING;
 
 		// Localise start/goal positions
-		PathNode* start = searchSpace->Localise(request.data.start);
-		PathNode* goal = searchSpace->Localise(request.data.goal);
+		PathNode* start = searchSpace->Localise(lastStart);
+		PathNode* goal = searchSpace->Localise(lastGoal);
 
 		// Validate request
 		if (Validate(request, start, goal))

@@ -38,6 +38,9 @@ public:
 	// Get path
 	virtual void GetPath(Path& path) = 0;
 
+	// Reset
+	virtual void Reset() = 0;
+	
 	// Debug render
 	virtual void DebugRender(const MathGeom::Matrix4& viewProjection) = 0;
 };

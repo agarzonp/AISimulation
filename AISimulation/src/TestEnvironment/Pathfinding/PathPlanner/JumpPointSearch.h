@@ -48,8 +48,6 @@ public:
   // Get path
   void GetPath(Path& path) final
   {
-    assert(searchCompleted);
-
     if (pathFound)
     {
       // go backwards to get the path
@@ -70,41 +68,51 @@ public:
   {
     if (start && goal)
     {
-      Transform transform;
-      transform.position = start->position;
-      RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+		Transform transform;
+		transform.position = start->position;
+		RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
 
-      transform.position = goal->position;
-      RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+		transform.position = goal->position;
+		RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
+
+		Path path;
+		GetPath(path);
+
+		for (auto& p : path)
+		{
+			Transform transform;
+			transform.position = p;
+			RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+		}
     }
   }
 
-private:
-
   // Reset
-  void Reset()
+  void Reset() override
   {
-    searchCompleted = false;
-    pathFound = false;
+	  searchCompleted = false;
+	  pathFound = false;
 
-    // clear lists
-    auto ClearList = [this](std::list<PathNode*>& list)
-    {
-      // reset nodes 
-      for (auto& node : list)
-      {
-        node->fCost = 0.0f;
-        node->gCost = 0.0f;
-        node->hCost = 0.0f;
-        node->parent = nullptr;
-      }
+	  // clear lists
+	  auto ClearList = [this](std::list<PathNode*>& list)
+	  {
+		  // reset nodes 
+		  for (auto& node : list)
+		  {
+			  node->fCost = 0.0f;
+			  node->gCost = 0.0f;
+			  node->hCost = 0.0f;
+			  node->parent = nullptr;
+		  }
 
-      list.clear();
-    };
+		  list.clear();
+	  };
 
-    ClearList(open);
-    ClearList(close);
+	  ClearList(open);
+	  ClearList(close);
   }
+
+private:
 
   // Search
   bool Search()

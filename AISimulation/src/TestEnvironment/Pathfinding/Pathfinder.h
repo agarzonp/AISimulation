@@ -110,7 +110,7 @@ public:
 	{
 		if (debugRenderPath)
 		{
-			pathPlanner->DebugRender(viewProjection);
+			pathRequestScheduler.DebugRender(viewProjection);
 		}
 
 		if (searchSpace && debugRenderSearchSpace)

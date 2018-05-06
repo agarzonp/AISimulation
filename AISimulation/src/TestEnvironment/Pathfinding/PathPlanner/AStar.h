@@ -47,8 +47,6 @@ public:
 	// Get path
 	void GetPath(Path& path) final
 	{
-		assert(searchCompleted);
-
 		if (pathFound)
 		{
 			// go backwards to get the path
@@ -71,17 +69,25 @@ public:
 		{
 			Transform transform;
 			transform.position = start->position;
-			RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+			RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
 
 			transform.position = goal->position;
-			RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+			RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
+
+			Path path;
+			GetPath(path);
+
+			for (auto& p : path)
+			{
+				Transform transform;
+				transform.position = p;
+				RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+			}
 		}
 	}
 
-private:
-
 	// Reset
-	void Reset()
+	void Reset() override
 	{
 		searchCompleted = false;
 		pathFound = false;
@@ -104,6 +110,8 @@ private:
 		ClearList(open);
 		ClearList(close);
 	}
+
+private:
 
 	// Search
 	bool Search()
