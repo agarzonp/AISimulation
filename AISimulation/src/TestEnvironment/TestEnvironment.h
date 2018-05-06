@@ -84,6 +84,17 @@ public:
 			pathRequestId = pathfinder.RequestPath(pathRequestData);
 			break;
 		}
+
+		case GLFW_KEY_J:
+		{
+			static bool jps = false;
+			jps = !jps;
+
+			PathPlannerData plannerData;
+			plannerData.type = jps ? PathPlannerType::JUMP_POINT_SEARCH : PathPlannerType::A_STAR;
+			pathfinder.SetPathPlanner(plannerData);
+		}
+			
 		}
 	}
 
@@ -271,7 +282,7 @@ protected:
 		pathfinderData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
 		pathfinderData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
 		pathfinderData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);
-		pathfinderData.gridCellSize = 10.0f;
+		pathfinderData.searchSpaceData.gridCellSize = 10.0f;
 		pathfinder.Init(pathfinderData);
 	}
 

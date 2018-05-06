@@ -17,9 +17,9 @@ public:
 	
 	// Constructors
 	NavGrid() = default;
-	NavGrid(const SearchSpaceData& data, float gridCellSize)
+	NavGrid(const SearchSpaceData& data)
 		: SearchSpace(data)
-		, cellSize(gridCellSize)
+		, cellSize(data.gridCellSize)
 	{ 
 	}
 

@@ -35,6 +35,18 @@ public:
 		this->pathPlanner = pathPlanner;
 	}
 
+	// Set search space
+	void SetSearchSpace(std::shared_ptr<SearchSpace> searchSpace)
+	{
+		this->searchSpace = searchSpace;
+	}
+
+	// Set path planner
+	void SetPathPlanner(std::shared_ptr<PathPlanner> pathPlanner)
+	{
+		this->pathPlanner = pathPlanner;
+	}
+
 	// Add request
 	PathRequestId AddRequest(const PathRequestData& requestData)
 	{

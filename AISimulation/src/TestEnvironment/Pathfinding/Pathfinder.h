@@ -15,7 +15,6 @@ struct PathfinderData
 {
 	SearchSpaceData searchSpaceData;
 	PathPlannerData pathPlannerData;
-	float gridCellSize{ 1.0f };
 };
 
 class Pathfinder
@@ -34,15 +33,24 @@ public:
 	// Init
 	void Init(const PathfinderData& data)
 	{
-		// create search space
-		switch (data.searchSpaceData.searchSpaceType)
+		// set search space
+		SetSearchSpace(data.searchSpaceData);
+
+		// set planner
+		SetPathPlanner(data.pathPlannerData);
+	}
+
+	// set search space
+	void SetSearchSpace(const SearchSpaceData& searchSpaceData)
+	{
+		switch (searchSpaceData.searchSpaceType)
 		{
-			case SearchSpaceType::OCTILE_GRID:
-				searchSpace = std::make_shared<NavGrid>(data.searchSpaceData, data.gridCellSize);
-				break;
-			default:
-				assert(false);
-				break;
+		case SearchSpaceType::OCTILE_GRID:
+			searchSpace = std::make_shared<NavGrid>(searchSpaceData);
+			break;
+		default:
+			assert(false);
+			break;
 		}
 
 		// build search space
@@ -51,22 +59,29 @@ public:
 			searchSpace->Build();
 		}
 
+		// set search space to the scheduler
+		pathRequestScheduler.SetSearchSpace(searchSpace);
+	}
+
+	// Set planner type
+	void SetPathPlanner(const PathPlannerData& pathPlannerData)
+	{
 		// create planner
-		switch (data.pathPlannerData.type)
+		switch (pathPlannerData.type)
 		{
 		case PathPlannerType::A_STAR:
-			pathPlanner = std::make_shared<AStar>(data.pathPlannerData);
+			pathPlanner = std::make_shared<AStar>(pathPlannerData);
 			break;
 		case PathPlannerType::JUMP_POINT_SEARCH:
-			pathPlanner = std::make_shared<JumpPointSearch>(data.pathPlannerData);
+			pathPlanner = std::make_shared<JumpPointSearch>(pathPlannerData);
 			break;
 		default:
 			assert(false);
 			break;
 		}
 
-		// init scheduler
-		pathRequestScheduler.Init(searchSpace, pathPlanner);
+		// set planner to the scheduler
+		pathRequestScheduler.SetPathPlanner(pathPlanner);
 	}
 
 	// Request path

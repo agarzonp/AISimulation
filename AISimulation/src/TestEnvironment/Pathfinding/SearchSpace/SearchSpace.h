@@ -13,9 +13,11 @@ struct SearchSpaceData
 	SearchSpaceType searchSpaceType;
 	MathGeom::Vector3 anchorPosition;
 	MathGeom::Vector3 worldSize;
+
+	float gridCellSize{ 1.0f };
 };
 
-// Seaerch space
+// Search space
 class SearchSpace
 {
 protected:
