@@ -191,9 +191,6 @@ private:
     // jump
     for (auto neighbour : neighbours)
     {
-      if (!neighbour)
-        continue;
-
       if (auto jumpPoint = Jump(current, GetJumpDirection(current, neighbour)))
       {
         successors.push_back(jumpPoint);
@@ -210,10 +207,13 @@ private:
     }
 	else
 	{
-		// current node is the start node, so consider all neighbours as there is nothing to prune
+		// current node is the start node, so consider all walkable neighbours
 		for (auto neighbour : current->neighbours)
 		{
-			neighbours.push_back(neighbour);
+			if (IsWalkable(neighbour))
+			{
+				neighbours.push_back(neighbour);
+			}
 		}
 	}
   }
@@ -469,7 +469,7 @@ private:
 
 	  // prune neighbours
 	  std::vector<PathNode*> neighbours;
-	  Prune(current, neighbours);
+	  Prune(current, neighbours, direction);
 	  for (auto n : neighbours)
 	  {
 		  if (n->isForced)
