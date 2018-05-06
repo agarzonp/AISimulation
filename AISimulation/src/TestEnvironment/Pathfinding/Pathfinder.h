@@ -57,6 +57,9 @@ public:
 		case PathPlannerType::A_STAR:
 			pathPlanner = std::make_shared<AStar>(data.pathPlannerData);
 			break;
+		case PathPlannerType::JUMP_POINT_SEARCH:
+			pathPlanner = std::make_shared<JumpPointSearch>(data.pathPlannerData);
+			break;
 		default:
 			assert(false);
 			break;

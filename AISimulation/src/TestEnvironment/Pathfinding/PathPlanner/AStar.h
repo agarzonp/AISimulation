@@ -17,7 +17,7 @@ class AStar : public PathPlanner
 
 public:
 
-	// Consructors
+	// Constructors
 	AStar(const PathPlannerData& data) : PathPlanner(data) {}
 
 	// Start search
