@@ -63,28 +63,28 @@ public:
 		if (neighbour == node->neighbours[(int)PathNodeAdjacency::TOP_LEFT])
 		{
 			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::TOP])
-				|| !IsWalkable(node->neighbours[(int)PathNodeAdjacency::LEFT]))
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::LEFT]))
 				return false;
 		}
 
 		if (neighbour == node->neighbours[(int)PathNodeAdjacency::TOP_RIGHT])
 		{
 			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::TOP])
-				|| !IsWalkable(node->neighbours[(int)PathNodeAdjacency::RIGHT]))
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::RIGHT]))
 				return false;
 		}
 
 		if (neighbour == node->neighbours[(int)PathNodeAdjacency::BOTTOM_RIGHT])
 		{
 			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::BOTTOM])
-				|| !IsWalkable(node->neighbours[(int)PathNodeAdjacency::RIGHT]))
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::RIGHT]))
 				return false;
 		}
 
 		if (neighbour == node->neighbours[(int)PathNodeAdjacency::BOTTOM_LEFT])
 		{
 			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::BOTTOM])
-				|| !IsWalkable(node->neighbours[(int)PathNodeAdjacency::LEFT]))
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::LEFT]))
 				return false;
 		}
 

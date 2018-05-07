@@ -69,7 +69,7 @@ private:
 		// current node is the start node, so consider all walkable neighbours
 		for (auto neighbour : current->neighbours)
 		{
-			if (IsWalkable(neighbour))
+			if (searchSpace->IsValidAdjacency(current, neighbour))
 			{
 				neighbours.push_back(neighbour);
 			}
