@@ -17,9 +17,9 @@ public:
 	
 	// Constructors
 	NavGrid() = default;
-	NavGrid(const SearchSpaceData& data, float gridCellSize)
+	NavGrid(const SearchSpaceData& data)
 		: SearchSpace(data)
-		, cellSize(gridCellSize)
+		, cellSize(data.gridCellSize)
 	{ 
 	}
 
@@ -48,6 +48,47 @@ public:
 		}
 
 		return nullptr;
+	}
+
+	// Is valid adjacency
+	bool IsValidAdjacency(PathNode* node, PathNode* neighbour) override
+	{
+		assert(node);
+		
+		if (!IsWalkable(neighbour))
+			return false;
+
+		assert(IsAdjacent(node, neighbour));
+
+		if (neighbour == node->neighbours[(int)PathNodeAdjacency::TOP_LEFT])
+		{
+			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::TOP])
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::LEFT]))
+				return false;
+		}
+
+		if (neighbour == node->neighbours[(int)PathNodeAdjacency::TOP_RIGHT])
+		{
+			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::TOP])
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::RIGHT]))
+				return false;
+		}
+
+		if (neighbour == node->neighbours[(int)PathNodeAdjacency::BOTTOM_RIGHT])
+		{
+			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::BOTTOM])
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::RIGHT]))
+				return false;
+		}
+
+		if (neighbour == node->neighbours[(int)PathNodeAdjacency::BOTTOM_LEFT])
+		{
+			if (!IsWalkable(node->neighbours[(int)PathNodeAdjacency::BOTTOM])
+				&& !IsWalkable(node->neighbours[(int)PathNodeAdjacency::LEFT]))
+				return false;
+		}
+
+		return true;
 	}
 
 private:
@@ -118,6 +159,7 @@ private:
 			int n = std::rand() % nodes.size();
 			if (nodes[n].type == PathNodeType::UNBLOCKED)
 			{
+				printf("Navgrid random blocked cell index: %d\n", n);
 				nodes[n].type = PathNodeType::BLOCKED;
 				count--;
 			}
@@ -160,7 +202,7 @@ private:
 	// Set Adjacency
 	void SetAdjacency(PathNode& nodeA, PathNode* nodeB, PathNodeAdjacency adjacency)
 	{
-		if (nodeA.type == PathNodeType::BLOCKED || !nodeB || nodeB->type == PathNodeType::BLOCKED)
+		if (!nodeB)
 		{
 			// no need to connect the nodes
 			return;
@@ -217,6 +259,23 @@ private:
 			assert(false);
 			break;
 		}
+	}
+
+	// Is walkable
+	bool IsWalkable(PathNode* node) { return node && node->type != PathNodeType::BLOCKED; }
+
+	// Is adjacent
+	bool IsAdjacent(PathNode* node, PathNode* neighbour)
+	{
+		for (auto n : node->neighbours)
+		{
+			if (n == neighbour)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 };
 

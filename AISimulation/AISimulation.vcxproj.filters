@@ -320,6 +320,12 @@
     <ClInclude Include="src\TestEnvironment\Physics\Collision\ContactsResolver.h">
       <Filter>Source Files\TestEnvironment\Physics\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\JumpPointSearch.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathPlanner</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\OpenClosePathPlanner.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding\PathPlanner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
