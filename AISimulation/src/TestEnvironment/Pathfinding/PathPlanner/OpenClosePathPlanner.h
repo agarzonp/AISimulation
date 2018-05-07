@@ -138,7 +138,7 @@ protected:
 		if (std::find(open.begin(), open.end(), neighbour) != open.end())
 		{
 			// check if this path is better
-			float gCost = current->gCost + DistanceSq(current, neighbour);
+			float gCost = current->gCost + DistanceEuclidean(current, neighbour);
 			if (gCost < neighbour->gCost)
 			{
 				// update neighbour
@@ -152,7 +152,7 @@ protected:
 			// update neighbour
 			neighbour->parent = current;
 			neighbour->hCost = DistanceManhattan(neighbour, goal);
-			neighbour->gCost = current->gCost + DistanceSq(current, neighbour);
+			neighbour->gCost = current->gCost + DistanceEuclidean(current, neighbour);
 			neighbour->fCost = neighbour->hCost + neighbour->gCost;
 
 			// push in open
@@ -219,10 +219,10 @@ private:
 		return cheapest;
 	}
 
-	// Distance Sq
-	float DistanceSq(PathNode* nodeA, PathNode* nodeB)
+	// Distance Euclidean
+	float DistanceEuclidean(PathNode* nodeA, PathNode* nodeB)
 	{
-		return MathGeom::DistanceSq(nodeA->position, nodeB->position);
+		return MathGeom::Distance(nodeA->position, nodeB->position);
 	}	
 
 	// Distance Manhattan
