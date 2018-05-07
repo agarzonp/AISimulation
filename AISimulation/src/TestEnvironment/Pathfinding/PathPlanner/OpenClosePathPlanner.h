@@ -111,6 +111,7 @@ public:
 				node->gCost = 0.0f;
 				node->hCost = 0.0f;
 				node->parent = nullptr;
+				node->isForced = false;
 			}
 
 			list.clear();

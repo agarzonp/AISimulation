@@ -61,7 +61,8 @@ private:
   {
     if (current->parent)
     {
-		Prune(current, neighbours, GetJumpDirection(current->parent, current));
+		bool flagForcedNodes = false;
+		Prune(current, neighbours, GetJumpDirection(current->parent, current), flagForcedNodes);
     }
 	else
 	{
@@ -77,48 +78,48 @@ private:
   }
 
   // Prune
-  void Prune(PathNode* current, std::vector<PathNode*>& neighbours, JumpDirection direction)
+  void Prune(PathNode* current, std::vector<PathNode*>& neighbours, JumpDirection direction, bool flagForcedNodes)
   {
 	  switch (direction)
 	  {
 	  case JumpDirection::RIGHT:
 	  {
-		  PruneStraightMove(current, neighbours, JumpDirection::RIGHT, JumpDirection::TOP_RIGHT, JumpDirection::BOTTOM_RIGHT, JumpDirection::TOP, JumpDirection::BOTTOM);
+		  PruneStraightMove(current, neighbours, JumpDirection::RIGHT, JumpDirection::TOP_RIGHT, JumpDirection::BOTTOM_RIGHT, JumpDirection::TOP, JumpDirection::BOTTOM, flagForcedNodes);
 		  break;
 	  }
 	  case JumpDirection::LEFT:
 	  {
-		  PruneStraightMove(current, neighbours, JumpDirection::LEFT, JumpDirection::TOP_LEFT, JumpDirection::BOTTOM_LEFT, JumpDirection::TOP, JumpDirection::BOTTOM);
+		  PruneStraightMove(current, neighbours, JumpDirection::LEFT, JumpDirection::TOP_LEFT, JumpDirection::BOTTOM_LEFT, JumpDirection::TOP, JumpDirection::BOTTOM, flagForcedNodes);
 		  break;
 	  }
 	  case JumpDirection::TOP:
 	  {
-		  PruneStraightMove(current, neighbours, JumpDirection::TOP, JumpDirection::TOP_RIGHT, JumpDirection::TOP_LEFT, JumpDirection::RIGHT, JumpDirection::LEFT);
+		  PruneStraightMove(current, neighbours, JumpDirection::TOP, JumpDirection::TOP_RIGHT, JumpDirection::TOP_LEFT, JumpDirection::RIGHT, JumpDirection::LEFT, flagForcedNodes);
 		  break;
 	  }
 	  case JumpDirection::BOTTOM:
 	  {
-		  PruneStraightMove(current, neighbours, JumpDirection::BOTTOM, JumpDirection::BOTTOM_RIGHT, JumpDirection::BOTTOM_LEFT, JumpDirection::RIGHT, JumpDirection::LEFT);
+		  PruneStraightMove(current, neighbours, JumpDirection::BOTTOM, JumpDirection::BOTTOM_RIGHT, JumpDirection::BOTTOM_LEFT, JumpDirection::RIGHT, JumpDirection::LEFT, flagForcedNodes);
 		  break;
 	  }
 	  case JumpDirection::TOP_RIGHT:
 	  {
-		  PruneDiagonalMove(current, neighbours, JumpDirection::TOP, JumpDirection::RIGHT, JumpDirection::TOP_RIGHT, JumpDirection::TOP_LEFT, JumpDirection::LEFT, JumpDirection::BOTTOM_RIGHT, JumpDirection::BOTTOM);
+		  PruneDiagonalMove(current, neighbours, JumpDirection::TOP, JumpDirection::RIGHT, JumpDirection::TOP_RIGHT, JumpDirection::TOP_LEFT, JumpDirection::LEFT, JumpDirection::BOTTOM_RIGHT, JumpDirection::BOTTOM, flagForcedNodes);
 		  break;
 	  }
 	  case JumpDirection::TOP_LEFT:
 	  {
-		  PruneDiagonalMove(current, neighbours, JumpDirection::TOP, JumpDirection::LEFT, JumpDirection::TOP_LEFT, JumpDirection::TOP_RIGHT, JumpDirection::RIGHT, JumpDirection::BOTTOM_LEFT, JumpDirection::BOTTOM);
+		  PruneDiagonalMove(current, neighbours, JumpDirection::TOP, JumpDirection::LEFT, JumpDirection::TOP_LEFT, JumpDirection::TOP_RIGHT, JumpDirection::RIGHT, JumpDirection::BOTTOM_LEFT, JumpDirection::BOTTOM, flagForcedNodes);
 		  break;
 	  }
 	  case JumpDirection::BOTTOM_RIGHT:
 	  {
-		  PruneDiagonalMove(current, neighbours, JumpDirection::BOTTOM, JumpDirection::RIGHT, JumpDirection::BOTTOM_RIGHT, JumpDirection::BOTTOM_LEFT, JumpDirection::LEFT, JumpDirection::TOP_RIGHT, JumpDirection::TOP);
+		  PruneDiagonalMove(current, neighbours, JumpDirection::BOTTOM, JumpDirection::RIGHT, JumpDirection::BOTTOM_RIGHT, JumpDirection::BOTTOM_LEFT, JumpDirection::LEFT, JumpDirection::TOP_RIGHT, JumpDirection::TOP, flagForcedNodes);
 		  break;
 	  }
 	  case JumpDirection::BOTTOM_LEFT:
 	  {
-		  PruneDiagonalMove(current, neighbours, JumpDirection::BOTTOM, JumpDirection::LEFT, JumpDirection::BOTTOM_LEFT, JumpDirection::BOTTOM_RIGHT, JumpDirection::RIGHT, JumpDirection::TOP_LEFT, JumpDirection::TOP);
+		  PruneDiagonalMove(current, neighbours, JumpDirection::BOTTOM, JumpDirection::LEFT, JumpDirection::BOTTOM_LEFT, JumpDirection::BOTTOM_RIGHT, JumpDirection::RIGHT, JumpDirection::TOP_LEFT, JumpDirection::TOP, flagForcedNodes);
 		  break;
 	  }
 	  default:
@@ -135,7 +136,8 @@ private:
 	  JumpDirection topRight, 
 	  JumpDirection bottomRight, 
 	  JumpDirection top, 
-	  JumpDirection bottom)
+	  JumpDirection bottom,
+	  bool flagForcedNodes)
   {
 	  PathNode* rightNode = current->GetNeighbour((int)right);
 	  if (IsWalkable(rightNode))
@@ -150,13 +152,13 @@ private:
 
 		  if (IsWalkable(topRightNode) && !IsWalkable(topNode))
 		  {
-			  topRightNode->isForced = true;
+			  topRightNode->isForced = flagForcedNodes;
 			  neighbours.push_back(topRightNode); 
 		  }
 
 		  if (IsWalkable(bottomRightNode) && !IsWalkable(bottomNode))
 		  {
-			  bottomRightNode->isForced = true;
+			  bottomRightNode->isForced = flagForcedNodes;
 			  neighbours.push_back(bottomRightNode);
 		  }
 	  }
@@ -172,7 +174,8 @@ private:
 	  JumpDirection topLeft,
 	  JumpDirection left,
 	  JumpDirection bottomRight,
-	  JumpDirection bottom)
+	  JumpDirection bottom,
+	  bool flagForcedNodes)
   {
 	  PathNode* topNode = current->GetNeighbour(int(top));
 	  PathNode* rightNode = current->GetNeighbour(int(right));
@@ -187,7 +190,8 @@ private:
 
 		  if (IsWalkable(topLeftNode) && !IsWalkable(leftNode))
 		  {
-			  neighbours.push_back(topLeftNode); // forced
+			  topLeftNode->isForced = flagForcedNodes;
+			  neighbours.push_back(topLeftNode); 
 		  }
 	  }
 
@@ -200,7 +204,8 @@ private:
 
 		  if (IsWalkable(bottomRightNode) && !IsWalkable(bottomNode))
 		  {
-			  neighbours.push_back(bottomRightNode); // forced
+			  bottomRightNode->isForced = flagForcedNodes;
+			  neighbours.push_back(bottomRightNode);
 		  }
 	  }
 
@@ -324,23 +329,24 @@ private:
   bool HasForcedNeighbours(PathNode* current, JumpDirection direction)
   {
 	  bool hasForcedNeighbours = false;
+	  bool flagForcedNodes = true;
 
 	  // prune neighbours
 	  std::vector<PathNode*> neighbours;
-	  Prune(current, neighbours, direction);
+	  Prune(current, neighbours, direction, flagForcedNodes);
 	  for (auto n : neighbours)
 	  {
 		  if (n->isForced)
 		  {
 			  hasForcedNeighbours = true;
+
+			  // make sure we clear is forced flag
+			  for (auto nf : neighbours)
+			  {
+				  nf->isForced = false;
+			  }
 			  break;
 		  }
-	  }
-
-	  // make sure we clear is forced flag
-	  for (auto n : neighbours)
-	  {
-		  n->isForced = false;
 	  }
 
 	  return hasForcedNeighbours;
