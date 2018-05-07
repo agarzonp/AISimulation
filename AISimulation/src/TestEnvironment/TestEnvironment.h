@@ -76,9 +76,10 @@ public:
 			PathRequestData pathRequestData;
 			pathRequestData.start = MathGeom::Vector3(-50 + std::rand()%100, 0.0f, -50 + std::rand() % 100);
 			pathRequestData.goal = MathGeom::Vector3(-50 + std::rand() % 100, 0.0f, -50 + std::rand() % 100);
-			pathRequestData.onPathRequestResult = [](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
+
+			pathRequestData.onPathRequestResult = [pathRequestData](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
 			{
-				printf("PathRequest %d result: %d pathSize: %d\n", id, resultStatus, path.size());
+				printf("PathRequest %d ([%d, %d] - [%d, %d]) result: %d pathSize: %d\n", id, (int)pathRequestData.start.x, (int)pathRequestData.start.z, (int)pathRequestData.goal.x, (int)pathRequestData.goal.z, resultStatus, path.size());
 			};
 
 			pathRequestId = pathfinder.RequestPath(pathRequestData);
