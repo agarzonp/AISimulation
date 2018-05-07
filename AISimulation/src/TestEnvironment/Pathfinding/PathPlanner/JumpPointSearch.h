@@ -264,7 +264,7 @@ private:
 	  }
 	  case JumpDirection::TOP_LEFT:
 	  {
-		  PruneDiagonalMove(current, neighbours, JumpDirection::TOP, JumpDirection::LEFT, JumpDirection::TOP_LEFT, JumpDirection::TOP_RIGHT, JumpDirection::RIGHT, JumpDirection::BOTTOM_RIGHT, JumpDirection::BOTTOM);
+		  PruneDiagonalMove(current, neighbours, JumpDirection::TOP, JumpDirection::LEFT, JumpDirection::TOP_LEFT, JumpDirection::TOP_RIGHT, JumpDirection::RIGHT, JumpDirection::BOTTOM_LEFT, JumpDirection::BOTTOM);
 		  break;
 	  }
 	  case JumpDirection::BOTTOM_RIGHT:
@@ -293,16 +293,16 @@ private:
 	  JumpDirection top, 
 	  JumpDirection bottom)
   {
-	  PathNode* rightNode = current->GetNeighbour((int)JumpDirection::RIGHT);
+	  PathNode* rightNode = current->GetNeighbour((int)right);
 	  if (IsWalkable(rightNode))
 	  {
 		  neighbours.push_back(rightNode);
 
-		  PathNode* topRightNode = current->GetNeighbour((int)JumpDirection::TOP_RIGHT);
-		  PathNode* bottomRightNode = current->GetNeighbour((int)JumpDirection::BOTTOM_RIGHT);
+		  PathNode* topRightNode = current->GetNeighbour((int)topRight);
+		  PathNode* bottomRightNode = current->GetNeighbour((int)bottomRight);
 
-		  PathNode* topNode = current->GetNeighbour((int)JumpDirection::TOP);
-		  PathNode* bottomNode = current->GetNeighbour((int)JumpDirection::BOTTOM);
+		  PathNode* topNode = current->GetNeighbour((int)top);
+		  PathNode* bottomNode = current->GetNeighbour((int)bottom);
 
 		  if (IsWalkable(topRightNode) && !IsWalkable(topNode))
 		  {
