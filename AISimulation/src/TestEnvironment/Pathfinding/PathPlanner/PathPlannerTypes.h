@@ -8,6 +8,7 @@ enum class PathPlannerType
 };
 
 #include "PathPlanner.h"
+#include "OpenClosePathPlanner.h"
 
 #include "AStar.h"
 #include "JumpPointSearch.h"
