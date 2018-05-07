@@ -13,9 +13,11 @@ struct SearchSpaceData
 	SearchSpaceType searchSpaceType;
 	MathGeom::Vector3 anchorPosition;
 	MathGeom::Vector3 worldSize;
+
+	float gridCellSize{ 1.0f };
 };
 
-// Seaerch space
+// Search space
 class SearchSpace
 {
 protected:
@@ -44,6 +46,9 @@ public:
 
 	// Localise
 	virtual PathNode* Localise(const MathGeom::Vector3& position) = 0;
+
+	// Is valid adjacency
+	virtual bool IsValidAdjacency(PathNode* node, PathNode* neighbour) = 0;
 
 	// Debug render
 	void DebugRender(const MathGeom::Matrix4& viewProjection)
