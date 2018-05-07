@@ -88,7 +88,7 @@ public:
 	// Debug render
 	void DebugRender(const MathGeom::Matrix4& viewProjection)
 	{
-		if (requestCount > 0)
+		if (!requestQueue.GetRequest())
 		{
 			Transform transform;
 			transform.position = lastStart;

@@ -18,7 +18,10 @@ class AStar : public PathPlanner
 public:
 
 	// Constructors
-	AStar(const PathPlannerData& data) : PathPlanner(data) {}
+	AStar(const PathPlannerData& data, std::shared_ptr<SearchSpace> searchSpace) 
+		: PathPlanner(data, searchSpace) 
+	{
+	}
 
 	// Start search
 	bool StartSearch(PathNode* start, PathNode* goal) final
@@ -109,6 +112,9 @@ public:
 
 		ClearList(open);
 		ClearList(close);
+
+		start = nullptr;
+		goal = nullptr;
 	}
 
 private:
@@ -175,7 +181,7 @@ private:
 	{
 		for (auto neighbour : current->neighbours)
 		{
-			if (!neighbour)
+			if (!searchSpace->IsValidAdjacency(current, neighbour))
 				continue;
 
 			if (std::find(close.begin(), close.end(), neighbour) != close.end())

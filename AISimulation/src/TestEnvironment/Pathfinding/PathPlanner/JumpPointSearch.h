@@ -18,8 +18,11 @@ class JumpPointSearch : public PathPlanner
 
 public:
 
-  // Constructor
-	JumpPointSearch(const PathPlannerData& data) : PathPlanner(data) {}
+	// Constructor
+	JumpPointSearch(const PathPlannerData& data, std::shared_ptr<SearchSpace> searchSpace) 
+		: PathPlanner(data, searchSpace) 
+	{
+	}
 
   // Start search
   bool StartSearch(PathNode* start, PathNode* goal) final
@@ -110,6 +113,9 @@ public:
 
 	  ClearList(open);
 	  ClearList(close);
+
+	  start = nullptr;
+	  goal = nullptr;
   }
 
 private:
@@ -419,11 +425,11 @@ private:
 
 	  if (fromNode->position.z < toNode->position.z)
 	  {
-		  dir.y = 1;
+		  dir.y = -1;
 	  }
 	  else if (fromNode->position.z > toNode->position.z)
 	  {
-		  dir.y = -1;
+		  dir.y = 1;
 	  }
 
 	  return dir;

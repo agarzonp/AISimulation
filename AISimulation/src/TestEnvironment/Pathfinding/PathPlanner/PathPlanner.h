@@ -2,6 +2,7 @@
 #define	PATH_PLANNER_H
 
 #include "../PathNode.h"
+#include "../SearchSpace/SearchSpace.h"
 
 // number of revolutions that the algorithm can perform
 static const int DEFAULT_MAX_REVOLUTIONS = 200;
@@ -24,10 +25,17 @@ protected:
 
 	int maxRevolutions{ DEFAULT_MAX_REVOLUTIONS };
 
+	// search space
+	std::shared_ptr<SearchSpace> searchSpace;
+
 public:
 
 	// Constructors
-	PathPlanner(const PathPlannerData& data): maxRevolutions(data.maxRevolutions){}
+	PathPlanner(const PathPlannerData& data, std::shared_ptr<SearchSpace> searchSpace_)
+		: maxRevolutions(data.maxRevolutions)
+		, searchSpace(searchSpace_)
+	{
+	}
 
 	// Start search
 	virtual bool StartSearch(PathNode* start, PathNode* goal) = 0;

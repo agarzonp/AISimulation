@@ -70,10 +70,10 @@ public:
 		switch (pathPlannerData.type)
 		{
 		case PathPlannerType::A_STAR:
-			pathPlanner = std::make_shared<AStar>(pathPlannerData);
+			pathPlanner = std::make_shared<AStar>(pathPlannerData, searchSpace);
 			break;
 		case PathPlannerType::JUMP_POINT_SEARCH:
-			pathPlanner = std::make_shared<JumpPointSearch>(pathPlannerData);
+			pathPlanner = std::make_shared<JumpPointSearch>(pathPlannerData, searchSpace);
 			break;
 		default:
 			assert(false);
