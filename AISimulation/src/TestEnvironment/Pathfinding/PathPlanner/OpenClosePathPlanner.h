@@ -150,7 +150,7 @@ protected:
 		{
 			// update neighbour
 			neighbour->parent = current;
-			neighbour->hCost = DistanceSq(neighbour, goal);
+			neighbour->hCost = DistanceManhattan(neighbour, goal);
 			neighbour->gCost = current->gCost + DistanceSq(current, neighbour);
 			neighbour->fCost = neighbour->hCost + neighbour->gCost;
 
@@ -223,6 +223,16 @@ private:
 	{
 		return MathGeom::DistanceSq(nodeA->position, nodeB->position);
 	}	
+
+	// Distance Manhattan
+	float DistanceManhattan(PathNode* nodeA, PathNode* nodeB)
+	{
+		float dx = fabsf(nodeA->position.x - nodeB->position.x);
+		float dy = fabsf(nodeA->position.y - nodeB->position.y);
+		float dz = fabsf(nodeA->position.z - nodeB->position.z);
+
+		return dx + dy + dz;
+	}
 };
 
 #endif // !OPEN_CLOSE_PATH_PLANNER_H
