@@ -28,6 +28,11 @@ namespace MathGeom
 		return Dot(fromAtoB, fromAtoB);
 	}
 
+	float Distance(const Vector3& a, const Vector3& b)
+	{
+		return glm::distance(a, b);
+	}
+
 }
 
 

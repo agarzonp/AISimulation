@@ -44,6 +44,9 @@ struct PathNode
 	// adjacent neighbours of current PathNode
 	std::array<PathNode*, (int)PathNodeAdjacency::MAX_ADJACENCY > neighbours;
 
+	// Get Neighbour
+	PathNode* GetNeighbour(int index) { return neighbours[index]; }
+
 	// type
 	PathNodeType type { PathNodeType::UNBLOCKED };
 
@@ -54,6 +57,9 @@ struct PathNode
 
 	// parent node
 	PathNode* parent{ nullptr };
+
+	// for JPS
+	bool isForced { false };
 
 private:
 

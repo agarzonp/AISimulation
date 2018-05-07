@@ -76,14 +76,26 @@ public:
 			PathRequestData pathRequestData;
 			pathRequestData.start = MathGeom::Vector3(-50 + std::rand()%100, 0.0f, -50 + std::rand() % 100);
 			pathRequestData.goal = MathGeom::Vector3(-50 + std::rand() % 100, 0.0f, -50 + std::rand() % 100);
-			pathRequestData.onPathRequestResult = [](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
+
+			pathRequestData.onPathRequestResult = [pathRequestData](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
 			{
-				printf("PathRequest %d result: %d pathSize: %d\n", id, resultStatus, path.size());
+				printf("PathRequest %d ([%d, %d] - [%d, %d]) result: %d pathSize: %d\n", id, (int)pathRequestData.start.x, (int)pathRequestData.start.z, (int)pathRequestData.goal.x, (int)pathRequestData.goal.z, resultStatus, path.size());
 			};
 
 			pathRequestId = pathfinder.RequestPath(pathRequestData);
 			break;
 		}
+
+		case GLFW_KEY_J:
+		{
+			static bool jps = false;
+			jps = !jps;
+
+			PathPlannerData plannerData;
+			plannerData.type = jps ? PathPlannerType::JUMP_POINT_SEARCH : PathPlannerType::A_STAR;
+			pathfinder.SetPathPlanner(plannerData);
+		}
+			
 		}
 	}
 
@@ -271,7 +283,7 @@ protected:
 		pathfinderData.searchSpaceData.searchSpaceType = SearchSpaceType::OCTILE_GRID;
 		pathfinderData.searchSpaceData.anchorPosition = MathGeom::Vector3(-50.0f, 0.0f, -50.0f);
 		pathfinderData.searchSpaceData.worldSize = MathGeom::Vector3(100.0f, 100.0f, 100.0f);
-		pathfinderData.gridCellSize = 10.0f;
+		pathfinderData.searchSpaceData.gridCellSize = 10.0f;
 		pathfinder.Init(pathfinderData);
 	}
 
