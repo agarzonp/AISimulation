@@ -60,10 +60,18 @@ public:
 		{
 			// go backwards to get the path
 			auto node = close.back();
-			while (node)
+			PathNode* current = node;
+			PathNode* parent = node->parent;
+			path.push_back(node->position);
+			while (parent)
 			{
+				// make sure that adjacency between current node and parent node is valid
+				node = searchSpace->GetValidatedPathNode(current, parent);
+				
 				path.push_back(node->position);
-				node = node->parent;
+
+				current = parent;
+				parent = parent->parent;
 			}
 
 			// reverse the path
