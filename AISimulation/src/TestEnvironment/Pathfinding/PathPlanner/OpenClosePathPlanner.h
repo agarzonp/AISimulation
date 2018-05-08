@@ -59,12 +59,20 @@ public:
 		if (pathFound)
 		{
 			// go backwards to get the path
+
 			auto node = close.back();
 			PathNode* current = node;
 			PathNode* parent = node->parent;
+			
+			plannerPath.clear();
+			plannerPath.push_back(current);
+
 			path.push_back(node->position);
+
 			while (parent)
 			{
+				plannerPath.push_back(parent);
+
 				// make sure that adjacency between current node and parent node is valid
 				node = searchSpace->GetValidatedPathNode(current, parent);
 				
@@ -76,30 +84,38 @@ public:
 
 			// reverse the path
 			std::reverse(path.begin(), path.end());
+			std::reverse(plannerPath.begin(), plannerPath.end());
 		}
 	}
 
 	// Debug Render
-	void DebugRender(const MathGeom::Matrix4& viewProjection) final
+	void DebugRender(const MathGeom::Matrix4& viewProjection, const PathfinderDebugRenderFlags& render) final
 	{
-		if (start && goal)
+		if (start && goal && (render.pathPlannerPath || render.finalPath))
 		{
-			Transform transform;
-			transform.position = start->position;
-			RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
-
-			transform.position = goal->position;
-			RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
-
 			Path path;
 			GetPath(path);
 
-			for (auto& p : path)
+			if (render.pathPlannerPath)
 			{
-				Transform transform;
-				transform.position = p;
-				RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+				for (auto& node : plannerPath)
+				{
+					Transform transform;
+					transform.position = node->position;
+					RenderUtils::RenderCube(viewProjection, transform, 0xFF0000);
+				}
 			}
+
+			if (render.finalPath)
+			{
+				for (auto& p : path)
+				{
+					Transform transform;
+					transform.position = p;
+					RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
+				}
+			}
+			
 		}
 	}
 

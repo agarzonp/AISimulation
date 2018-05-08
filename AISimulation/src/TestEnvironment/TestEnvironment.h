@@ -56,12 +56,32 @@ public:
 
 		case GLFW_KEY_1:
 		{
-			pathfinder.debugRenderSearchSpace = !pathfinder.debugRenderSearchSpace;
+			pathfinder.debugRenderFlags.enabled = !pathfinder.debugRenderFlags.enabled;
 			break;
 		}
 		case GLFW_KEY_2:
 		{
-			pathfinder.debugRenderPath = !pathfinder.debugRenderPath;
+			pathfinder.debugRenderFlags.searchSpace = !pathfinder.debugRenderFlags.searchSpace;
+			break;
+		}
+		case GLFW_KEY_3:
+		{
+			pathfinder.debugRenderFlags.startGoalWorldPosition = !pathfinder.debugRenderFlags.startGoalWorldPosition;
+			break;
+		}
+		case GLFW_KEY_4:
+		{
+			pathfinder.debugRenderFlags.startGoalSearchSpace = !pathfinder.debugRenderFlags.startGoalSearchSpace;
+			break;
+		}
+		case GLFW_KEY_5:
+		{
+			pathfinder.debugRenderFlags.pathPlannerPath = !pathfinder.debugRenderFlags.pathPlannerPath;
+			break;
+		}
+		case GLFW_KEY_6:
+		{
+			pathfinder.debugRenderFlags.finalPath = !pathfinder.debugRenderFlags.finalPath;
 			break;
 		}
 		case GLFW_KEY_TAB:
@@ -76,6 +96,8 @@ public:
 			PathRequestData pathRequestData;
 			pathRequestData.start = MathGeom::Vector3(-50 + std::rand()%100, 0.0f, -50 + std::rand() % 100);
 			pathRequestData.goal = MathGeom::Vector3(-50 + std::rand() % 100, 0.0f, -50 + std::rand() % 100);
+			//pathRequestData.start = MathGeom::Vector3(-1, 0.0f, 18);
+			//pathRequestData.goal = MathGeom::Vector3(38, 0.0f, 42);
 
 			pathRequestData.onPathRequestResult = [pathRequestData](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
 			{
