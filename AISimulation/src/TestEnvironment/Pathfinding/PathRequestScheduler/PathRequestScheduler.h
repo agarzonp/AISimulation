@@ -255,7 +255,14 @@ private:
 		// get the path
 		Path path;
 		pathPlanner->GetPath(path);
-
+		
+		// override start/goal position
+		if (path.size() > 0)
+		{
+			path[0] = request.data.start;
+			path[path.size() - 1] = request.data.goal;
+		}
+	
 		// terminate
 		PathRequestResultStatus resultStatus = path.size() > 0 ? PathRequestResultStatus::PathFound : PathRequestResultStatus::PathNotFound;
 		TerminateRequest(request, resultStatus, path);
