@@ -326,6 +326,9 @@
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathPlanner\OpenClosePathPlanner.h">
       <Filter>Source Files\TestEnvironment\Pathfinding\PathPlanner</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Pathfinding\PathfinderDebugRenderFlags.h">
+      <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

@@ -91,6 +91,72 @@ public:
 		return true;
 	}
 
+	// Get validated PathNode
+	PathNode* GetValidatedPathNode(PathNode* nodeA, PathNode* nodeB) override
+	{
+		if (nodeB == nodeA->neighbours[(int)PathNodeAdjacency::TOP_LEFT])
+		{
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::TOP]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::LEFT]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::LEFT];
+			}
+
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::LEFT]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::TOP]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::TOP];
+			}
+		}
+
+		if (nodeB == nodeA->neighbours[(int)PathNodeAdjacency::TOP_RIGHT])
+		{
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::TOP]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::RIGHT]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::RIGHT];
+			}
+
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::RIGHT]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::TOP]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::TOP];
+			}
+		}
+
+		if (nodeB == nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM_RIGHT])
+		{
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::RIGHT]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::RIGHT];
+			}
+
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::RIGHT]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM];
+			}
+		}
+
+		if (nodeB == nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM_LEFT])
+		{
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::LEFT]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::LEFT];
+			}
+
+			if (!IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::LEFT]))
+			{
+				assert(IsWalkable(nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM]));
+				return nodeA->neighbours[(int)PathNodeAdjacency::BOTTOM];
+			}
+		}
+
+		return nodeB;
+	}
+
 private:
 
 	// Create Grid
