@@ -50,6 +50,9 @@ public:
 	// Is valid adjacency
 	virtual bool IsValidAdjacency(PathNode* node, PathNode* neighbour) = 0;
 
+	// Get validated PathNode
+	virtual PathNode* GetValidatedPathNode(PathNode* nodeA, PathNode* nodeB) = 0;
+
 	// Debug render
 	void DebugRender(const MathGeom::Matrix4& viewProjection)
 	{

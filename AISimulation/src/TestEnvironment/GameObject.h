@@ -48,6 +48,27 @@ public:
 	{
 		renderable->Render(viewProjection, transform);
 	}
+
+protected:
+
+	// Add Force
+	void AddForce(const MathGeom::Vector3& force)
+	{
+		assert(physicObject);
+		if (physicObject)
+		{
+			physicObject->AddForce(force * physicObject->Mass());
+		}
+	}
+
+	// Set stationary
+	void SetStationary(bool stationary)
+	{
+		physicObject->SetStationary(stationary);
+	}
+
+	// Get velocity
+	const MathGeom::Vector3& Velocity() const { return physicObject->Velocity(); }
 };
 
 #endif // !GAME_OBJECT_H
