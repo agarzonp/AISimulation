@@ -12,6 +12,9 @@ class PhysicObject : public IPhysicObject
 	// game object
 	GameObject* gameObject {nullptr};
 
+	// isStationary
+	bool isStationary{ false };
+
 	// mass
 	float mass {0.0f};
 	float inverseMass {0.0f};
@@ -33,6 +36,7 @@ public:
 	PhysicObject() = default;
 	PhysicObject(GameObject& gameObject_, const PhysicObjectDesc& desc)
 		: gameObject(&gameObject_)
+		, isStationary(desc.isStationary)
 		, mass(desc.mass)
 		, inverseMass(desc.mass > 0.0f ? 1.0f/desc.mass : 0.0f)
 		, position(gameObject_.transform.position)
@@ -45,6 +49,16 @@ public:
 	void AddForce(const MathGeom::Vector3& force) final
 	{
 		accumulatedForces += force;
+	}
+
+	// Set stationary
+	void SetStationary(bool stationary) final
+	{
+		isStationary = stationary;
+		if (isStationary)
+		{
+			velocity = MathGeom::Vector3();
+		}
 	}
 
 	// Mass getter
@@ -91,7 +105,7 @@ public:
 	// Integrate
 	void Integrate(float deltaTime)
 	{
-		if (inverseMass <= 0.0f)
+		if (inverseMass <= 0.0f || isStationary)
 		{
 			// Do not integrate objects with infinite mass (static objects)
 			return;

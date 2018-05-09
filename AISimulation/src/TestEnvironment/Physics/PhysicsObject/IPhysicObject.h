@@ -12,6 +12,9 @@ public:
 	// Add force
 	virtual void AddForce(const MathGeom::Vector3& force) = 0;
 
+	// Set stationary
+	virtual void SetStationary(bool stationary) = 0;
+
 	// Mass
 	virtual float Mass() = 0;
 
