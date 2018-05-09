@@ -117,6 +117,23 @@ public:
 			plannerData.type = jps ? PathPlannerType::JUMP_POINT_SEARCH : PathPlannerType::A_STAR;
 			pathfinder.SetPathPlanner(plannerData);
 		}
+
+		case GLFW_KEY_M:
+		{
+			PathRequestData pathRequestData;
+			pathRequestData.start = aiEntity.transform.position;
+			pathRequestData.goal = MathGeom::Vector3(-46, 0.0f, 22);
+			
+			pathRequestData.onPathRequestResult = [pathRequestData, this](PathRequestId id, PathRequestResultStatus resultStatus, Path& path)
+			{
+				printf("PathRequest %d ([%d, %d] - [%d, %d]) result: %d pathSize: %d\n", id, (int)pathRequestData.start.x, (int)pathRequestData.start.z, (int)pathRequestData.goal.x, (int)pathRequestData.goal.z, resultStatus, path.size());
+				this->aiEntity.SetPath(path);
+			};
+
+			pathfinder.RequestPath(pathRequestData);
+
+			break;
+		}
 			
 		}
 	}
@@ -133,11 +150,14 @@ public:
 	{
 		camera.Update(deltaTime);
 
-		physicsEngine.Update(deltaTime);
-
+		// update AI
 		aiEntity.Update(worldState);
 
+		// update pathfinfer
 		pathfinder.Update();
+
+		// update physics
+		physicsEngine.Update(deltaTime);
 	}
 
 	// Render
@@ -152,6 +172,8 @@ public:
 		{
 			gameObject.Render(viewProjection);
 		}
+
+		aiEntity.Render(viewProjection);
 
 		// render physics
 		physicsEngine.DebugRender(viewProjection);
@@ -191,7 +213,8 @@ protected:
 	{
 		InitFloor();
 		InitWalls();
-		InitMovableObjects();
+		//InitMovableObjects();
+		InitAIEntities();
 	}
 
 	void InitFloor()
@@ -214,7 +237,7 @@ protected:
 		MathGeom::Vector3 pointC = glm::vec3(0.0f, 0.0001f, 0.5f);;
 		physicObject.colliderDesc = std::make_unique<PlaneColliderDesc>(pointA, pointB, pointC, gameObjects.back().transform);
 
-		physicsEngine.AddPhysics(gameObjects.back(), physicObject);
+		//physicsEngine.AddPhysics(gameObjects.back(), physicObject);
 	}
 
 	void InitWalls()
@@ -296,6 +319,26 @@ protected:
 		redPhysicObject.isAffectedByGravity = false;
 
 		physicsEngine.AddPhysics(gameObjects.back(), redPhysicObject);
+	}
+
+	void InitAIEntities()
+	{
+		aiEntity.transform.position = glm::vec3(25.0f, 0.0f, 40.0f);
+		aiEntity.transform.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+		aiEntity.transform.scale = glm::vec3(3.0f, 3.0f, 3.0f);
+		float sphereRadius = aiEntity.transform.scale.x;
+		aiEntity.SetRenderable(std::shared_ptr<Renderable>(static_cast<Renderable*>(new SphereRenderable(sphereRadius, &sphereMesh, shader, glm::vec4(0.0f, 0.3f, 0.0f, 1.0f)))));
+		aiEntity.SetRenderable(std::shared_ptr<Renderable>(static_cast<Renderable*>(new SphereRenderable(sphereRadius, &sphereMesh, shader, glm::vec4(0.0f, 0.3f, 0.0f, 1.0f)))));
+		aiEntity.SetVisible(true);
+
+		PhysicObjectDesc physicObject;
+		physicObject.type = PhysicObjectType::PARTICLE;
+		physicObject.mass = 10.0f;
+		physicObject.colliderDesc = std::make_unique<SphereColliderDesc>(aiEntity.transform);
+		physicObject.isAffectedByGravity = false;
+		physicObject.isStationary = true;
+
+		physicsEngine.AddPhysics(aiEntity, physicObject);
 	}
 
 	void InitPathfinder()

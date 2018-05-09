@@ -17,6 +17,11 @@ namespace MathGeom
 
 	const double PI = 3.14159265358979323846;
 
+	Vector3 Normalise(const Vector3& a)
+	{
+		return glm::normalize(a);
+	}
+
 	float Dot(const Vector3& a, const Vector3& b)
 	{
 		return glm::dot(a, b);
