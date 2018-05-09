@@ -18,6 +18,10 @@ public:
 	// Mass
 	virtual float Mass() = 0;
 
+	// Velocity
+	virtual const MathGeom::Vector3& Velocity() const = 0;
+	virtual MathGeom::Vector3& Velocity() = 0;
+
 	// Set Transform
 	virtual void SetTransform(const Transform& transform) = 0;
 

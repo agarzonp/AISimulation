@@ -87,8 +87,8 @@ public:
 	const Collider& GetCollider() const { return *collider.get(); }
 
 	// Velocity getter/setter
-	const MathGeom::Vector3& Velocity() const { return velocity; }
-	MathGeom::Vector3& Velocity() { return velocity; }
+	const MathGeom::Vector3& Velocity() const final { return velocity; }
+	MathGeom::Vector3& Velocity() final { return velocity; }
 
 	// Position getter/setter
 	const MathGeom::Vector3& Position() const { return position; }
