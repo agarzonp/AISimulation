@@ -3,6 +3,7 @@
 
 #include "../PathNode.h"
 #include "../SearchSpace/SearchSpace.h"
+#include "../PathfinderDebugRenderFlags.h"
 
 // number of revolutions that the algorithm can perform
 static const int DEFAULT_MAX_REVOLUTIONS = 200;
@@ -28,6 +29,9 @@ protected:
 	// search space
 	std::shared_ptr<SearchSpace> searchSpace;
 
+	// planner path (for debugging purpose)
+	std::vector<PathNode*> plannerPath;
+
 public:
 
 	// Constructors
@@ -50,7 +54,7 @@ public:
 	virtual void Reset() = 0;
 	
 	// Debug render
-	virtual void DebugRender(const MathGeom::Matrix4& viewProjection) = 0;
+	virtual void DebugRender(const MathGeom::Matrix4& viewProjection, const PathfinderDebugRenderFlags& render) = 0;
 };
 
 #endif // !PATH_PLANNER_H

@@ -6,6 +6,7 @@
 // Path
 using Path = std::vector<MathGeom::Vector3>;
 
+#include "PathfinderDebugRenderFlags.h"
 #include "SearchSpace/SearchSpaceTypes.h"
 #include "PathPlanner/PathPlannerTypes.h"
 #include "PathRequestScheduler/PathRequestScheduler.h"
@@ -104,19 +105,19 @@ public:
 	}
 
 	// Debug render
-	bool debugRenderSearchSpace{ false };
-	bool debugRenderPath{ false };
+	PathfinderDebugRenderFlags debugRenderFlags;
 	void DebugRender(const MathGeom::Matrix4& viewProjection)
 	{
-		if (debugRenderPath)
+		if (debugRenderFlags.enabled)
 		{
-			pathRequestScheduler.DebugRender(viewProjection);
+			pathRequestScheduler.DebugRender(viewProjection, debugRenderFlags);
+			
+			if (searchSpace && debugRenderFlags.searchSpace)
+			{
+				searchSpace->DebugRender(viewProjection);
+			}
 		}
-
-		if (searchSpace && debugRenderSearchSpace)
-		{
-			searchSpace->DebugRender(viewProjection);
-		}
+		
 	}
 
 private:

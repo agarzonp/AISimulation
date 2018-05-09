@@ -6,6 +6,7 @@
 #include "PathRequest.h"
 #include "PathRequestQueue.h"
 
+#include "../PathfinderDebugRenderFlags.h"
 #include "../SearchSpace/SearchSpace.h"
 #include "../PathPlanner/PathPlanner.h"
 
@@ -86,34 +87,51 @@ public:
 	}
 
 	// Debug render
-	void DebugRender(const MathGeom::Matrix4& viewProjection)
+	void DebugRender(const MathGeom::Matrix4& viewProjection, const PathfinderDebugRenderFlags& render)
 	{
-		if (!requestQueue.GetRequest())
+		if (requestQueue.GetRequest())
+		{
+			// ignore debug rendering until last request path is done
+			return;
+		}
+
+		if (render.startGoalWorldPosition)
 		{
 			Transform transform;
 			transform.position = lastStart;
-			RenderUtils::RenderCube(viewProjection, transform, 0x0000FF);
+			RenderUtils::RenderCube(viewProjection, transform, 0xFF00FF);
 
 			transform.position = lastGoal;
-			RenderUtils::RenderCube(viewProjection, transform, 0x0000FF);
+			RenderUtils::RenderCube(viewProjection, transform, 0xFF00FF);
+		}
 
+		if (render.startGoalSearchSpace)
+		{
 			PathNode* start = searchSpace->Localise(lastStart);
 			if (start)
 			{
+				Transform transform;
 				transform.position = start->position;
-				RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
+				RenderUtils::RenderCube(viewProjection, transform, 0x0000FF);
 			}
 
 			PathNode* goal = searchSpace->Localise(lastGoal);
 			if (goal)
 			{
+				Transform transform;
 				transform.position = goal->position;
-				RenderUtils::RenderCube(viewProjection, transform, 0x00FF00);
+				RenderUtils::RenderCube(viewProjection, transform, 0x0000FF);
 			}
+		}
+
+		if (render.pathPlannerPath || render.finalPath)
+		{
+			PathNode* start = searchSpace->Localise(lastStart);
+			PathNode* goal = searchSpace->Localise(lastGoal);
 
 			if (start && goal && start->type != PathNodeType::BLOCKED && goal->type != PathNodeType::BLOCKED)
 			{
-				pathPlanner->DebugRender(viewProjection);
+				pathPlanner->DebugRender(viewProjection, render);
 			}
 		}
 	}
@@ -237,7 +255,14 @@ private:
 		// get the path
 		Path path;
 		pathPlanner->GetPath(path);
-
+		
+		// override start/goal position
+		if (path.size() > 0)
+		{
+			path[0] = request.data.start;
+			path[path.size() - 1] = request.data.goal;
+		}
+	
 		// terminate
 		PathRequestResultStatus resultStatus = path.size() > 0 ? PathRequestResultStatus::PathFound : PathRequestResultStatus::PathNotFound;
 		TerminateRequest(request, resultStatus, path);

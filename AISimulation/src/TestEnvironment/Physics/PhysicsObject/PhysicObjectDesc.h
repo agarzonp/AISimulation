@@ -12,6 +12,7 @@ struct PhysicObjectDesc
 {
 	PhysicObjectType type;
 
+	bool isStationary{ false };
 	float mass{ 0.0f };
 	
 	MathGeom::Vector3 position;
