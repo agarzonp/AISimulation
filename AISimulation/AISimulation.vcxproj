@@ -161,6 +161,7 @@ xcopy /Y /E "$(SolutionDir)common\lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="src\TestEnvironment\Camera\Camera.h" />
     <ClInclude Include="src\TestEnvironment\Camera\FreeCamera.h" />
     <ClInclude Include="src\TestEnvironment\GameObject.h" />
+    <ClInclude Include="src\TestEnvironment\Gameplay\WorldMap.h" />
     <ClInclude Include="src\TestEnvironment\MathGeom.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\Pathfinder.h" />
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathfinderDebugRenderFlags.h" />

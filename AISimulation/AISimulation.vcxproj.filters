@@ -88,6 +88,9 @@
     <Filter Include="Source Files\TestEnvironment\Pathfinding\PathRequestScheduler">
       <UniqueIdentifier>{5cf15919-82aa-4e54-9029-786b9aa4cc60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TestEnvironment\Gameplay">
+      <UniqueIdentifier>{792c87db-bf3a-45c8-a93e-2e808cca85ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\basic.frag">
@@ -328,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="src\TestEnvironment\Pathfinding\PathfinderDebugRenderFlags.h">
       <Filter>Source Files\TestEnvironment\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestEnvironment\Gameplay\WorldMap.h">
+      <Filter>Source Files\TestEnvironment\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
